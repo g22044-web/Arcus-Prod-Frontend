@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Factspan - ARCUS - Team Details</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="pragma" content="no-cache" />
+
+    <link rel="stylesheet" href="css/bootstrap/3.4.1/css/bootstrap.min.css" />
+    <script src="js/jquery/3.5.1/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="css/dataTables/1.10.25/css/jquery.dataTables.min.css"
+    />
+    <script
+      type="text/javascript"
+      src="js/dataTables/1.10.25/js/jquery.dataTables.min.js"
+    ></script>
+    <script src="js/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="css/toastr/2.0.1/css/toastr.css" rel="stylesheet" />
+    <script src="js/toastr/2.0.1/js/toastr.js"></script>
+    <script
+      src="js/gijgo/1.9.13/js/gijgo.min.js"
+      type="text/javascript"
+    ></script>
+    <link
+      href="css/gijgo/1.9.13/css/gijgo.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script
+      type="text/javascript"
+      src="js/jquery.ajax-cross-origin.min.js"
+    ></script>
+    <link rel="stylesheet" href="css/custom.css" />
+    <script src="js/teamdata.js"></script>
+    <!-- <script src="js/empProfile.js"></script> -->
+    <script src="js/common.js"></script>
+    <link
+      rel="stylesheet"
+      href="css/fontawesome/6.1.1/css/fontawesome.min.css"
+      type="text/css"
+    />
+    <script
+      src="js/fontawesome/fontawesome.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <link rel="stylesheet" href="css/busyLoading.css" />
+    <link
+      rel="icon"
+      href="images\factspan.png"
+      type="image/png"
+      sizes="16x16"
+    />
+
+    <link rel="stylesheet" href="css/jquery.multiselect.css" />
+    <script src="lib/jQuery-MultiSelect.js"></script>
+    <script src="js/bootbox.min.js"></script>
+    <script src="js/bootbox.locales.min.js"></script>
+    <script src="js/lodash/4.17.10/lodash.min.js"></script>
+    <script>
+      $(function () {
+        $("#header").load("header.html");
+      });
+    </script>
+  </head>
+  <style>
+    #app-name {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #menu {
+      text-align: center;
+      box-shadow: 0px 0px 10px #c4c0c0;
+      border-radius: 15px;
+
+      align-items: center;
+      justify-content: center;
+      width: 85%;
+
+      background-color: #fff;
+      padding: 40px 60px 60px 60px;
+    }
+
+    #dash-title {
+      text-align: left;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .center-menu {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 25px;
+      height: 120px;
+      color: #fff;
+      font-size: 20px;
+      box-shadow: 0px 0px 10px #571b1b;
+      font-weight: 600;
+    }
+
+    .menu-header {
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media screen and (max-height: 450px) {
+      .sidenav {
+        padding-top: 15px;
+      }
+
+      .sidenav a {
+        font-size: 12px;
+      }
+    }
+
+    #emp_table thead > tr > th {
+      background-color: #f2f2f2;
+      z-index: 100;
+      text-align: center;
+    }
+
+    #emp_table td,
+    #customers th {
+      /* border: 0.5px solid #ddd; */
+      padding: 8px;
+    }
+
+    .navbar-default .navbar-nav > li > a {
+      font-weight: 500;
+    }
+
+    #profile {
+      background-color: cadetblue;
+      border-radius: 124px;
+      font-size: 30px;
+      margin-left: 15px;
+    }
+
+    #profile_div a:hover {
+      color: #eff4f8;
+    }
+
+    .navbar-brand {
+      padding: 0px 15px;
+    }
+
+    .employee_form .btn-info {
+      margin: 0 !important;
+      padding: 1px 3px;
+    }
+
+    .emp_filter {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      flex-direction: column;
+      margin-top: -40px;
+    }
+
+    .emp_radio_filter {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background-color: #cecece;
+      width: 180px;
+      height: 25px;
+      border-radius: 9999px;
+      box-shadow: inset 0.5px 0.5px 2px 0 rgba(0, 0, 0, 0.15);
+      margin-top: -38px;
+      margin-right: 110px;
+    }
+
+    input[type="radio"] {
+      appearance: none;
+      display: none;
+    }
+
+    .emp_radio_filter > label {
+      font-family: "Open Sans", sans-serif;
+      font-size: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: inherit;
+      width: 50px;
+      height: 20px;
+      text-align: center;
+      border-radius: 9999px;
+      overflow: hidden;
+      transition: linear 0.3s;
+      color: #6e6e6edd;
+      margin-bottom: 0px;
+      cursor: pointer;
+    }
+
+    input[type="radio"]:checked + label {
+      background-color: #1e90ff;
+      color: #f1f3f5;
+      font-weight: 900;
+      transition: 0.3s;
+    }
+
+    .col_width {
+      width: 40px !important;
+    }
+
+    .col_width_loc {
+      width: 30px !important;
+    }
+    .col_width_other,
+    .col_width_func_bill {
+      width: 30px !important;
+    }
+
+    .col_width_id {
+      width: 35px !important;
+    }
+    .col_name,
+    .col_utiliz_billing {
+      width: 100px !important;
+    }
+    .col_utiliz_billing_width {
+      width: 200px !important;
+    }
+    .col_job,
+    .col_manager,
+    .col_funnel,
+    .col_account {
+      width: 75px !important;
+    }
+    .col_billing {
+      width: 65px !important;
+    }
+    .col_sow_name {
+      width: 100px !important;
+      word-break: break-word !important;
+    }
+    .col_fac_exp,
+    .col_total_exp,
+    .col_status {
+      width: 60px !important;
+    }
+    .col_width_skills {
+      width: 80px !important;
+    }
+    .col_width_1 {
+      width: 75px !important;
+      word-break: break-word;
+    }
+    .col_width_2 {
+      width: 50px !important;
+      word-break: break-word;
+    }
+
+    .col_skill_width {
+      width: 80px !important;
+    }
+    .col_skill_data_width {
+      width: 120px !important;
+    }
+
+    .skillClass {
+      width: 25%;
+    }
+
+    ul {
+      padding-inline-start: 0px !important;
+    }
+
+    .ms-options {
+      min-height: auto !important;
+      width: auto !important;
+      max-height: 200px !important;
+    }
+
+    .ms-options-wrap {
+      width: 90px;
+    }
+    .ms-options-wrap button,
+    .ms-active button {
+      font-size: 10px !important;
+    }
+
+    #skillLevelSelect, #skillNewLevelSelect {
+      font-size: 10px;
+    }
+
+    .col_width_loc .ms-options-wrap {
+      width: 50px !important;
+    }
+
+    .col_width_other .ms-options-wrap,
+    .col_width_func_bill .ms-options-wrap {
+      width: 80px !important;
+    }
+
+    #emp_table_wrapper {
+      min-height: 420px !important;
+    }
+
+    .ms-options-wrap > button:focus,
+    .ms-options-wrap > button {
+      padding: 0px 13px 0px 5px !important;
+      border-radius: 5px;
+    }
+
+    .employee_detail_inside .table th {
+      padding: 3px 7px !important;
+    }
+
+    .bench_class {
+      border-radius: 0 !important;
+    }
+
+    .ms-options-wrap > .ms-options > .ms-search input {
+      color: black;
+    }
+
+    [data-title]:hover:after {
+      opacity: 1;
+      transition: all 0.1s ease 0.5s;
+      visibility: visible;
+    }
+
+    [data-title]:after {
+      content: attr(data-title);
+      background-color: #00ff00;
+      color: #111;
+      font-size: 12px;
+      position: absolute;
+      padding: 1px 5px 2px 5px;
+      bottom: -1.6em;
+      left: 30%;
+      white-space: nowrap;
+      box-shadow: 1px 1px 3px #222222;
+      opacity: 0;
+      border: 1px solid #111111;
+      z-index: 99;
+      visibility: hidden;
+    }
+
+    [data-title] {
+      position: relative;
+    }
+
+    .more {
+      display: inline-block;
+      width: 180px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .more:hover {
+      white-space: initial;
+      cursor: pointer;
+      width: 75%;
+    }
+
+    #employee {
+      padding: 10px 25px;
+    }
+
+    #use_bench_data {
+      padding: 10px 25px !important;
+    }
+
+    #team_date_filter {
+      padding: 6px !important;
+    }
+
+    .current_filter {
+      display: flex;
+      margin-bottom: -50px;
+      margin-right: 380px;
+      padding: 5px;
+    }
+
+    .label_name {
+      font-weight: 500 !important;
+      padding: 8px;
+    }
+
+    .filter_button_changes {
+      border-color: white !important;
+      border-radius: 5px !important;
+      padding: 0px 5px !important;
+      background-color: #fff !important;
+      color: black !important;
+    }
+
+    .filter_button_changes:hover {
+      color: #000000 !important;
+    }
+
+    .status_of_style {
+      width: 100%;
+    }
+
+    /* .ms-options-wrap.ms-active>.ms-options {
+    margin-top: 30px;
+  } */
+
+    .fixTableHead thead {
+      position: sticky;
+      top: 0;
+    }
+
+    table.dataTable {
+      width: 100% !important;
+    }
+
+    #skillLevelSelect, #skillNewLevelSelect {
+      padding: 0px;
+      height: auto;
+      width: 75px;
+      border-radius: 5px;
+      background-color: #fff !important;
+      padding-left: 5px;
+      background: url(../images/dropdown_icon.png) no-repeat 93% / 10px 10px;
+      font-weight: 600;
+    }
+    .employee_form::-webkit-scrollbar {
+      display: none;
+    }
+    .utilization_chart_div {
+      margin-right: 225px;
+      margin-top: 10px;
+    }
+
+    #utilization_chart {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .option_selections {
+      margin-top: 13px;
+      margin-right: 190px;
+      margin-bottom: 5px;
+    }
+
+    .utilization_text {
+      font-size: 10px;
+      font-weight: 500;
+    }
+
+    .utilization_span {
+      white-space: nowrap;
+    }
+
+    @media screen and (min-width: 1200px) and (max-width: 1350px) {
+      .ms-options-wrap {
+        width: 78px;
+      }
+      .more {
+        width: 150px;
+      }
+      .more:hover {
+        width: auto;
+      }
+      .skill_fil {
+        right: 18px;
+      }
+      .skill_level_fil {
+        right: 12px;
+        top: 2px;
+      }
+      .col_width_other .ms-options-wrap {
+        width: 50px !important;
+      }
+      .col_width_func_bill .ms-options-wrap {
+        width: 58px !important;
+      }
+    }
+
+    .utilization_span {
+      white-space: nowrap;
+    }
+    .icon-custom-style {
+      color: #fc8c15;
+      margin-right: 15px;
+      /* margin-left: 5px; */
+    }
+
+    .filter-icon {
+      margin-left: 5px;
+      cursor: pointer;
+    }
+
+    .filter-icon i {
+      color: #313265;
+      display: flex;
+      justify-content: center;
+      padding: 4px 4px 4px 2px;
+      border: 1px solid #d0c7c7;
+      width: fit-content;
+      align-items: center;
+      background-color: white;
+      margin: auto;
+      border-radius: 3px;
+    }
+    .employee_detail_inside .table th i {
+      margin-left: auto;
+    }
+
+    /* Popup panel styling */
+    .month-filter-panel {
+      position: absolute; /* or relative if you prefer */
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 8px 12px;
+      z-index: 999;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .month-filter-panel .filter-title {
+      font-weight: bold;
+      margin-bottom: 5px;
+      border-bottom: 1px solid #ccc;
+      padding: 5px 0px 5px 0px;
+    }
+    .month-filter-panel label {
+      font-size: 10px;
+      color: #3d3d3d;
+      /* text-transform: uppercase; */
+      font-weight: 400;
+      padding: 5px;
+      border-bottom: 1px solid #ccc;
+      width: 100%;
+      text-align: left;
+      display: flex;
+      justify-content: flex-start;
+      gap: 5px;
+      align-items: center;
+      margin: 0px !important;
+    }
+    .month-filter-panel label:last-child {
+      border-bottom: none; /* Removes border for the last label */
+    }
+    .availability_checkbox {
+      margin: 0px !important;
+    }
+    .tooltip-container {
+      /* position: relative; */
+      cursor: pointer;
+    }
+
+    .tooltip-container:hover::after {
+      content: attr(title);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #333;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 4px;
+      white-space: nowrap;
+      font-size: 12px;
+      z-index: 10;
+    }
+
+    .skill-box {
+      position: absolute;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 4px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 10;
+      display: none;
+      max-width: 300px;
+      word-wrap: break-word;
+    }
+
+    .skill-count {
+      cursor: pointer;
+      /* position: relative; */
+    }
+    .total-utilization,
+    .total-bench,
+    .total-investment {
+      background-color: rgba(41, 133, 193, 0.1) !important;
+      text-align: justify !important;
+      padding-left: 10px !important;
+      /* border-radius: 15px;
+    padding: 4px;
+    color: black;
+    font-weight: 500; */
+    }
+    .table_title {
+      display: flex;
+      gap: 10px;
+    }
+    .legend-container {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      align-items: center;
+    }
+    .legend-bg-code {
+      display: flex;
+      font-size: 8px;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-left: 5px;
+      flex-wrap: nowrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+    }
+    .billed-thick-bg {
+      background-color: #1db81d;
+      width: 13px;
+      height: 11px;
+      border-radius: 2px;
+    }
+    .billed-light-bg {
+      background-color: #a7dab6;
+      width: 13px;
+      height: 11px;
+      border-radius: 2px;
+    }
+    .billed-light-bg {
+      background-color: #a7dab6;
+      width: 13px;
+      height: 11px;
+      border-radius: 2px;
+    }
+    .inv-signed-bg {
+      background-color: #ffff7f;
+      width: 13px;
+      height: 11px;
+      border-radius: 2px;
+    }
+    .inv-qp-bg {
+      background-color: #c7eaf5;
+      width: 13px;
+      height: 11px;
+      border-radius: 2px;
+    }
+    .bench-bg {
+      background-color: #EA979B;
+      width: 13px;
+      height: 11px;
+      border-radius: 2px;
+    }
+    .sow-proposal-bg {
+      background-color: #c7eaf5;
+      width: 13px;
+      height: 11px;
+      border-radius: 2px;
+    }
+    .inv-signed-thick-bg {
+      background-color: #a4a426;
+      width: 13px;
+      height: 11px;
+      border-radius: 2px;
+    }
+    .inv-qp-thick-bg {
+      background-color: #B8860B;
+      width: 13px;
+      height: 11px;
+      border-radius: 2px;
+    }
+    .bench-bg {
+      background-color: #ea979b;
+      width: 13px;
+      height: 11px;
+      border-radius: 2px;
+    }
+    .all_month {
+      cursor: pointer;
+    }
+    .tooltip-inner {
+      background-color: #333 !important; /* Dark background */
+      color: #fff !important; /* White text */
+      font-size: 12px;
+      text-align: left;
+      padding: 8px;
+      border-radius: 5px;
+      max-width: 200px;
+    }
+
+    .tooltip-billed {
+      color: #28a745; /* Green for Billed */
+      font-weight: bold;
+    }
+
+    .tooltip-bench {
+      color: #dc3545; /* Red for Bench */
+      font-weight: bold;
+    }
+
+    .tooltip-investment {
+      color: #ffc107; /* Yellow for Investment */
+      font-weight: bold;
+    }
+
+    .tooltip-no-data {
+      color: #999; /* Grey for no data */
+      font-style: italic;
+    }
+    #emp_table_filter {
+      margin-top: -40px;
+      position: fixed;
+      right: 40px;
+    }
+    #SOWSelect + .ms-options-wrap {
+      width: 120px !important;
+    }
+    .employee_form label {
+      text-align: justify !important;
+    }
+    .ms-options-wrap > .ms-options {
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    /* .teams_emp_head_id {
+      left: 0px;
+      position: sticky !important;
+      z-index: 102 !important;
+    }
+    .teams_emp_id {
+      left: 0px;
+      position: sticky;
+      z-index: 101;
+      background-color: #fff;
+    } */
+
+    #emp_table {
+      table-layout: fixed;
+      width: 100%;
+    }
+    #emp_table,
+    #emp_table thead {
+      position: relative;
+    }
+     #emp_table th.sticky-col {
+      position: sticky;
+      left: 0;
+      z-index: 105;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+    #emp_table td.sticky-col {
+      position: sticky;
+      left: 0;
+      background-color: #fff;
+      z-index: 101;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    #emp_table th.sticky-col-1,
+    #emp_table td.sticky-col-1 {
+      left: 0;
+    }
+    #emp_table th.sticky-col-2,
+    #emp_table td.sticky-col-2,
+    #emp_table th.sticky-col-2-filter {
+      left: 50px;
+    }
+    #emp_table th.sticky-col-2-filter {
+      top: 38px;
+    }
+    
+    /* #emp_table th.sticky-col-3,
+    #emp_table td.sticky-col-3,
+    #emp_table th.sticky-col-3-filter {
+      left: 165px;
+    } */
+    #emp_table th.sticky-col-3-filter {
+      top: 38px;
+    }
+    /* #emp_table th.sticky-col-4,
+    #emp_table td.sticky-col-4,
+    #emp_table th.sticky-col-4-filter {
+      left: 255px;
+    } */
+    #emp_table th.sticky-col-4-filter {
+      top: 38px;
+    }
+    /* #emp_table th.sticky-col-5,
+    #emp_table td.sticky-col-5,
+    #emp_table th.sticky-col-5-filter {
+      left: 345px;
+    } */
+    #emp_table th.sticky-col-5-filter {
+      top: 38px;
+    }
+    /* #emp_table th.sticky-col-6,
+    #emp_table td.sticky-col-6,
+    #emp_table th.sticky-col-6-filter {
+      left: 443px;
+    } */
+    #emp_table th.sticky-col-6-filter {
+      top: 38px;
+    }
+    /* #emp_table th.sticky-col-7,
+    #emp_table td.sticky-col-7,
+    #emp_table th.sticky-col-7-filter {
+      left: 540px;
+    } */
+    #emp_table th.sticky-col-7-filter {
+      top: 38px;
+    }
+    /* #emp_table th.sticky-col-8,
+    #emp_table td.sticky-col-8,
+    #emp_table th.sticky-col-8-filter {
+      left: 663px;
+    } */
+    #emp_table th.sticky-col-8-filter {
+      top: 38px;
+    }
+    /* #emp_table th.sticky-col-9,
+    #emp_table td.sticky-col-9,
+    #emp_table th.sticky-col-9-filter {
+      left: 743px;
+    } */
+    /* #emp_table th.sticky-col-10,
+    #emp_table td.sticky-col-10,
+    #emp_table th.sticky-col-10-filter {
+      left: 825px;
+    } */
+    /* #emp_table th.sticky-col-11,
+    #emp_table td.sticky-col-11,
+    #emp_table th.sticky-col-11-filter {
+      left: 908px;
+    } */
+    #emp_table th.sticky-col-11-filter {
+      top: 38px;
+    } 
+
+
+    #emp_table th.weekly-utliz-data {
+      top: 38px;
+    }
+    #nameSelect + .ms-options-wrap {
+      width: 100px !important;
+    }
+    /* #funSelect + .ms-options-wrap,
+    #custSelect + .ms-options-wrap,
+    #jobSelect + .ms-options-wrap,
+    #repMangSelect + .ms-options-wrap {
+      width: 80px !important;
+    }
+    #status + .ms-options-wrap,
+    #billSelect + .ms-options-wrap {
+      width: 60px !important;
+    }
+    #skillSelect + .ms-options-wrap, #skillNewSelect + .ms-options-wrap {
+      width: 70px !important;
+    } */
+    /* .total_data_utilz {
+      position: sticky;
+      left: -5px;
+      z-index: 102;
+      background-color: #e9f3f9 !important;
+    } */
+    .all_month {
+      width: 50px !important;
+    }
+    .ms-options {
+      min-height: auto !important;
+      width: 200px !important;
+      max-height: 250px !important;
+    }
+    .ms-search {
+      position: sticky;
+      top: 0px;
+      background-color: white;
+      z-index: 9;
+    }
+    /* #emp_body_data>tr>td {
+      border: 1px solid #ddd;
+    } */
+    .skill_data_header {
+      display: flex;
+      /* flex-direction: column; */
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+    }
+    #skillNewLevelSelect {
+      width: 50px !important;
+    }
+    .link_class{
+      cursor: pointer;
+      color: #006eff;
+    }
+    .sow-link {
+      color: #006eff !important;
+    }
+    .sow-link:hover {
+      box-shadow: 0px 0px 10px #c4c0c0;
+    }
+    .sow-static {
+      cursor: default;
+    }
+    .alloc_year_filter {
+      width: 100px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      right: 0px;
+      top: 75px;
+      margin-right: 405px;
+    }
+    #team_year_label {
+      white-space: nowrap;
+    }
+    .teams_ytd_current, .teams_ytd_future {
+      padding: 3px 3px !important;
+      font-size: 10px !important;
+    }
+
+    /* ===== Figma filter toolbar ===== */
+    .detail_top_bar.account-filter-toolbar {
+      min-height: 30px;
+      margin: 0 -10px 0 -15px;
+      padding: 6px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: nowrap;
+      background: #1F3864;
+      border-top: 1px solid #777675;
+      overflow-x: auto;
+    }
+
+    .account-toolbar-left,
+    .account-toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* All / IND / USCA pill toggle */
+    .account-filter-toolbar .emp_radio_filter {
+      width: auto;
+      min-height: 30px;
+      margin: 0;
+      padding: 4px;
+      gap: 4px;
+      justify-content: flex-start;
+      background: #16243e;
+      border-radius: 999px;
+      box-shadow: none;
+    }
+
+    .account-filter-toolbar .emp_radio_filter > input[type="radio"] {
+      display: none;
+    }
+
+    .account-filter-toolbar .emp_radio_filter > label {
+      width: auto;
+      height: auto;
+      margin: 0;
+      padding: 4px 16px;
+      border-radius: 999px;
+      background: transparent;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 1;
+      cursor: pointer;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .account-filter-toolbar .emp_radio_filter > input[type="radio"]:checked + label {
+      background: #ff7d20;
+      color: #fff;
+      font-weight: 500;
+    }
+
+    /* Divider */
+    .account-toolbar-divider {
+      width: 1px;
+      height: 28px;
+      background: rgba(255, 255, 255, 0.28);
+      flex-shrink: 0;
+    }
+
+    /* Legend on the dark bar (round dots, white text) */
+    .account-filter-toolbar .legend-container {
+      margin: 0;
+    }
+
+    .account-filter-toolbar .legend-bg-code {
+      font-size: 12px;
+      gap: 18px;
+      margin: 0;
+      color: #fff;
+      flex-wrap: nowrap;
+    }
+
+    .account-filter-toolbar .legend-item {
+      gap: 7px;
+      color: #fff;
+      font-size: 10px;
+    }
+
+    .account-filter-toolbar .legend-item > div:first-child {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+    }
+
+    /* Search field */
+    .account-search-field {
+      height: 30px;
+      min-width: 200px;
+      margin: 0;
+      padding: 0 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.78);
+      border-radius: 10px;
+      color: #fff;
+    }
+
+    .account-search-field i {
+      font-size: 13px;
+      color: #fff;
+    }
+
+    #team_toolbar_search {
+      display: inline-flex;
+      flex: 1;
+    }
+
+    /* Hide the original DataTables search wrapper; its input is relocated into
+       #team_toolbar_search by teamdata.js, leaving only the stray "Search:" label behind. */
+    #emp_table_filter {
+      display: none !important;
+    }
+
+    #team_toolbar_search input {
+      width: 100%;
+      border: 0;
+      margin: 0;
+      background: transparent !important;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 400;
+      outline: none;
+      box-shadow: none;
+    }
+
+    #team_toolbar_search input::placeholder {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Year dropdown (custom-built list so the open panel matches the toolbar theme
+       instead of the browser's native <select> popup) */
+    .account-filter-toolbar .alloc_year_filter {
+      width: auto;
+      position: relative;
+      right: auto;
+      top: auto;
+      margin: 0;
+      gap: 8px;
+      height: 30px;
+      padding: 0 12px;
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.78);
+      border-radius: 10px;
+    }
+
+    .account-filter-toolbar .alloc_year_filter label {
+      margin: 0;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    .year-dropdown-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 400;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .year-dropdown-btn i {
+      font-size: 12px;
+      transition: transform 0.15s ease;
+    }
+
+    .year-dropdown.open .year-dropdown-btn i {
+      transform: rotate(180deg);
+    }
+
+    .year-dropdown-list {
+      display: none;
+      position: fixed;
+      margin: 0;
+      padding: 4px 0;
+      list-style: none;
+      background: #ffffff;
+      border: 1px solid #d7dbe0;
+      border-radius: 6px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+      z-index: 3000;
+      overflow: hidden;
+    }
+
+    .year-dropdown.open .year-dropdown-list {
+      display: block;
+    }
+
+    .year-dropdown-list li {
+      padding: 8px 14px;
+      color: #333333;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.3;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .year-dropdown-list li:hover {
+      background: #f2f4f7;
+    }
+
+    .year-dropdown-list li.selected {
+      background: #1e90ff;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    @media (max-width: 1200px) {
+      .detail_top_bar.account-filter-toolbar {
+        flex-wrap: wrap;
+        overflow-x: visible;
+        gap: 12px;
+      }
+      .account-toolbar-left,
+      .account-toolbar-right {
+        flex-wrap: wrap;
+      }
+    }
+
+    .fixTableHead {
+      overflow-y: auto;
+      /* height: 75vh; */
+      height: calc(100vh - 120px);
+    }
+    .employee_detail_inside {
+      display: inline-block;
+      width: 100%;
+      margin-top: 5px;
+      padding: 0px;
+      box-shadow: 0px 5px 12px -5px #989696;
+      min-height: 400px;
+    }
+
+  </style>
+
+  <body>
+    <div class="loader">
+      <div class="loader-wheel"></div>
+      <div class="loader-text"></div>
+    </div>
+
+    <div class="show_page" style="display: none">
+      <div id="header"></div>
+      <div class="wrapper_outer">
+        <div class="container-fluid">
+          <div class="detail_box" id="teams_div">
+            <div class="employee_form" id="emp_form">
+              <div class="detail_top_bar account-filter-toolbar">
+                <div class="account-toolbar-left">
+                  <div class="emp_radio_filter option_selections">
+                    <input
+                      type="radio"
+                      name="emp_radio"
+                      id="ALL"
+                      class="emp_select"
+                      value="ALL"
+                      onclick="getIndUsEmpData()"
+                      checked
+                    />
+                    <label for="ALL">All</label>
+                    <input
+                      type="radio"
+                      name="emp_radio"
+                      id="IND"
+                      class="emp_select"
+                      value="IND"
+                      onclick="getIndUsEmpData()"
+                    />
+                    <label for="IND">IND</label>
+                    <input
+                      type="radio"
+                      name="emp_radio"
+                      id="US"
+                      class="emp_select"
+                      value="US"
+                      onclick="getIndUsEmpData()"
+                    />
+                    <label for="US">USCA</label>
+                  </div>
+
+                  <div class="account-toolbar-divider" aria-hidden="true"></div>
+
+                  <div class="legend-container">
+                    <div class="legend-bg-code">
+                      <div class="legend-item">
+                        <div class="billed-light-bg"></div>
+                        <div>Billed (≤100%)</div>
+                      </div>
+                      <div class="legend-item">
+                        <div class="billed-thick-bg"></div>
+                        <div>Billed (>100%)</div>
+                      </div>
+                      <div class="legend-item">
+                        <div class="inv-signed-bg"></div>
+                        <div>Inv (Signed/Renewal)</div>
+                      </div>
+                      <div class="legend-item">
+                        <div class="sow-proposal-bg"></div>
+                        <div>Inv (Q/P/PreQ)</div>
+                      </div>
+                      <div class="legend-item">
+                        <div class="bench-bg"></div>
+                        <div>Bench</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="account-toolbar-right">
+                  <label class="account-search-field" for="emp_table_filter">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                    <span id="team_toolbar_search"></span>
+                  </label>
+
+                  <div class="current_filter" style="display: none">
+                    <label class="label_name status_of_style"
+                      >Status as of
+                    </label>
+                    <input
+                      class="form-control"
+                      type="date"
+                      id="team_date_filter"
+                      onchange="getStatusAfOf()"
+                      onclick="this.showPicker()"
+                    />
+                  </div>
+
+                  <div class="alloc_year_filter year-dropdown" id="yearDropdownWrap">
+                    <label id="team_year_label" for="teams_year">Year</label>
+                    <button
+                      type="button"
+                      class="year-dropdown-btn"
+                      id="yearDropdownBtn"
+                      aria-haspopup="listbox"
+                      aria-expanded="false"
+                    >
+                      <!-- <span id="yearDropdownLabel">All</span> -->
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </button>
+                    <ul class="year-dropdown-list" id="yearDropdownList" role="listbox"></ul>
+                    <select class="form-control select-filter" name="teams_year" id="teams_year" style="display: none"></select>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="employee_detail_inside table-responsive fixTableHead emp_new_data"
+                style="display: none"
+              >
+                <table
+                  class="table table-bordered border-primary"
+                  id="emp_table"
+                  style="width: 100%"
+                >
+                  <thead id="teamHeaderData">
+                    <!-- <tr>
+                    <th rowspan="2" scope="col" class="col_width_id columntwo">ID</th>
+                    <th class="columnthree">Name</th>
+                    <th>Job Title</th>
+                    <th>Manager</th>
+                    <th style="padding-right: 15px !important;">Location</th>
+                    <th style="padding-right: 15px !important;">Function</th>
+                    <th style="padding-right: 15px !important;">Account</th>
+                    <th>Billing</th>
+                    <th>Status</th>
+
+                    <th colspan="2">Billed<br><span class="utilization_span">Utilization %</span></th>
+                    <th rowspan="2" scope="col" class="col_width_id columntwo">Next Billability Date</th>
+
+                    <th>Skills</th>
+                    <th rowspan="2" class="col_width columnthree" style="padding-right: 15px !important;">Factspan Exp</th>
+                    <th rowspan="2" class="col_width columnthree" style="padding-right: 15px !important;">Total Exp</th>
+                    <th rowspan="2" scope="col"  style="display: none;">Skill</th>
+                    <th rowspan="2" scope="col" style="display: none;">Email ID</th>
+                  </tr>
+                  <tr>
+                    <th scope="col" class="col_width columnthree">
+                      <div style="color: black">
+                        <select class="form-control" name="nameSelect[]" multiple id="nameSelect">
+                        </select>
+                      </div>
+                    </th>
+                    <th scope="col" class="col_width">
+                      <div style="color: black">
+                        <select name="jobSelect[]" multiple id="jobSelect">
+                        </select>
+                      </div>
+
+                    </th>
+                    <th scope="col" class="col_width">
+                      <div style="color: black">
+                        <select name="repMangSelect[]" multiple id="repMangSelect">
+                        </select>
+                      </div>
+
+                    </th>
+                    <th scope="col" class="col_width_loc">
+                      <div style="color: black">
+                        <select name="locatSelect[]" multiple id="locatSelect">
+                      </div>
+                      </select>
+                    </th>
+                    <th scope="col" class="col_width_func_bill">
+                      <div style="color: black">
+                        <select name="funSelect[]" multiple id="funSelect">
+                        </select>
+                      </div>
+
+                    </th>
+                    <th scope="col" class="col_width_other">
+                      <div style="color: black">
+                        <select name="custSelect[]" multiple id="custSelect">
+                        </select>
+                      </div>
+
+                    </th>
+                    <th scope="col" class="col_width_func_bill">
+                      <div style="color: black">
+                        <select name="billSelect[]" multiple id="billSelect">
+                        </select>
+                      </div>
+
+                    </th>
+
+                    <th scope="col" class="col_width_other">
+                      <div style="color: black">
+                        <select name="status[]" multiple id="status">
+                          <option value="NO">Active</option>
+                          <option value="YES">In Notice Period</option>
+                        </select>
+                      </div>
+
+                    </th>
+                    <th style="padding: 3px 15px !important;">YTD</th>
+                    <th id="fy_year" style="padding: 3px 15px !important;">FY</th>
+                    
+                    <th scope="col" class="col_skill_width">
+                      <div class="skill_header_filter" style="margin-left: auto;">
+                        <div class="col-sm-6 skill_fil">
+
+                          <select name="skillSelect[]" multiple id="skillSelect">
+                          </select>
+                        </div>
+                        <div class="col-sm-6 skill_level_fil">
+                          <select id="skillLevelSelect">
+                            <option value="-1">All</option>
+                            <option value="R1">R1</option>
+                            <option value="R2">R2</option>
+                            <option value="R3">R3</option>
+                          </select>
+                        </div>
+                      </div>
+                    </th>
+                  </tr> -->
+                  </thead>
+                  <tbody id="emp_body_data"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="table-loading" id="loading_div">
+            <div class="loader-div">
+              <!-- <h1>Loading...</h1> -->
+              <div class="loader-wheel-div"></div>
+              <div class="loader-text-div"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Factspan - ARCUS - Revenue Details</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv='cache-control' content='no-cache'>
+  <meta http-equiv='expires' content='0'>
+  <meta http-equiv='pragma' content='no-cache'>
+  <script src="js/chatbot.js"></script>
+  <link rel="stylesheet" href="css/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="js/jquery/3.5.1/jquery.min.js"></script>
+  <!-- <link rel="stylesheet" href="css/dataTables/1.10.25/css/jquery.dataTables.min.css"> -->
+  <!-- <script type="text/javascript" src="js/dataTables/1.10.25/js/jquery.dataTables.min.js"></script> -->
+  <script src="js/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <!-- <link href="css/toastr/2.0.1/css/toastr.css" rel="stylesheet" /> -->
+  <!-- <script src="js/toastr/2.0.1/js/toastr.js"></script> -->
+  <!-- <script src="js/gijgo/1.9.13/js/gijgo.min.js" type="text/javascript"></script> -->
+  <!-- <link href="css/gijgo/1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" /> -->
+  <script src="js/fontawesome/fontawesome.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/custom.css" />
+  <script src="js/revenueDetails.js"></script>
+  <script src="js/jquery.tabledit.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/sowEdit.js"></script>
+  <link rel="icon" href="images\factspan.png" type="image/png" sizes="16x16">
+  <!-- JS & CSS library of MultiSelect plugin -->
+  <script src="lib/jQuery-MultiSelect.js"></script>
+  <link rel="stylesheet" href="css/jquery.multiselect.css">
+  <script src="js/bootbox.min.js"></script>
+  <script src="js/bootbox.locales.min.js"></script>
+  <script src="js/jquery.table2excel.js"></script>
+  <link rel="stylesheet" href="css/busyLoading.css">
+
+  <script>
+    $(function () {
+      $('#header').load('header.html');
+      // $('#chatbot-container').load('chatbot.html');
+
+    })
+  </script>
+</head>
+<style>
+  #app-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .container-fluid {
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  #menu {
+    text-align: center;
+    box-shadow: 0px 0px 10px #c4c0c0;
+    border-radius: 15px;
+    
+    align-items: center;
+    justify-content: center;
+    width: 85%;
+    
+    background-color: #fff;
+    padding: 40px 60px 60px 60px;
+  }
+
+  #dash-title {
+    text-align: left;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .center-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    height: 120px;
+    color: #fff;
+    font-size: 20px;
+    box-shadow: 0px 0px 10px #571b1b;
+    font-weight: 600;
+  }
+
+  .menu-header {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+
+
+
+  @media screen and (max-height: 450px) {
+    .sidenav {
+      padding-top: 15px;
+    }
+
+    .sidenav a {
+      font-size: 12px;
+    }
+  }
+
+  #emp_table thead>tr>th {
+    background-color: #fae9e9;
+  }
+
+  #emp_table td,
+  #customers th {
+    border: 0.5px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+
+  
+  .navbar-default .navbar-nav>li>a {
+   
+    font-weight: 500;
+  }
+
+
+  #profile {
+    background-color: cadetblue;
+    border-radius: 124px;
+    font-size: 30px;
+    margin-left: 15px;
+  }
+
+
+
+  #profile_div a:hover {
+    color: #eff4f8;
+  }
+
+  .navbar-brand {
+    padding: 0px 15px;
+  }
+
+  .input-group-addon {
+    padding: 3px 2px;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 1;
+    color: #555;
+    text-align: center;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .input-group-addon,
+  .input-group-btn {
+    width: auto;
+  }
+
+
+
+  #sow_profile_details {
+    padding: 5px 5px;
+  }
+
+
+  .ms-options {
+    min-height: 120px !important;
+    max-height: 250px !important;
+  }
+
+  .employee_form .btn-info {
+    border-radius: 5px;
+    padding: 5px 8px !important;
+    
+  }
+  
+  .employee_form .poc_pov {
+    border-radius: 5px;
+    padding: 5px 8px !important;
+    /* margin-left: 140px; */
+    /* margin-top: 7px; */
+    
+  }
+
+  .ms-options-wrap>button:focus,
+  .ms-options-wrap>button {
+    
+    border-radius: 6px;
+  
+    padding: 2px 20px 2px 5px;
+  }
+
+  .form-control {
+    padding: 0px !important;
+  }
+
+  #filter_search {
+    padding: 6px 25px !important;
+  }
+
+  .employee_detail_inside {
+    min-height: auto !important;
+  }
+
+  #sow_show_data {
+    
+    color: #fd7e14;
+  }
+
+  .sow_mini_header .table th {
+    padding: 2px 5px !important;
+    border-radius: 0 !important;
+  }
+
+  .employee_detail_inside .table td {
+    padding: 0px 10px !important;
+  }
+
+  
+  tr.hide-table-padding td {
+    padding: 0;
+  }
+
+  .expand-button {
+    position: relative;
+  }
+
+  .accordion-toggle .expand-button:after {
+    position: absolute;
+    left: .75rem;
+    top: 50%;
+    transform: translate(0, -50%);
+    content: '-';
+    font-size: 20px;
+  }
+
+  .accordion-toggle.collapsed .expand-button:after {
+    content: '+';
+    font-size: 20px;
+  }
+
+  #sow_show_data {
+    padding: 10px !important;
+  }
+
+  .child_header {
+    border-radius: 0px !important;
+  }
+
+  .detail_top_bar {
+    margin-top: 35px;
+  }
+
+  .sow_mini_header .table>thead>tr {
+    background-color: #ffe8d4;
+  }
+
+  .sow_mini_header .table>thead>tr>th {
+    color: #03295b;
+    text-align: center;
+  }
+
+  #sow_emp_details>thead>tr>th {
+    text-align: center;
+  }
+
+  .emp_radio_filter {
+    margin-top: 0px;
+    margin-right: 200px;
+    margin-bottom: 6px;
+    width: 112px;
+    height: 37px;
+  }
+
+  .emp_radio_filter>label {
+    font-size: 9px;
+    width: 50px;
+    height: 28px;
+    text-align: center;
+  }
+
+  .employee_form label {
+    text-transform: capitalize;
+  }
+
+  .sow_detail {
+    min-height: 450px;
+  }
+
+  
+  .employee_sow_details .table th {
+    background: #f8f9fa !important;
+    padding: 5px 5px !important;
+    border: solid 0px #f8f9fa;
+    border-radius: 0px;
+  }
+
+ 
+  .employee_detail_inside .table th {
+    font-size: 10px;
+    font-weight: 500;
+    color: #8b8988;
+  }
+
+  .employee_detail_inside table tr:nth-child(even) {
+    background: #ffffff;
+    border-top: solid 1px #ffffff;
+  }
+
+ 
+  .sow_type_style {
+    background-color: #fd7e141a;
+    border-radius: 25px;
+    text-align: center;
+    color: #cd8500;
+  }
+
+  .sow_empty_data_style {
+    background-color: #e3e2e263;
+    border-radius: 25px;
+    text-align: center;
+    color: #e3e2e263;
+  }
+
+  .sow_total_data_style {
+    background-color: #03295b29;
+    border-radius: 25px;
+    text-align: center;
+    color: #03295b;
+  }
+
+  .employee_detail_inside table tr {
+    background: #fff;
+    height: 25px !important;
+  }
+
+  .sow_data_style,
+  .sow_data_style_100 {
+    background-color: #e3e2e263;
+    border-radius: 25px;
+    text-align: center;
+    color: #252424ad;
+  }
+
+  .sow_data_name {
+    background-color: #e3e2e263;
+    border-radius: 25px;
+    text-align: center;
+    color: #006eff;
+    cursor: pointer;
+    word-break: break-word;
+  }
+
+  .sow_data_style_70,
+  .sow_data_style_80,
+  .sow_data_style_90,
+  .sow_data_style_60 {
+    background-color: #62d98021;
+    border-radius: 25px;
+    text-align: center;
+    color: #026900ad;
+  }
+
+  .sow_data_style_10,
+  .sow_data_style_50,
+  .sow_data_style_40,
+  .sow_data_style_30,
+  .sow_data_style_20,
+  .sow_data_style_0,
+  .sow_data_style_-1 {
+    background-color: #faff6321;
+    border-radius: 25px;
+    text-align: center;
+    color: #696602ad;
+  }
+
+  .total_fixed {
+    position: fixed;
+    margin-left: 80%;
+    z-index: 1000;
+    margin-top: 250px !important;
+    background-color: grey;
+  }
+
+  .total_sow_fixed {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    
+    color: #151414;
+    text-align: end;
+    margin-bottom: 2%;
+  }
+
+  .total_fact {
+    padding: 5px;
+    border: 1px solid grey;
+    border-radius: 7px;
+    background-color: white;
+  }
+
+  .factspan_final_tot_style {
+    background-color: #0967e34a;
+    border-radius: 25px;
+    text-align: center;
+    
+    font-size: 12px !important;
+  }
+
+  .fixTableHead {
+    overflow-y: auto;
+    /* height: 75vh; */
+    height: calc(100vh - 115px);
+  }
+
+  .renew_button_class {
+    font-size: 10px !important;
+  }
+
+  .fixTableHead thead th {
+    position: sticky;
+    top: 0;
+  }
+
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th,
+  td {
+    padding: 8px 15px;
+    border: 2px solid #529432;
+  }
+
+  th {
+    background: #ABDD93;
+  }
+
+  .header_child {
+    position: sticky !important;
+    top: 24px !important;
+  }
+
+  .sow_empty_data_style_tot {
+    background-color: #b8d3f754;
+    border-radius: 25px;
+    text-align: center;
+    color: #b8d3f754;
+  }
+
+  #iconToggle {
+    color: orange;
+    font-size: 12px;
+  }
+
+  .hide_column {
+    display: none !important;
+  }
+
+  .employee_detail_inside .table th {
+    width: 7.14% !important;
+  }
+
+  #excelDownload {
+    float: right;
+    margin-top: -8px;
+  }
+
+  #headerColumn {
+    color: orange;
+  }
+
+  #userManual {
+    margin-left: 5px;
+  }
+.funnel-stage{
+  color: #8b8988 !important;
+  font-size: 12px !important;
+  font-weight: 450 !important;
+  margin-right: 5px;
+  margin-top: 7px;
+}
+.ms-options-wrap.ms-has-selections > button {
+    color: black;
+    font-size: 10px !important;
+    font-weight: 400;
+    min-width: 150px;
+    max-width: 140px;
+}
+/* .col_width_loc .ms-options-wrap {
+    max-width: 140px !important;
+} */
+.ms-options-wrap > .ms-options .ms-selectall {
+    display: inline-block;
+    font-size: 12px !important;
+    text-transform: capitalize;
+    font-weight: 500 !important;
+}
+.ms-options-wrap > .ms-options > .ms-search input {
+    width: 100%;
+    padding: 4px 5px;
+    border: none;
+    border-bottom: 1px groove;
+    outline: none;
+    font-weight: 450 !important;
+}
+
+/* Revenue toolbar */
+.revenue-filter-bar {
+  min-height: 40px;
+  margin: 0px -10px 0px -15px;
+  padding: 2px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  background: #1F3864;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  border-bottom: 3px solid #f4f7fb;
+  color: #fff;
+}
+
+.employee_form {
+    height: calc(100vh - 60px);
+    overflow-y: hidden;
+}
+
+.revenue-filter-bar .filter_opt {
+  margin: 0;
+}
+
+.revenue-filter-bar .revenue-filter-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-width: 0;
+}
+
+.revenue-filter-bar .funnel-filter {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.revenue-filter-bar .funnel-stage {
+  margin: 0;
+  color: #fff !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  line-height: 1;
+}
+
+.revenue-filter-bar .header-button,
+.revenue-filter-bar #excelDownload {
+  height: 30px;
+  margin: 0;
+  padding: 0 10px !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  float: none;
+  color: #fff;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 400;
+  box-shadow: none;
+}
+
+.revenue-filter-bar .header-button:hover,
+.revenue-filter-bar .header-button:focus,
+.revenue-filter-bar #excelDownload:hover,
+.revenue-filter-bar #excelDownload:focus {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #fff;
+  outline: none;
+}
+
+.revenue-filter-bar #account_details {
+  min-width: 130px;
+}
+
+.revenue-filter-bar #excelDownload {
+  width: 52px;
+  min-width: 52px;
+  padding: 0 !important;
+}
+
+.revenue-filter-bar .button-icon {
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.revenue-filter-bar .ms-options-wrap {
+  width: min(30vw, 535px);
+  min-width: 300px;
+}
+
+.revenue-filter-bar .ms-options-wrap > button,
+.revenue-filter-bar .ms-options-wrap > button:focus {
+  height: 30px;
+  margin: 0;
+  padding: 0 45px 0 24px;
+  color: #fff;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  font-size: 12px !important;
+  font-weight: 400;
+  outline: none;
+}
+
+.revenue-filter-bar .ms-options-wrap.ms-has-selections > button {
+  min-width: 0;
+  max-width: none;
+  color: #fff;
+  font-size: 12px !important;
+  font-weight: 400;
+}
+
+.revenue-filter-bar .ms-options-wrap > button::after {
+  right: 28px;
+  border-width: 6px;
+  border-top-color: #fff;
+}
+
+.revenue-filter-bar .ms-options-wrap > .ms-options {
+  margin-top: 6px;
+  color: #313265;
+  border: 1px solid #d8dee8;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(18, 36, 68, 0.18);
+}
+
+@media (max-width: 900px) {
+  .revenue-filter-bar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .revenue-filter-bar .revenue-filter-actions {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .revenue-filter-bar .funnel-filter {
+    flex: 1 1 100%;
+  }
+
+  .revenue-filter-bar .ms-options-wrap {
+    width: 100%;
+    min-width: 0;
+  }
+}
+</style>
+
+<body class="unselectable">
+  <div class="loader">
+    <div class="loader-wheel"></div>
+    <div class="loader-text"></div>
+  </div>
+  <div>
+    <div id="header"></div>
+
+    <div class="show_page wrapper_outer" style="display: none;">
+      <div id="loader" class="lds-dual-ring hidden overlay"></div>
+      <div class="container-fluid">
+        <div class="detail_box">
+          <div class="employee_form sow_detail">
+            <div class="detail_top_bar revenue-filter-bar">
+              <div class="filter_opt">
+                <!-- <button class="btn btn-info header-button" 
+                  id="buying_center_details" 
+                  title="Buying Center" 
+                  type="button" 
+                  onclick="buyingCenter(event)">
+                  Buying Center
+                </button> -->
+                <button class="btn btn-info header-button" 
+                  id="account_details" 
+                  title="Create Account" 
+                  type="button" 
+                  onclick="account(event)">
+                  <img src="images/account_icon.svg" alt="" class="button-icon" aria-hidden="true"> Account Details
+                </button>
+        
+                
+                  <!-- <button class="btn btn-info poc_pov header-button" id="poc_pov_details" onclick="pocPovHandler()" title="Create POC POV"><i
+                    class="fa fa-file-text-o" aria-hidden="true"></i> POC/POV Request</button> -->
+              </div>
+           
+              <div class="filter_opt revenue-filter-actions">
+                <!-- Label and Dropdown on the Same Line -->
+                <div class="funnel-filter">
+                  <label for="funnelSelect" class="funnel-stage">Funnel Stage</label>
+                  <select class="form-control col_width_loc" name="funnelSelect[]" multiple id="funnelSelect">
+                  </select>
+                </div>
+                 <!-- New Button -->
+                 <button class="btn btn-info header-button" id="sow_Res_page" title="Create Sow" onclick="createSow()">
+                  <img src="images/new_icon.svg" alt="" class="button-icon" aria-hidden="true"> New
+                </button>
+                <!-- Download Button -->
+                <button class="btn btn-info" id="excelDownload" onclick="downloadExcel()" title="Excel Download">
+                  <img src="images/download_icon.svg" alt="Download" class="button-icon">
+                </button>
+                
+              
+              </div>
+            </div>
+              <script src="statuses.js"></script>
+              
+              <div class="employee_detail_inside employee_sow_details table-responsive fixTableHead">
+                <table class="table table-bordered border-primary sow_emp_details_class" id="sow_emp_details">
+                  <thead class="thead-light">
+                    <tr>
+                      <th class="capital" scope="col" rowspan="2" onclick="sowAccountSort()">Account <i id="iconToggle"
+                          class="fa fa-sort-alpha-asc" aria-hidden="true"></i></th>
+                      <th class="capital" scope="col" rowspan="2">Sow Name</th>
+                      <th class="capital" scope="col" rowspan="2">Funnel Stage</th>
+                      <th class="capital" scope="col" rowspan="2">Probability</th>
+                      <th class="capital" scope="col" rowspan="2">Sow Type</th>
+                      <th class="capital hide_column" scope="col" rowspan="2">Billing Type</th>
+                      <th class="capital" scope="col" colspan="2">Legal Dates</th>
+                      <th class="capital" scope="col" colspan="2">Billing Dates</th>
+                      <th class="capital" scope="col" colspan="2">Actual Dates</th>
+                      <th class="capital" scope="col" colspan="2">Team Size</th>
+                      <th class="capital" scope="col" rowspan="2" onclick="showAmountCol()">Sow Amount</th>
+                      <th class="capital renew_class" scope="col" rowspan="2"></th>
+                    </tr>
+                    <tr>
+                      <th class="child_header capital header_child">Start</th>
+                      <th class="child_header capital header_child">End</th>
+                      <th class="child_header capital header_child">Start</th>
+                      <th class="child_header capital header_child">End</th>
+                      <th class="child_header capital header_child">Start</th>
+                      <th class="child_header capital header_child">End</th>
+                      <th class="child_header capital header_child">USCAN</th>
+                      <th class="child_header capital header_child">IND</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+                  </tbody>
+                </table>
+              </div>
+          </div>
+          <div class="table-loading" id="loading_div">
+            <div class="loader-div">
+              <!-- <h1>Loading...</h1> -->
+              <div class="loader-wheel-div"></div>
+              <div class="loader-text-div"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+  
+  <div id="chatbot-container"></div>
+  </div>
+  <script>
+    $(document).ready(function () {
+      assignMetaValue();
+      $("meta[name='google-signin-client_id']").attr("content", metaValue);
+     
+      getLocalSessionData();
+      if (sessionName == null) {
+        window.location.href = 'index.html';
+        return false;
+      } else {
+        // Access checking for Revenue page
+        let accessStatus = checkDashboardPageAccessData()
+        $("#account_details").css("visibility", "hidden")
+        let getUserRole = localStorage.getItem("user-role");
+        let useremail = localStorage.getItem("email");
+        let userDepartment = localStorage.getItem("Department");
+        let userDesignation = localStorage.getItem("Job_Role");
+        let access_page_list = $.parseJSON(localStorage.getItem("access-page-list"))
+        // $.each(access_page_list, function(h, page){
+        //   switch(page){
+        //     case "accountDetails.html":
+        //       $("#account_details").css("visibility", "visible")
+        //     case "All":
+        //       $("#account_details").css("visibility", "visible")
+        //   }
+        // })
+        if(userDesignation == "Vice President") {
+          $("#account_details").css("visibility", "visible")
+        }
+        if (getUserRole.toLocaleLowerCase() == "admin" || useremail.toLocaleLowerCase() == "akhilesh@factspan.com") {
+          $("#account_details").css("visibility", "visible")
+        }
+        if(accessStatus){
+          let accessLevel = checkEachPageAccess("Revenue")
+          if(accessLevel.length > 0){
+            let environment = accessLevel[0]
+            if(environment == apiValue.environment){
+              $('body').bind('copy paste', function (e) {
+              e.preventDefault(); return false;
+              });
+              $(".table-loading").show();
+              getSowViewData();              
+              $('.green').attr('background-color', '#b1eeb1 !important');
+                        
+              $('.input-group-addon').hide();
+              $(".loader").css("display", "none");
+              $(".show_page").css("display", "block");
+              
+              let backBtnSowName = localStorage.getItem("BackSowAccName");
+              localStorage.setItem('sowBackBtnNav', '')
+              // gotoSOWName(backBtnSowName);
+
+              let pageLevelAccess = accessLevel[1]
+                let eachLevel = pageLevelAccess.split(',') 
+                $.each(eachLevel, function(l, level){
+                  switch(level){
+                    case "view": 
+                      $("#sow_Res_page").hide()
+                      break;
+                    case "edit": 
+                      $("#sow_Res_page").show()
+                      break;
+                  }
+                })
+
+            }else{
+              window.location.href = "home.html"
+            }
+          }
+          
+        }else{
+            window.location.href = "home.html"
+        }       
+      }
+      $(".new-sub-menu").hover(function () {
+        $('.sub-menu').css('display', '')
+        
+      });
+      $('#dashboard').click(function () {
+        window.location.href = 'home.html';
+        return false;
+      });
+      $('#userManual').click(function () {
+        
+        window.location.href = 'RRESOWUserManual.html';
+        return false;
+      });
+      $('#logout').click(function () {
+        localStorage.clear();
+       
+        window.location.href = 'index.html';
+        return false;
+      });
+      // $('#account_details').click(function () {
+      //   window.location.href = 'accountDetails.html';
+      //   return false;
+      // })
+    });
+  </script>
+  
+</body>
+
+</html>

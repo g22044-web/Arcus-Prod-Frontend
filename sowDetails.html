@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Factspan - ARCUS - SOW Details</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-signin-client_id"
+    content="776418814053-hccb99mo0ks8o9l3o3e5plhsn43p96rk.apps.googleusercontent.com">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+  </style>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+  <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+  <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+  <script src="https://kit.fontawesome.com/01f906aa6d.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/custom.css" />
+  <script src="js/sowDetails.js"></script>
+  <script src="js/jquery.tabledit.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/sowEdit.js"></script>
+  <link rel="icon" href="images\factspan.png" type="image/png" sizes="16x16">
+  <!-- JS & CSS library of MultiSelect plugin -->
+  <script src="lib/jQuery-MultiSelect.js"></script>
+  <link rel="stylesheet" href="css/jquery.multiselect.css">
+  <script src="js/bootbox.min.js"></script>
+  <script src="js/bootbox.locales.min.js"></script>
+  <script src="js/jquery.table2excel.js"></script>
+  <link rel="stylesheet" href="css/busyLoading.css">
+
+  <script>
+    $(function () {
+      $('#header').load('header.html');
+      // $('#header').load('HeaderMenu.html');
+    })
+  </script>
+</head>
+<style>
+  #app-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #menu {
+    text-align: center;
+    box-shadow: 0px 0px 10px #c4c0c0;
+    border-radius: 15px;
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    width: 85%;
+    /* height: 100%; */
+    background-color: #fff;
+    padding: 40px 60px 60px 60px;
+  }
+
+  #dash-title {
+    text-align: left;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .center-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    height: 120px;
+    color: #fff;
+    font-size: 20px;
+    box-shadow: 0px 0px 10px #571b1b;
+    font-weight: 600;
+  }
+
+  .menu-header {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+
+
+
+  @media screen and (max-height: 450px) {
+    .sidenav {
+      padding-top: 15px;
+    }
+
+    .sidenav a {
+      font-size: 12px;
+    }
+  }
+
+  #emp_table thead>tr>th {
+    background-color: #fae9e9;
+  }
+
+  #emp_table td,
+  #customers th {
+    border: 0.5px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+
+  .navbar-default .navbar-nav>li>a {
+    font-weight: 500;
+  }
+
+
+  #profile {
+    background-color: cadetblue;
+    border-radius: 124px;
+    font-size: 30px;
+    margin-left: 15px;
+  }
+
+
+
+  #profile_div a:hover {
+    color: #eff4f8;
+  }
+
+  .navbar-brand {
+    padding: 0px 15px;
+  }
+
+  .input-group-addon {
+    padding: 3px 2px;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 1;
+    color: #555;
+    text-align: center;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .input-group-addon,
+  .input-group-btn {
+    width: auto;
+  }
+
+  /* .detail_box select {
+    width: 100% !important;
+  } */
+
+  #sow_profile_details {
+    padding: 5px 5px;
+  }
+
+ 
+  .ms-options {
+    min-height: 120px !important;
+    max-height: 250px !important;
+  }
+
+  .employee_form .btn-info {
+    border-radius: 5px;
+    padding: 5px 8px !important;
+  }
+
+  .ms-options-wrap>button:focus,
+  .ms-options-wrap>button {
+    border-radius: 6px;
+    padding: 2px 20px 2px 5px;
+  }
+
+  .form-control {
+    padding: 0px !important;
+  }
+
+  #filter_search {
+    padding: 6px 25px !important;
+  }
+
+  .employee_detail_inside {
+    min-height: auto !important;
+  }
+
+  #sow_show_data {
+   
+    color: #fd7e14;
+  }
+
+  .sow_mini_header .table th {
+    padding: 2px 5px !important;
+    border-radius: 0 !important;
+  }
+
+  .employee_detail_inside .table td {
+    padding: 0px 10px !important;
+  }
+
+  /* SHow / hide table data of sow details */
+  tr.hide-table-padding td {
+    padding: 0;
+  }
+
+  .expand-button {
+    position: relative;
+  }
+
+  .accordion-toggle .expand-button:after {
+    position: absolute;
+    left: .75rem;
+    top: 50%;
+    transform: translate(0, -50%);
+    content: '-';
+    font-size: 20px;
+  }
+
+  .accordion-toggle.collapsed .expand-button:after {
+    content: '+';
+    font-size: 20px;
+  }
+
+  #sow_show_data {
+    padding: 10px !important;
+  }
+
+  .child_header {
+    border-radius: 0px !important;
+  }
+
+  .detail_top_bar {
+    margin-top: 35px;
+  }
+
+  .sow_mini_header .table>thead>tr {
+    background-color: #ffe8d4;
+  }
+
+  .sow_mini_header .table>thead>tr>th {
+    color: #03295b;
+    text-align: center;
+  }
+
+  #sow_emp_details>thead>tr>th {
+    text-align: center;
+  }
+
+  .emp_radio_filter {
+    margin-top: 0px;
+    margin-right: 200px;
+    margin-bottom: 6px;
+    width: 112px;
+    height: 37px;
+  }
+
+  .emp_radio_filter>label {
+    font-size: 9px;
+    width: 50px;
+    height: 28px;
+    text-align: center;
+  }
+
+  .employee_form label {
+    text-transform: capitalize;
+  }
+
+  .sow_detail {
+    min-height: 450px;
+  }
+
+  /* newly added styling  */
+  .employee_sow_details .table th {
+    background: #f8f9fa !important;
+    padding: 5px 5px !important;
+    border: solid 0px #f8f9fa;
+    border-radius: 0px;
+  }
+
+  /* .sow_detail .employee_detail_inside .table th {
+    width: 0;
+} */
+  .employee_detail_inside .table th {
+    font-size: 10px;
+    font-weight: 500;
+    color: #8b8988;
+  }
+
+  .employee_detail_inside table tr:nth-child(even) {
+    background: #ffffff;
+    border-top: solid 1px #ffffff;
+  }
+
+ 
+  .sow_type_style {
+    background-color: #fd7e141a;
+    border-radius: 25px;
+    text-align: center;
+    color: #cd8500;
+  }
+
+  .sow_empty_data_style {
+    background-color: #e3e2e263;
+    border-radius: 25px;
+    text-align: center;
+    color: #e3e2e263;
+  }
+
+  .sow_total_data_style {
+    background-color: #03295b29;
+    border-radius: 25px;
+    text-align: center;
+    color: #03295b;
+  }
+
+  .employee_detail_inside table tr {
+    background: #fff;
+    height: 25px !important;
+  }
+
+  .sow_data_style,
+  .sow_data_style_100 {
+    background-color: #e3e2e263;
+    border-radius: 25px;
+    text-align: center;
+    color: #252424ad;
+  }
+
+  .sow_data_name {
+    background-color: #e3e2e263;
+    border-radius: 25px;
+    text-align: center;
+    color: #006eff;
+    cursor: pointer;
+  }
+
+  .sow_data_style_70,
+  .sow_data_style_80,
+  .sow_data_style_90,
+  .sow_data_style_60 {
+    background-color: #62d98021;
+    border-radius: 25px;
+    text-align: center;
+    color: #026900ad;
+  }
+
+  .sow_data_style_10,
+  .sow_data_style_50,
+  .sow_data_style_40,
+  .sow_data_style_30,
+  .sow_data_style_20 {
+    background-color: #faff6321;
+    border-radius: 25px;
+    text-align: center;
+    color: #696602ad;
+  }
+
+  .total_fixed {
+    position: fixed;
+    margin-left: 80%;
+    z-index: 1000;
+    margin-top: 250px !important;
+    background-color: grey;
+  }
+
+  .total_sow_fixed {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    /* width: 98%; */
+    color: #151414;
+    text-align: end;
+    margin-bottom: 2%;
+  }
+
+  .total_fact {
+    padding: 5px;
+    border: 1px solid grey;
+    border-radius: 7px;
+    background-color: white;
+  }
+
+  .factspan_final_tot_style {
+    background-color: #0967e34a;
+    border-radius: 25px;
+    text-align: center;
+    font-size: 12px !important;
+  }
+
+  .fixTableHead {
+    overflow-y: auto;
+    height: 75vh;
+  }
+
+  .fixTableHead thead th {
+    position: sticky;
+    top: 0;
+  }
+
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th,
+  td {
+    padding: 8px 15px;
+    border: 2px solid #529432;
+  }
+
+  th {
+    background: #ABDD93;
+  }
+
+  .header_child {
+    position: sticky !important;
+    top: 24px !important;
+  }
+
+  .sow_empty_data_style_tot {
+    background-color: #b8d3f754;
+    border-radius: 25px;
+    text-align: center;
+    color: #b8d3f754;
+  }
+
+  #iconToggle {
+    color: orange;
+    font-size: 12px;
+  }
+
+  .hide_column {
+    display: none !important;
+  }
+
+  .employee_detail_inside .table th {
+    width: 4.14% !important;
+  }
+
+  #excelDownload {
+    float: right;
+  }
+  #headerColumn {
+    color: orange;
+  }
+  #userManual {
+    margin-left: 5px;
+  }
+</style>
+
+<body class="unselectable">
+  <div class="loader">
+    <div class="loader-wheel"></div>
+    <div class="loader-text"></div>
+  </div>
+  <div class="show_page" style="display: none;">
+    <div id="header"></div>
+
+    <div class="wrapper_outer">
+      <div id="loader" class="lds-dual-ring hidden overlay"></div>
+      <div class="container-fluid">
+        <div class="detail_box">
+          <div class="employee_form sow_detail">
+            <div class="detail_top_bar">
+              <div class="pull-right filter_opt">
+                
+                <input type="checkbox" name="lead_data" id="lead_data" class="k-checkbox"
+                  onclick="statusCheck('lead')" /><span>
+                  Lead</span>
+                <input type="checkbox" name="pre_qualified_data" id="pre_qualified_data" class="k-checkbox"
+                  onclick="statusCheck('pre-qualified')" /><span>
+                  Pre-Qualified</span>
+                <input type="checkbox" name="qualified_data" id="qualified_data" class="k-checkbox"
+                  onclick="statusCheck('qualified')" /><span>
+                  Qualified</span>
+                <input type="checkbox" name="proposal_data" id="proposal_data" class="k-checkbox"
+                  onclick="statusCheck('proposal')" /><span>
+                  Proposal</span>
+                <input type="checkbox" name="sign_data" id="sign_data" class="k-checkbox"
+                  onclick="statusCheck('sign')" /><span>
+                  Signed</span>
+                <input type="checkbox" name="renewal_data" id="renewal_data" class="k-checkbox"
+                  onclick="statusCheck('renewal')" /><span>
+                  Renewal</span>
+                <input type="checkbox" name="lost_data" id="lost_data" class="k-checkbox"
+                  onclick="statusCheck('lost')" /><span>
+                  Lost</span>
+
+               
+                    <button class="btn btn-info pull-right" id="userManual" title="RRE User Manual"><i class="fa fa-question-circle" aria-hidden="true"></i></button>
+                    <button class="btn btn-info pull-right" id="excelDownload" onclick="downloadExcel()" title="Excel Download"><i class="fa fa-download" aria-hidden="true"></i></button>
+                    <button class="btn btn-info pull-right header-button" id="sow_Res_page" title="Create Sow"><i class="fa fa-file-o"
+                      aria-hidden="true"></i> New</button>
+
+              </div>
+              <div class="employee_detail_inside employee_sow_details table-responsive fixTableHead">
+                <table class="table table-bordered border-primary sow_emp_details_class" id="sow_emp_details">
+                  <thead class="thead-light">
+                    <tr>
+                      <th class="capital" scope="col" rowspan="2" onclick="sowAccountSort()">Account <i id="iconToggle"
+                          class="fa fa-sort-alpha-asc" aria-hidden="true"></i></th>
+                      <th class="capital" scope="col" rowspan="2">Sow Name</th>
+                      <th class="capital" scope="col" rowspan="2">Funnel Stage</th>
+                      <th class="capital" scope="col" rowspan="2">Probability</th>
+                      <th class="capital" scope="col" rowspan="2">Sow Type</th>
+                      <th class="capital hide_column" scope="col" rowspan="2">Billing Type</th>
+                      <th class="capital" scope="col" colspan="2">Legal Dates</th>
+                      <th class="capital" scope="col" colspan="2">Billing Dates</th>
+                      <th class="capital" scope="col" colspan="2">Actual Dates</th>
+                      <th class="capital" scope="col" colspan="2">Team Size</th>
+                      <th class="capital" scope="col" rowspan="2" onclick="showAmountCol()">Sow Amount 
+                        <!-- <i id="headerColumn" class="fa fa-chevron-right" aria-hidden="true"></i> -->
+                      </th>
+                      <th class="capital active_sow_amount" scope="col" rowspan="2">Actual Amount</th>
+                      <th class="capital active_sow_amount" scope="col" rowspan="2">Projected Amount</th>
+                    </tr>
+                    <tr>
+                      <th class="child_header capital header_child">Start</th>
+                      <th class="child_header capital header_child">End</th>
+                      <th class="child_header capital header_child">Start</th>
+                      <th class="child_header capital header_child">End</th>
+                      <th class="child_header capital header_child">Start</th>
+                      <th class="child_header capital header_child">End</th>
+                      <th class="child_header capital header_child">USCAN</th>
+                      <th class="child_header capital header_child">IND</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+         
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+ 
+
+  </div>
+  <script>
+    $(document).ready(function () {
+      assignMetaValue();
+      $("meta[name='google-signin-client_id']").attr("content", metaValue);
+     
+      getLocalSessionData();
+      if (sessionName == null) {
+        window.location.href = 'index.html';
+        return false;
+      } else {
+        $('body').bind('copy paste', function (e) {
+          e.preventDefault(); return false;
+        });
+        getSowViewData();
+        $('.green').attr('background-color', '#b1eeb1 !important');
+        $('#legal_start_date').datepicker({
+          format: 'mm-dd-yy',
+          uiLibrary: 'bootstrap'
+        });
+        $('#legal_end_date').datepicker({
+          format: 'mm-dd-yy',
+          uiLibrary: 'bootstrap'
+        });
+        $('#billing_start_date').datepicker({
+          format: 'mm-dd-yy',
+          uiLibrary: 'bootstrap'
+        });
+        $('#billing_end_date').datepicker({
+          format: 'mm-dd-yy',
+          uiLibrary: 'bootstrap'
+        });
+        $('#actual_start_date').datepicker({
+          format: 'mm-dd-yy',
+          uiLibrary: 'bootstrap'
+        });
+        $('#actual_end_date').datepicker({
+          format: 'mm-dd-yy',
+          uiLibrary: 'bootstrap'
+        });
+
+        // $('.filter_dropdown').toggle();
+        $('.input-group-addon').hide();
+        $(".loader").css("display", "none");
+        $(".show_page").css("display", "block");
+        
+      }
+      $(".new-sub-menu").hover(function () {
+        $('.sub-menu').css('display', '')
+       
+      });
+    });
+    $('#dashboard').click(function () {
+      window.location.href = 'home.html';
+      return false;
+    });
+    $('#sow_Res_page').click(function () {
+      localStorage.setItem("addRequest", true);
+      localStorage.setItem("editRequest", false);
+      window.location.href = 'sowCreate.html';
+      return false;
+    });
+    $('#userManual').click(function () {
+      
+      window.location.href = 'RRESOWUserManual.html';
+      return false;
+    });
+    $('#logout').click(function () {
+      localStorage.clear();
+      console.log("sessionName - " + sessionName);
+      window.location.href = 'index.html';
+      return false;
+    });
+  </script>
+  <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+</body>
+
+</html>

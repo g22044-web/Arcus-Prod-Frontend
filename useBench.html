@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Factspan - ARCUS - Employee Details</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-signin-client_id" content="776418814053-hccb99mo0ks8o9l3o3e5plhsn43p96rk.apps.googleusercontent.com">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+  </style>
+
+
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+  <script type="text/javascript" src="js/jquery.ajax-cross-origin.min.js"></script>
+  <link rel="stylesheet" href="css/custom.css" />
+  <script src="js/useBench.js"></script>
+  <script src="js/common.js"></script>
+  <link rel="stylesheet" href="css/overlay.css" />
+  <link rel="icon" href="images\factspan.png" type="image/png" sizes="16x16">
+  <!-- JS & CSS library of MultiSelect plugin -->
+  <script src="https://phpcoder.tech/multiselect/js/jquery.multiselect.js"></script>
+  <link rel="stylesheet" href="https://phpcoder.tech/multiselect/css/jquery.multiselect.css">
+  <script>
+    $(function(){
+       $('#header').load('header.html');
+    })
+ </script>
+</head>
+<style>
+  #app-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #menu {
+    text-align: center;
+    box-shadow: 0px 0px 10px #c4c0c0;
+    border-radius: 15px;
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    width: 85%;
+    /* height: 100%; */
+    background-color: #fff;
+    padding: 40px 60px 60px 60px;
+  }
+
+  #dash-title {
+    text-align: left;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .center-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    height: 120px;
+    color: #fff;
+    font-size: 20px;
+    box-shadow: 0px 0px 10px #571b1b;
+    font-weight: 600;
+  }
+
+  .menu-header {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+
+
+
+  @media screen and (max-height: 450px) {
+    .sidenav {
+      padding-top: 15px;
+    }
+
+    .sidenav a {
+      font-size: 12px;
+    }
+  }
+
+  #emp_table thead>tr>th {
+    background-color: #fae9e9;
+    text-align: center;
+  }
+
+  #emp_table td,
+  #customers th {
+    border: 0.5px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+
+  /* Header menu custom style */
+  .navbar-default .navbar-nav>li>a {
+    /* color: #363535 !important; */
+    font-weight: 500;
+  }
+
+  /* .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+      background-color: #f38e22;
+      color: white !important;
+    } */
+
+  /* .border-style {
+      border-right: 1px solid #707072;
+    } */
+  #profile {
+    background-color: cadetblue;
+    border-radius: 124px;
+    font-size: 30px;
+    margin-left: 15px;
+  }
+
+
+
+  #profile_div a:hover {
+    color: #eff4f8;
+  }
+
+  .navbar-brand {
+    padding: 0px 15px;
+  }
+
+  .employee_form .btn-info {
+    margin: 0 !important;
+    padding: 1px 3px;
+  }
+
+  .emp_filter {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+    margin-top: -40px;
+  }
+
+  .emp_radio_filter {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #cecece;
+    width: 180px;
+    height: 40px;
+    border-radius: 9999px;
+    box-shadow: inset 0.5px 0.5px 2px 0 rgba(0, 0, 0, 0.15);
+    margin-top: -38px;
+    margin-right: 110px;
+  }
+
+  input[type="radio"] {
+    appearance: none;
+    display: none;
+  }
+
+  .emp_radio_filter>label {
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: inherit;
+    width: 50px;
+    height: 30px;
+    text-align: center;
+    border-radius: 9999px;
+    overflow: hidden;
+    transition: linear 0.3s;
+    color: #6e6e6edd;
+    margin-bottom: 0px;
+  }
+
+  input[type="radio"]:checked+label {
+    background-color: #1e90ff;
+    color: #f1f3f5;
+    font-weight: 900;
+    transition: 0.3s;
+  }
+
+  .col_width {
+    width: 40px !important;
+    /* word-break: break-word; */
+  }
+
+  .col_width_1 {
+    width: 75px !important;
+    word-break: break-word;
+  }
+
+  .col_skill_width {
+    width: 100px !important;
+  }
+
+  /* .ms-options-wrap>.ms-options>ul label { */
+  /* position: relative;
+    display: inline-block;
+    width: 100%; */
+  /* padding: 0px !important; */
+  /* margin: 1px 0; */
+  /* } */
+
+  .skillClass {
+    width: 25%;
+  }
+
+  ul {
+    padding-inline-start: 0px !important;
+  }
+
+  .ms-options {
+    min-height: auto !important;
+    width: auto !important;
+  }
+
+  .ms-options-wrap {
+    width: 90px;
+  }
+
+  #emp_table_wrapper {
+    min-height: 420px !important;
+  }
+
+  .ms-options-wrap>button:focus,
+  .ms-options-wrap>button {
+    padding: 0px 13px 0px 5px !important;
+  }
+
+  /* .level_class {
+    margin-top: -15px;
+  } */
+
+  .employee_detail_inside .table th {
+    padding: 3px 7px !important;
+  }
+
+  .bench_class {
+    border-radius: 0 !important;
+  }
+
+  .ms-options-wrap>.ms-options>.ms-search input {
+    color: black;
+  }
+
+  [data-title]:hover:after {
+    opacity: 1;
+    transition: all 0.1s ease 0.5s;
+    visibility: visible;
+  }
+
+  [data-title]:after {
+    content: attr(data-title);
+    background-color: #00FF00;
+    color: #111;
+    font-size: 12px;
+    position: absolute;
+    padding: 1px 5px 2px 5px;
+    bottom: -1.6em;
+    left: 30%;
+    white-space: nowrap;
+    box-shadow: 1px 1px 3px #222222;
+    opacity: 0;
+    border: 1px solid #111111;
+    z-index: 99999;
+    visibility: hidden;
+  }
+
+  [data-title] {
+    position: relative;
+  }
+
+  .more {
+    display: inline-block;
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .more:hover {
+    white-space: initial;
+    cursor: pointer;
+    width: 90%;
+  }
+
+  #employee {
+    padding: 10px 25px;
+  }
+  #use_bench_back {
+    padding: 10px 25px !important;
+  }
+</style>
+
+<body class="show_page">
+  <div id="header"></div>
+  <!-- <div class="header">
+    <div class="container">
+      <div class="inner_header">
+        <div class="logo">
+         <a href="#"> <img src="images\logo.png" alt="Factspan Background" /></a>
+       </div>
+
+       <div class=""  style="height: 50px;text-align: center;">
+        <button class="btn btn-info float-right" id="dashboard" style="margin: 10px;"> 
+          <span class=""><img src="images/home_icon.png" align="" /></span> Home</button>
+        <button class="btn btn-info float-right" id="logout" style="margin: 10px;"> 
+          <span class=""><img src="images/logout.png" align="" width="15" height="15"/></span> Logout</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container" style="margin-top: 10px;">
+      <div class="inner_header">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation"
+            onclick="$('html').toggleClass('fw-noscroll')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="sr-only">Toggle navigation</span>
+          </button>
+          <a class="" href="home.html">
+            <img src="images\logo.png" alt="Factspan Logo" class="responsive" height="60px" style="display: block;">
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse menusec" id="">
+          <div class="container-fluid">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="revenueDetails.html" id="sow_resource_req" class="border-style "><span
+                    class="hover-underline-animation">
+                    <center><img src="images/icon01.png" height="25px" /><br>SOW Resource Requirement</center>
+                  </span></a></li>
+                  <li class="dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#" id="sow_res_recom" class="border-style ">
+                       <span class="hover-underline-animation">
+                          <center><img src="images/icon05.png" height="25px" /><br>Resource Allocation <b class="caret"></b></center>
+                       </span>
+                    </a>
+                    <ul class="dropdown-menu">
+                       <li><a href="sowResRecom.html"><span class="hover-underline-animation">Project Allocation</span></a></li>
+                       <li><a href="employeeProject.html"><span class="hover-underline-animation">Employee Allocation</span></a></li>
+                    </ul>
+                 </li>
+              <li><a href="team.html" id="employee_details" class="border-style selected_menu"><span
+                    class="hover-underline-animation active_grp">
+                    <center><img src="images/icon03.png" height="25px" /><br>Employee Details</center>
+                  </span></a></li>
+              <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#" id="Metrics" class="border-style ">
+                  <span class="hover-underline-animation">
+                    <center><img src="images/icon05.png" height="25px" /><br>Metrics <b class="caret"></b></center>
+                  </span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="sowRsrceAllocSummar.html"><span class="hover-underline-animation">SOW Resource Allocation
+                        Summary</span></a></li>
+                  <li><a href="allCmpnyUsIndSummary.html"><span class="hover-underline-animation">Resource
+                        Utilization</span></a></li>
+                  <li><a href="availResProjAttr.html"><span class="hover-underline-animation">Available Resigned &
+                        Projected Attrition</span></a></li>
+                  <li class="dropdown-submenu new-sub-menu">
+                    <a tabindex="-1" href="#" class="dropdown-submenu-toggle"><span
+                        class="hover-underline-animation">Exception <b class="caret"></b></span></a>
+                    <ul class="dropdown-menu sub-menu" style="display: none;">
+                      <li><a href="exceptionResult.html"><span class="hover-underline-animation">Revenue Loss</span></a>
+                      </li>
+                      <li><a href="overStaff.html"><span class="hover-underline-animation">Overstaff</span></a></li>
+                      <li><a href="priority_hiring.html"><span class="hover-underline-animation">Prioritize
+                            Hiring</span></a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li><a href="orgChart.html" id="employee_details" class="border-style"><span
+                    class="hover-underline-animation">
+                    <center><img src="images/icon04.png" height="25px" /><br>Org Chart</center>
+                  </span></a></li>
+              
+            </ul>
+          </div>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navigation">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="#" id="profile" class="profile_pic" data-toggle="collapse" data-target="#profile_down"
+                style="color: #ffffff;"><img src="images/user.jpg" alt="" />
+                <i class=""><img src="images/down-arrow.png" alt="" /></i>
+              </a>
+            </li>
+          </ul>
+          <div id="profile_down" class="collapse out pull-right">
+            <div id="profile_akhliesh">
+              <center>
+                <div id="profile_div"><a id="profile_name_sign" class="profile_pic">
+                    <img src="images/user.jpg" alt="" />
+                  </a></div>
+                  <div style="font-weight: 500;"><span id="display_name"></span></div>
+                  <div><span id="email_id"></span></div>
+                <button class="btn btn-info float-right" id="logout" style="margin: 10px;" onclick="signOut();"> Sign out</button>
+              </center>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav> -->
+
+  <div class="wrapper_outer">
+
+    <div class="container-fluid">
+      <div class="detail_box">
+        <!-- <div id="mySidenav" class="sidenav">
+          <a href="sowResReq.html" id="sow_resource_req">SOW Resource Requirement</a>
+          <a href="sowResRecom.html" id="sow_resource_recom">Resource Allocation</a>
+          <a href="team.html" id="employee_details" class="active">Employee Details</a>
+          <a href="orgChart.html" id="org_chart">Org Chart</a> 
+        </div> -->
+        <div class="employee_form" id="emp_form">
+          <div class="detail_top_bar">
+            <div class="table_title">Use Bench Details</div>
+            <!-- <button class="btn btn-info pull-right" id="create_employee" style="margin: 10px;">Create Employee</button> -->
+            <!-- <div class="skillClass" style="margin-left: auto;">
+              <div class="col-sm-6">
+                <select name="skillSelect[]" multiple id="skillSelect">
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <select name="skillLevelSelect[]" multiple id="skillLevelSelect">
+                  <option value="R1">R1</option>
+                  <option value="R2">R2</option>
+                  <option value="R3">R3</option>
+                </select>
+              </div>
+            </div> -->
+            <div class="emp_filter">
+              <button class="btn btn-info pull-right" id="use_bench_back" style="margin: 10px;">Back</button>
+            </div>
+          </div>
+
+          <div class="employee_detail_inside table-responsive">
+            <table class="table table-bordered border-primary" id="emp_table">
+              <thead>
+                <tr>
+                  <th scope="col" rowspan="2" class="col_width">Employee ID</th>
+                  <th scope="col" rowspan="2" class="col_width">Name
+
+                  </th>
+                  <th scope="col" rowspan="2" class="col_width">Reporting Manager
+                  </th>
+                  <th scope="col" rowspan="2" class="col_width">Location
+                    
+                  </th>
+                  <th scope="col" rowspan="2" >Skills
+                </th>
+                <th rowspan="2" scope="col" style="display: none;">Skill</th>
+                  <th scope="col" rowspan="2" class="col_width">Function
+                    
+                  </th>
+                  <th scope="col" colspan="5" class="col_width">Current
+                      
+                  </th>
+                   
+                  </th>
+                  <th scope="col" colspan="5" class="col_width_1">Previous
+                    
+
+                  </th>
+
+                  <th scope="col" colspan="5" class="col_width_1">Future
+                    
+
+                  </th>
+                </tr>
+                <tr>
+                  <th class="bench_class">Account</th>
+                  <th class="bench_class">Project</th>
+                  <th class="bench_class">Billing Status</th>
+                  <th class="bench_class">Start Date</th>
+                  <th class="bench_class">End Date</th>
+                  <th class="bench_class">Account</th>
+                  <th class="bench_class">Project</th>
+                  <th class="bench_class">Billing Status</th>
+                  <th class="bench_class">Start Date</th>
+                  <th class="bench_class">End Date</th>
+                  <th class="bench_class">Account</th>
+                  <th class="bench_class">Project</th>
+                  <th class="bench_class">Billing Status</th>
+                  <th class="bench_class">Start Date</th>
+                  <th class="bench_class">End Date</th>
+                </tr>
+              </thead>
+              <tbody id="emp_body_data">
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      assignMetaValue();
+      $("meta[name='google-signin-client_id']").attr("content", metaValue);
+      // sessionName = localStorage.getItem("email");
+      // //sessionName = sessionStorage.getItem('name');
+      // // sessionStorage.setItem('name','sravan')
+      // console.log("Session name - " + sessionName);
+      getLocalSessionData();
+      if (sessionName == null) {
+        window.location.href = 'index.html';
+        return false;
+      } else {
+        $(".show_page"). css("display", "block");
+        getEmpData();
+        // $('#emp_table').dataTable();
+        // console.log("skill_data_option - " + skill_data_option);
+      }
+      $(".new-sub-menu").hover(function () {
+        $('.sub-menu').css('display', '')
+        // }, function () {
+        //    alert("hi out");
+      });
+    });
+    $('#dashboard').click(function () {
+      window.location.href = 'home.html';
+      return false;
+    });
+    $('#logout').click(function () {
+      localStorage.clear();
+      console.log("sessionName - " + sessionName);
+      window.location.href = 'index.html';
+      return false;
+    });
+    $("#use_bench_back").click(function () {
+      window.location.href = 'team.html';
+      return false;
+    });
+    $('#create_employee').click(function () {
+      window.location.href = 'employee_create.html';
+      return false;
+    });
+    function employeeDetails() {
+      window.location.href = 'employee_profile.html';
+      return false;
+    }
+
+
+    $('#exampleModal').on('show.bs.modal', function (event) {
+      let button = $(event.relatedTarget) // Button that triggered the modal
+      let employee_id = button.data('employee_id');
+      let name = button.data('name');
+      let designation = button.data('designation');
+      let function_name = button.data('function');
+      let project_manager = button.data('project_manager');
+      let reporting_manager = button.data('reporting_manager');
+      let location = button.data('location');
+      let join_date = button.data('join_date');
+      let end_date = button.data('end_date');
+      let flag = button.data('flag');
+      let skills = button.data('skills');
+
+      let modal = $(this)
+      modal.find('.modal-title').text("Employee Details - " + name)
+      modal.find('.modal-body #employee_id').val(employee_id)
+      modal.find('.modal-body #name').val(name)
+      modal.find('.modal-body #designation').val(designation)
+      modal.find('.modal-body #function').val(function_name)
+      modal.find('.modal-body #project_manager').val(project_manager)
+      modal.find('.modal-body #reporting_manager').val(reporting_manager)
+      modal.find('.modal-body #location').val(location)
+      modal.find('.modal-body #join_date').val(join_date)
+      modal.find('.modal-body #end_date').val(end_date)
+      modal.find('.modal-body #flag').val(flag)
+      modal.find('.modal-body #skills').val(skills)
+    })
+
+  </script>
+<script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+
+</body>
+
+</html>

@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Factspan - ARCUS - Workflow Details</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv='cache-control' content='no-cache'>
+  <meta http-equiv='expires' content='0'>
+  <meta http-equiv='pragma' content='no-cache'>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+  <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+  <link rel="stylesheet" href="css/custom.css" />
+  <script src="js/common.js"></script>
+  <script src="lib/jQuery-MultiSelect.js"></script>
+  <link rel="stylesheet" href="css/jquery.multiselect.css">
+  <link rel="icon" href="images\factspan.png" type="image/png" sizes="16x16">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/fontawesome.min.css"
+    type="text/css" />
+  <link rel="stylesheet" href="css/slimselect.min.css">
+  <script src="https://kit.fontawesome.com/01f906aa6d.js" crossorigin="anonymous"></script>
+  <script src="js/bootbox.min.js"></script>
+  <script src="js/bootbox.locales.min.js"></script>
+
+  <link href="https://cdn.jsdelivr.net/npm/select2@3.5.1/select2.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@3.5.1/select2.js"></script>
+  <script src="js/workflowDetails.js"></script>
+  <link rel="stylesheet" href="css/busyLoading.css" />
+  <script>
+    $(function () {
+      $('#header').load('header.html');
+    })
+  </script>
+</head>
+<style>
+  /* body {
+    font-family: 'Celias';
+  } */
+
+  #app-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #menu {
+    text-align: center;
+    box-shadow: 0px 0px 10px #c4c0c0;
+    border-radius: 15px;
+
+    align-items: center;
+    justify-content: center;
+    width: 85%;
+
+    background-color: #fff;
+    padding: 40px 60px 60px 60px;
+  }
+
+
+  @media screen and (max-height: 450px) {
+    .sidenav {
+      padding-top: 15px;
+    }
+
+    .sidenav a {
+      font-size: 12px;
+    }
+  }
+
+  .employee_form .form-control {
+    padding: 6px;
+    border: solid 1px #e9e9e9;
+  }
+
+  .employee_detail_inside .table th {
+    width: 0.5%;
+  }
+
+
+  .navbar-default .navbar-nav>li>a {
+
+    font-weight: 500;
+  }
+
+
+  #profile {
+    background-color: cadetblue;
+    border-radius: 124px;
+    font-size: 30px;
+    margin-left: 15px;
+  }
+
+
+
+  #profile_div a:hover {
+    color: #eff4f8;
+  }
+
+  .employee_form {
+    width: auto;
+    height: auto !important;
+
+  }
+
+  .navbar-brand {
+    padding: 0px 15px;
+  }
+
+  .custom_width {
+    width: 75px;
+  }
+
+  .table th,
+  td {
+    text-align: center;
+  }
+
+  .employee_form .form-group {
+    margin-bottom: 10px;
+  }
+
+  .table-bordered {
+    border: 1 !important;
+  }
+
+  .employee_form label {
+    font-size: 9px;
+  }
+
+
+  .skill_width {
+    width: 250px;
+    max-width: 251px !important;
+  }
+
+  .ms-options-wrap>button:focus,
+  .ms-options-wrap>button {
+    border: 0px solid #fd7e14 !important;
+    border-radius: 5px !important;
+  }
+
+  .ms-options-wrap,
+  .ms-options-wrap * {
+    max-width: 250px !important;
+  }
+
+  .table_align {
+    margin-top: 10px !important;
+  }
+
+  .header_col {
+    font-weight: 500;
+    font-size: 12px;
+  }
+
+
+
+  .add_account {
+    border: 1px solid #fd7e14;
+    margin-left: 10px;
+    padding: 2px 10px 2px 10px;
+    color: #fd7e14;
+    border-radius: 5px;
+  }
+
+  .option_create_text {
+    text-align: -webkit-right;
+    text-decoration: underline;
+    color: blue !important;
+  }
+
+  .table-bordered>tbody>tr>td,
+  .table-bordered>tbody>tr>th,
+  .table-bordered>tfoot>tr>td,
+  .table-bordered>tfoot>tr>th,
+  .table-bordered>thead>tr>td,
+  .table-bordered>thead>tr>th {
+    border: 1px solid #f6f6f6 !important;
+  }
+
+  .div_space {
+    height: 30px;
+  }
+
+  .date_style {
+    border: 1px solid grey;
+    padding: 7px;
+    border-radius: 5px;
+    margin: 5px;
+  }
+
+  .sow_header_div {
+    background-color: #dfdddd2e;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .date_header_div {
+    background-color: #f6dac22b;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .funnel_style {
+    padding: 15px;
+  }
+
+  .team_size {
+    padding: 5px;
+    background-color: #7ba7e236;
+    border-radius: 10px;
+  }
+
+  .employee_form .btn-info {
+    border-radius: 5px;
+  }
+
+  .billing_table_div {
+    padding: 20px;
+  }
+
+  #billing_exp_div {
+    font-size: 12px !important
+  }
+
+  #billing_exp_div>thead {
+    background-color: #ebebeb94;
+  }
+
+  .sow_amt_style {
+    font-size: 20px !important;
+
+    font-weight: 700 !important;
+  }
+
+  .input_right_broder {
+    border-radius: 5px 2px 2px 5px !important;
+    cursor: auto !important;
+  }
+
+  .input_left_broder {
+    border-radius: 0px 5px 5px 0px !important;
+    cursor: auto !important;
+  }
+
+  .funnel_data_style {
+    background-color: #EBFDFFFF;
+
+    color: #00BDD6FF;
+    border-radius: 10px;
+    padding: 9px;
+    font-weight: 400;
+  }
+
+  .prob_data_style {
+    background-color: #F5F2FDFF;
+
+    color: #8353E2FF;
+    border-radius: 10px;
+    padding: 9px;
+    font-weight: 400;
+  }
+
+  .type_data_style {
+    background-color: #FEF0F1FF;
+
+    color: #F22128FF;
+    border-radius: 10px;
+    padding: 9px;
+    font-weight: 400;
+  }
+
+  .persona_button {
+    background-color: #00BDD6FF;
+    color: white;
+    font-weight: 500;
+    border-radius: 5px;
+    padding: 5px;
+  }
+
+  .SerialNumberTooltip {
+    top: 20px;
+    left: 119px;
+    background-color: #ffffff;
+    width: 130px;
+    text-align: left;
+    cursor: pointer;
+    color: black;
+    font-size: 11px;
+    box-shadow: 30px;
+    box-shadow: 0px 0px 10px #c4c0c0;
+    border-radius: 5px;
+  }
+
+  #team_size_val {
+    font-weight: 700;
+  }
+
+  .btn-edit {
+    font-size: 11px !important;
+    background-color: #36d1e6;
+    color: white;
+    width: 65px;
+  }
+
+  .team_disable_header {
+    background-color: #8e8e8e40 !important;
+    color: white;
+  }
+
+  .us_bill_table {
+    padding: 5px 15px 5px 15px;
+    background-color: #e4e4e4;
+    border-radius: 20px;
+  }
+
+  .ind_bill_table {
+    padding: 5px 15px 5px 15px;
+    background-color: #F5F2FDFF;
+    border-radius: 20px;
+    color: #8353E2FF;
+  }
+
+  .billed_sow_table {
+    padding: 5px 15px 5px 15px;
+    background-color: #FEF6F1FF;
+    border-radius: 20px;
+    color: #ED7D2DFF;
+  }
+
+  .invest_sow_table {
+    padding: 5px 15px 5px 15px;
+    background-color: #F0F8FEFF;
+    border-radius: 20px;
+    color: #1091F4FF;
+  }
+
+  .bench_sow_table {
+    padding: 5px 15px 5px 15px;
+    background-color: #f0fefe;
+    border-radius: 20px;
+    color: #099797;
+  }
+
+  .select2-container {
+    box-sizing: border-box;
+    display: initial;
+  }
+
+  #addSkill,
+  #deleteSkill {
+    padding: 2px 10px !important;
+  }
+
+  .item-style {
+    padding: 10px;
+    background-color: #F3F4F6FF;
+  }
+
+  .item-count {
+    padding: 10px;
+    background-color: #FEF6F1FF;
+  }
+
+  .workflowSubItems {
+    width: 90%;
+    margin-left: 5%;
+  }
+
+  .header-button {
+    margin: 4px;
+    margin-top: 17px;
+  }
+
+  .account-accordion {
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    margin-bottom: 0.2rem;
+    margin-top: 0.2rem;
+  }
+
+  .accordion-button {
+    background-color: #337ab7;
+    color: #ffffff;
+    padding: 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s ease-in-out;
+  }
+
+  .accordion-button:hover {
+    background-color: #042d5f;
+  }
+
+  .accordion-button h3 {
+    font-weight: 600;
+    font-size: 1.25rem;
+    margin: 0;
+  }
+
+  .sow-count-badge {
+    background-color: #ffffff;
+    color: #042d5f;
+    font-weight: 700;
+    font-size: 10px;
+    border-radius: 9999px;
+    padding: 0.25rem 0.75rem;
+  }
+ 
+
+  .collapse-content {
+    background-color: #f9fafb;
+    padding: 1rem;
+    /* max-height: 0; */
+    /* overflow: hidden; */
+    /* opacity: 0; */
+    /* transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out, padding 0.5s ease-in-out; */
+  }
+
+  .collapse-content.show {
+    max-height: 2000px;
+    /* Adjust if content is taller */
+    opacity: 1;
+    padding: 1rem;
+  }
+
+  .sow-card {
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    margin-bottom: 1rem;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    border-left: 4px solid #6366f1;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .sow-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .sow-header {
+    padding: 1rem;
+    background-color: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+    cursor: pointer;
+  }
+
+  .sow-header:hover {
+    background-color: #e3f1ff;
+  }
+
+  .sow-header h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #042d5f;
+    margin: 0;
+  }
+
+  .sow-header p {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0.25rem 0 0 0;
+  }
+
+  .sow-body {
+    padding: 1rem;
+  }
+
+  .sow-details-grid {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1rem;
+    font-size: 12px;
+    justify-content: space-between;
+  }
+
+  .sow-details-grid>div>p:first-child {
+    font-weight: 600;
+    color: #4b5563;
+    margin: 0 0 0.25rem 0;
+    font-size: 12px;
+  }
+
+  .sow-details-grid>div>p:last-child {
+    color: #1f2937;
+    margin: 0;
+    font-size: 12px;
+  }
+
+  /* --- Status Badge Styles --- */
+  .status-badge {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 9999px;
+  }
+
+  .status-signed {
+    background-color: #d1fae5;
+    color: #065f46;
+  }
+
+  .status-renewal {
+    background-color: #dbeafe;
+    color: #1e40af;
+  }
+
+  .status-pre-qualified {
+    background-color: #fef3c7;
+    color: #92400e;
+  }
+
+  .status-default {
+    background-color: #dfe1e6;
+    color: #374151;
+    font-size: 11px;
+    min-width: 50px;
+    text-align: center;
+  }
+
+  /* --- Resource Table Styles --- */
+  .resource-table-container {
+    margin-top: 1rem;
+  }
+
+  .resource-table-container h5 {
+    font-weight: 600;
+    color: #374151;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+    border-radius: 0.375rem;
+    border: 1px solid #e5e7eb;
+  }
+
+  table {
+    width: 100%;
+    min-width: 600px;
+    background-color: #ffffff;
+    border-collapse: collapse;
+  }
+
+  thead {
+    background-color: #f3f4f6;
+  }
+
+  th,
+  td {
+    padding: 0.75rem 1rem;
+    font-size: 10px;
+    text-align: left;
+    font-weight: 500;
+  }
+
+  th {
+    font-weight: 600;
+    color: #4b5563;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  tbody tr:hover {
+    background-color: #f9fafb;
+  }
+
+  td .billing-status-badge {
+    padding: 0.25rem 0.5rem;
+    font-weight: 600;
+    line-height: 1.25;
+    border-radius: 9999px;
+  }
+
+  .billing-billed {
+    background-color: #d1fae5;
+    color: #059669;
+  }
+
+  .billing-investment {
+    background-color: #c1c2eb;
+    color: #313265;
+  }
+
+  .date-conflict {
+    background-color: #fee2e2;
+    /* light red */
+    color: #b91c1c;
+    /* dark red */
+    font-weight: 600;
+  }
+  .status-positive {
+    background-color: #90ee90;
+    color: #374151;
+    font-size: 11px;
+    min-width: 50px;
+    text-align: center;
+  }
+
+  .status-negative {
+    background-color: #ecb092;
+    color: #374151;
+    font-size: 11px;
+    min-width: 50px;
+    text-align: center;
+  }
+
+  .btn-primary {
+    color: #ff7d20;
+    background-color: #f3f3f3;
+    border-color: #d3cfcf;
+  }
+  .btn-primary:hover {
+    color: #ff7d20;
+    background-color: #f3f3f3;
+    border-color: #d3cfcf;
+  }
+  .btn {
+    font-weight: 500;
+  }
+</style>
+
+
+<body>
+
+  <div id="header"></div>
+  <div class="loader">
+    <div class="loader-wheel"></div>
+    <div class="loader-text"></div>
+  </div>
+  <div class="wrapper_outer show_page" style="display: none;">
+
+
+    <div class="container-fluid">
+      <div>
+        <div class="employee_form" id="sow_res_recom_table">
+          <div class="detail_top_bar">
+            <div class="table_title"></div>
+            <button class="btn btn-info pull-right header-button" id="dashboardPage">Back</button>
+
+          </div>
+          <div class="col-sm-12">
+            <div class="row">
+              <div class="col-sm-12 sow_approval" id="sowDiv">
+                <div class="col-sm-1">
+                </div>
+                <div class="col-sm-10 workflow_menu">
+                  <div class="sowAccount col-sm-12">
+                    <div class="col-sm-4" id="sowButton">
+                      <button class="btn btn-primary" type="button" data-toggle="collapse"
+                        data-target="#sowWorkflowData" aria-expanded="false" aria-controls="collapseExample">
+                        + SOW Approval
+                      </button>
+                    </div>
+                    <div class="col-sm-6">
+
+                    </div>
+                    <div class="sowItemCount col-sm-2">
+                      <div class="col-sm-8 item-style">
+                        <span>Approvals</span>
+                      </div>
+
+                      <div class="col-sm-4 item-count" id="sowCount">
+                        <b><span id="sowCountId">0</span></b>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+                  <div class="collapse workflowSubItems" id="sowWorkflowData">
+
+                  </div>
+                </div>
+                <div class="col-sm-1">
+
+                </div>
+              </div>
+              <div class="col-sm-12 account_approval" id="sowDiv">
+                <div class="col-sm-1">
+                </div>
+                <div class="col-sm-10 workflow_menu">
+                  <div class="sowAccount col-sm-12">
+                    <div class="col-sm-4" id="sowButton">
+                      <button class="btn btn-primary" type="button" data-toggle="collapse"
+                        data-target="#accountWorkflowData" aria-expanded="false" aria-controls="collapseExample">
+                        + Account Approval
+                      </button>
+                    </div>
+                    <div class="col-sm-6">
+
+                    </div>
+                    <div class="sowItemCount col-sm-2">
+                      <div class="col-sm-8 item-style">
+                        <span>Approvals</span>
+                      </div>
+
+                      <div class="col-sm-4 item-count" id="accountCount">
+                        <b><span id="accountCountId">0</span></b>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+                  <div class="collapse workflowSubItems" id="accountWorkflowData">
+
+                  </div>
+                </div>
+                <div class="col-sm-1">
+
+                </div>
+              </div>
+              <div class="col-sm-12 resource_allocation_approval">
+                <div class="col-sm-1">
+                </div>
+                <div class="col-sm-10 workflow_menu">
+                  <div class="sowAccount col-sm-12">
+                    <div class="col-sm-4">
+                      <button class="btn btn-primary" type="button" data-toggle="collapse"
+                        data-target="#resourceWorkflowData" aria-expanded="false" aria-controls="collapseExample">
+                        + Resource Allocation
+                      </button>
+
+                    </div>
+                    <div class="col-sm-6">
+
+                    </div>
+                    <div class="sowItemCount col-sm-2">
+                      <div class="col-sm-8 item-style">
+                        <span>Approvals</span>
+                      </div>
+
+                      <div class="col-sm-4 item-count" id="resCount">
+                        <b><span id="resCountId">0</span></b>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+                  <div class="collapse workflowSubItems" id="resourceWorkflowData">
+
+                  </div>
+                  <div class="col-sm-1">
+
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-sm-12 resource_allocation_details">
+                <div class="col-sm-1">
+                </div>
+                <div class="col-sm-10 workflow_menu">
+                  <div class="sowAccount col-sm-12">
+                    <div class="col-sm-4">
+                      <button class="btn btn-primary" type="button" data-toggle="collapse"
+                        data-target="#resourceAllocationData" aria-expanded="false" aria-controls="collapseExample">
+                        + Resource Allocation Conflict Details
+                      </button>
+
+                    </div>
+                    <div class="col-sm-6">
+
+                    </div>
+                    <div class="sowItemCount col-sm-2">
+                      <div class="col-sm-8 item-style">
+                        <span>Actions</span>
+                      </div>
+
+                      <div class="col-sm-4 item-count" id="resAllocCount">
+                        <b><span id="resAllocCountId">0</span></b>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+                  <div class="collapse workflowSubItems" id="resourceAllocationData">
+
+                  </div>
+                  <div class="col-sm-1">
+
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-sm-12 resource_allocation_shortage_details">
+                <div class="col-sm-1">
+                </div>
+                <div class="col-sm-10 workflow_menu">
+                  <div class="sowAccount col-sm-12">
+                    <div class="col-sm-4">
+                      <button class="btn btn-primary" type="button" data-toggle="collapse"
+                        data-target="#resourceAllocationShortageData" aria-expanded="false" aria-controls="collapseExample">
+                        + Resource Allocation Shortage Details
+                      </button>
+
+                    </div>
+                    <div class="col-sm-6">
+
+                    </div>
+                    <div class="sowItemCount col-sm-2">
+                      <div class="col-sm-8 item-style">
+                        <span>Actions</span>
+                      </div>
+
+                      <div class="col-sm-4 item-count" id="resAllocShortCount">
+                        <b><span id="resAllocShortCountId">0</span></b>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+                  <div class="collapse workflowSubItems" id="resourceAllocationShortageData">
+
+                  </div>
+                  <div class="col-sm-1">
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <script type="text/javascript">
+    $(document).ready(function () {
+
+      assignMetaValue();
+      $("meta[name='google-signin-client_id']").attr("content", metaValue);
+
+      getLocalSessionData();
+      if (sessionName == null) {
+        window.location.href = 'index.html';
+        return false;
+      } else {
+        $('body').css('display', 'block');
+        empName = localStorage.getItem("EmpUserName");
+        empId = localStorage.getItem("EmpUserID");
+        sessionName = localStorage.getItem("email");
+        accese_level = localStorage.getItem("ACCESS_LEVEL");
+        accessData = localStorage.getItem("Access");
+        edit_access = localStorage.getItem("EDIT_ACCESS");
+        groupName = localStorage.getItem("GROUP_NAME");
+        statusDetails = localStorage.getItem("STATUS");
+
+        getApprovalData();
+        getAllocationConflictData();
+      }
+    });
+
+    $('#legal_start_date').datepicker({
+      format: 'mm-dd-yy',
+      uiLibrary: 'bootstrap'
+    });
+    $('#legal_end_date').datepicker({
+      format: 'mm-dd-yy',
+      uiLibrary: 'bootstrap'
+    });
+    $('#billing_start_date').datepicker({
+      format: 'mm-dd-yy',
+      uiLibrary: 'bootstrap'
+    });
+    $('#billing_end_date').datepicker({
+      format: 'mm-dd-yy',
+      uiLibrary: 'bootstrap'
+    });
+    $('#actual_start_date').datepicker({
+      format: 'mm-dd-yy',
+      uiLibrary: 'bootstrap'
+    });
+    $('#actual_end_date').datepicker({
+      format: 'mm-dd-yy',
+      uiLibrary: 'bootstrap'
+    });
+    $('#ms_signed_date').datepicker({
+      format: 'mm-dd-yy',
+      uiLibrary: 'bootstrap'
+    });
+    $(".resourceDate").datepicker({
+      format: 'mm-dd-yy',
+      uiLibrary: 'bootstrap'
+    });
+
+
+
+    function getDashboardPageUrl() {
+      const departmentName = localStorage.getItem('Department');
+      const jobRole = localStorage.getItem('Job_Role');
+      const email = localStorage.getItem('email');
+      const userRoles = (localStorage.getItem('user-role') || '')
+        .split(',')
+        .map(function (role) { return role.trim().toLowerCase(); });
+
+      const hasAdminDashboardAccess =
+        departmentName === 'Products' ||
+        departmentName === 'CEO' ||
+        departmentName === 'COE' ||
+        jobRole === 'Vice President' ||
+        userRoles.includes('admin') ||
+        email === 'nitin.pandey@factspan.com' ||
+        email === 'nagarajan.v@factspan.com';
+
+      return hasAdminDashboardAccess ? 'adminDashboard.html' : 'home.html';
+    }
+
+    $('#dashboard').click(function () {
+      window.location.href = getDashboardPageUrl();
+      return false;
+    });
+    $('#dashboardPage').click(function () {
+      window.location.href = getDashboardPageUrl();
+      return false;
+    });
+    $('#logout').click(function () {
+      localStorage.clear();
+
+      window.location.href = 'index.html';
+      return false;
+    });
+
+
+  </script>
+</body>
+
+</html>

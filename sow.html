@@ -1,0 +1,2507 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Factspan - ARCUS - SOW Creation</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css"
+    />
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <script
+      src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js"
+      type="text/javascript"
+    ></script>
+    <link
+      href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    <link rel="stylesheet" href="css/custom.css" />
+
+    <script src="js/sowTeamAllocationEdit.js"></script>
+    <script src="js/sow.js"></script>
+    <script src="js/common.js"></script>
+
+    <script src="lib/jQuery-MultiSelect.js"></script>
+    <link rel="stylesheet" href="css/jquery.multiselect.css" />
+    <link
+      rel="icon"
+      href="images\factspan.png"
+      type="image/png"
+      sizes="16x16"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="css/slimselect.min.css" />
+    <script
+      src="https://kit.fontawesome.com/01f906aa6d.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/bootbox.min.js"></script>
+    <script src="js/bootbox.locales.min.js"></script>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@3.5.1/select2.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/select2@3.5.1/select2.js"></script>
+
+    <!-- Include Quill stylesheet -->
+    <link
+      href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-multiselect/css/jquery.multiselect.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery-multiselect/js/jquery.multiselect.min.js"></script>
+    
+    <!-- Include Quill library -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="css/busyLoading.css" />
+    <script>
+      $(function() {
+        $("#header").load("header.html");
+      });
+    </script>
+  </head>
+  <style>
+    body {
+      font-family: "Celias", "Poppins", sans-serif;;
+    }
+    /* .recom-filter-container {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center; 
+        gap: 15px; 
+        padding: 10px 15px; 
+        background: #fff; 
+        border-bottom: 1px solid #eee; 
+        margin-bottom: 10px; 
+        flex-wrap: nowrap !important;
+        width: 100%;
+    } */
+    .recom-filter-container.hidden {
+        display: none !important;
+    }
+    .warningMessage {
+      color: #ff0000;
+      font-size: 10px;
+      font-weight: 500;
+    }
+    .select2-container,
+    .select2-drop,
+    .select2-search,
+    .select2-search input {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      border: none !important;
+    }
+    .form-control {
+      display: block;
+      width: 100%;
+      height: 28px;
+      padding: 0px 6px;
+      font-size: 12px;
+      line-height: 1.42857143;
+      color: #313265;
+      background-color: #fff;
+      background-image: none;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      -webkit-box-shadow: none; /* Remove webkit box-shadow */
+      box-shadow: none; /* Remove box-shadow */
+      font-family: poppins;
+      font-weight: 500;
+      border: none;
+      font-size: 11px;
+    }
+    .label-options {
+      font-family: poppins;
+      font-size: 14px;
+      color: #fff;
+      font-weight: 400;
+    }
+    .fixed-width-select {
+      width: 150px !important; /* or any fixed value */
+      border: 1px solid #313265;
+    }
+    /* Styling both the input text and the placeholder text */
+    #sow_new_name {
+      width: 150px; /* Fixed width for the input */
+      font-family: poppins;
+      font-size: 13px;
+      color: #313265;
+      font-weight: 500;
+      border: 1px solid #313265;
+
+    }
+
+    #sow_new_name::placeholder {
+      font-family: poppins;
+      font-size: 14px;
+      color: #818199;
+      font-weight: 500;
+      opacity: 1; /* Remove opacity if you want placeholder to appear fully opaque */
+    }
+    .cancel-btn {
+      background-color: transparent;
+      color: #fff;
+      padding: 4px 10px; /* Add some padding */
+      font-size: 12px; /* Adjust font size */
+      display: inline-flex; /* Align icon and text */
+      align-items: center; /* Vertically align icon with text */
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 10px;
+      font-family: poppins;
+    }
+    .cancel-btn:hover, .cancel-btn:active:hover, .cancel-btn:focus {
+      background-color: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      border: 1px solid #fff;
+      outline: none;
+    }
+
+    .cancel-btn i {
+      margin-right: 6px; /* Add space between icon and text */
+    }
+
+    .save-btn {
+      font-size: 12px;
+      font-family: 400;
+      margin-left: 12px;
+      padding: 4px 10px;
+      font-family: poppins;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 10px;
+      background-color: transparent;
+    }
+    .save-btn:hover, .save-btn:focus, .save-btn:active:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      border: 1px solid #fff;
+      outline: none;
+    }
+    .save-btn i {
+      margin-right: 6px; /* Add space between icon and text */
+    }
+    .tab-buttons {
+      display: flex;
+      gap: 36px;
+      background-color: #1F3864;
+      padding: 4px 15px 0 15px;
+      /* border-top: 1px solid rgba(255, 255, 255, 0.12); */
+      margin-top: 0;
+      margin-right: 0;
+    }
+    #update_resource_data {
+      font-size: 10px;
+      margin-left: 12px;
+      padding: 4px 8px;
+      font-family: poppins;
+      color: #fc8c15;
+      border: 1px solid #fc8c15;
+      background-color: transparent;
+      border-radius: 5px;
+    }
+
+    #update_resource_data:hover{
+      background-color: #fc8c15;
+      color: white;
+      border: 1px solid #fc8c15;
+      outline: none;
+    }
+    .tab-button {
+      position: relative;
+      padding: 4px 2px 6px 2px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      outline: none;
+      margin-right: 0;
+      color: #fff !important;
+      font-size: 12px;
+      font-family: poppins;
+      font-weight: 400;
+    }
+    .tab-button.active {
+      color: #fff !important;
+      font-size: 12px;
+      font-family: poppins;
+      font-weight: 500;
+    }
+    .tab-button.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 3px;
+      border-radius: 3px;
+      background: #ff7d20;
+    }
+    .tab-content {
+    display: none;
+    padding: 8px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    background-color: #f9f9f9;
+    margin-top: 5px;
+    /* height: 35vh; */
+    height: calc(100vh - 355px);
+    overflow-y: auto;
+    border-radius: 8px;
+}
+
+    .tab-content.active {
+      display: block;
+    }
+    .comment-section textarea {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+    }
+    .comment-section button {
+      margin-top: 10px;
+      padding: 8px 16px;
+      font-size: 14px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .comment-section button:hover {
+      background-color: #0056b3;
+    }
+    .comment-section {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box; /* Ensures padding is included in width */
+      margin-top: 8px;
+      font-family: poppins;
+      color: #818199;
+      font-style: italic;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .comment-section textarea {
+      width: 100%;
+      height: 150px; /* Set a desired height */
+      margin-top: 10px;
+      padding: 8px;
+      resize: vertical; /* Allow vertical resizing only */
+      box-sizing: border-box; /* Ensures padding is included in width */
+      font-size: 16px;
+    }
+
+    .comment-section button {
+      margin-top: 10px;
+      padding: 8px 16px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .ql-toolbar.ql-snow {
+      padding: 8px !important;
+      background-color: #FFFFFF;
+    }
+    .ql-editor {
+      background-color: #FFFFFF;
+    }
+    .ql-snow.ql-toolbar button, .ql-snow .ql-toolbar button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    float: left;
+    height: 24px;
+    padding: 3px 5px;
+    width: 28px;
+}
+    .active {
+      color: rgb(73, 71, 71) !important;
+    }
+    .custom-row {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: nowrap; /* Prevents columns from wrapping to the next line */
+      margin-top: 15px;
+    }
+
+    .custom-col {
+      text-align: left;
+      border-radius: 8px; /* Optional for visual clarity */
+      padding: 5px;
+      box-sizing: border-box;
+      margin: 3px;
+      background: #ed7d2d1a;
+    }
+    .custom-col-opp {
+      text-align: left;
+      border-radius: 8px; /* Optional for visual clarity */
+      padding: 10px;
+      box-sizing: border-box;
+      margin: 3px;
+      background: #f9f9f9;
+    }
+    .custom-col-other {
+      text-align: left;
+      border-radius: 8px; /* Optional for visual clarity */
+      padding: 10px;
+      box-sizing: border-box;
+      margin: 3px;
+      background: #00bdd61a;
+    }
+    .label-class {
+      font-size: 11px;
+      font-family: poppins;
+      font-weight: 500;
+      color: #313265;
+      line-height: 21px;
+    }
+
+    .sow_amt_bg {
+      padding: 5px !important;
+    }
+    /* Ensuring lowercase placeholder text */
+    input#legal_start_date::placeholder {
+      text-transform: lowercase !important;
+    }
+
+    /* Browser compatibility for placeholder styling */
+    input#legal_start_date::-webkit-input-placeholder {
+      text-transform: lowercase !important;
+    }
+
+    input#legal_start_date::-moz-placeholder {
+      text-transform: lowercase !important;
+    }
+
+    input#legal_start_date:-ms-input-placeholder {
+      text-transform: lowercase !important;
+    }
+
+    /* Remove border and shadow from all datepicker inputs */
+    .datepicker-field {
+      border: none !important;
+      box-shadow: none !important;
+      margin-bottom: 2px;
+      font-size: 10px !important;
+      text-transform: lowercase !important;
+    }
+    .datepicker-row {
+      background: #ed7d2d1a;
+      margin-bottom: 10px;
+      border-radius: 8px;
+    }
+    .datepicker-row-team {
+      background: #ed7d2d1a;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      margin-left: 5px;
+    }
+    /* Increase width of .col-sm-3 columns */
+    /* Ensure the column is centered horizontally and vertically */
+    .date-picker-class {
+      display: flex;
+      justify-content: center; /* Centers horizontally */
+      align-items: center; /* Centers vertically */
+      height: 100%; /* Ensures the div takes full height of the column */
+    }
+
+    .partition-label {
+      text-align: center; /* Ensures the text is centered within the label */
+      margin: 5px;
+    }
+
+    @media (min-width: 768px) {
+      /* Custom widths when the screen is larger (for .col-sm-3) */
+      .date-picker-class {
+        width: 29.33%;
+      }
+    }
+    .input-group .form-control {
+      position: relative;
+      z-index: 2;
+      float: left;
+      width: 129%;
+      margin-bottom: 3px;
+    }
+    .input-group .resourceDate{
+      width:100%;
+      padding: 5px;
+      background-color: transparent;
+      font-size: 10px !important;
+      font-weight: 500 !important;
+    }
+    .input-group .datepicker-fields {
+    position: relative;
+    z-index: 2;
+    float: right;
+    width: 100%;
+    margin-bottom: 3px;
+    margin-left: 10px;
+}
+    #new_team {
+      border: none;
+      text-align: left !important;
+      color: #ed7d2d !important;
+    }
+    #new_team_buying {
+      border: none;
+    }
+    .team-size {
+      margin: 10px 0px;
+    }
+    #new_team{
+      text-align: left !important;
+    }
+    #dollor_icon {
+    border: none;
+    background-color: transparent;
+    font-size: 12px !important;
+  }
+  #sow_amount {
+    border:none;
+    background-color: transparent;
+    font-size: 14px; /* Adjust as needed */
+  border: none;
+  background-color: transparent;
+  /* width: 60px !important; */
+  padding: 2px;
+  cursor: default; /* Makes it clear it's non-editable */
+  margin-top: 0px;
+  color: #ed7d2d !important;
+  }
+  #proj_amount{
+    border:none;
+    background-color: transparent;
+    font-size: 14px; /* Adjust as needed */
+  border: none;
+  background-color: transparent;
+  width: 70px !important;
+  padding: 2px;
+  cursor: default; /* Makes it clear it's non-editable */
+  margin-top: 0px;
+  color: #ed7d2d !important;
+  }
+  .sow-amount-container {
+  display: flex;
+  align-items: center;
+}
+
+.dollar-label {
+  padding-right: 2px; /* Adjust space between $ and input as needed */
+  color: #ed7d2d;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: poppins;
+}
+
+.sow-amount-container {
+  display: flex;
+  align-items: center;
+}
+
+input#sow_amount {
+  color: #ed7d2d !important;
+  background-color: transparent !important; /* Ensure background is also transparent if desired */
+  font-size: 13px !important;
+}
+
+#sow_amount::placeholder {
+  color: #ed7d2d !important;
+  font-size: 13px !important;
+}
+#proj_amount::placeholder {
+  color: #ed7d2d !important;
+  font-size: 13px !important;
+} 
+#legal_start_date::placeholder{
+  font-size: 10px !important;
+  text-transform: lowercase !important;
+}
+.custom-alert {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1050; /* Higher than most elements */
+            /* background: white; */
+            border-radius: 8px;
+            padding: 0px;
+            padding-top: 0px;
+            /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); */
+            width: 450px; /* Fixed width */
+        }
+
+        .custom-alert .alert-header {
+            font-weight: 500;
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-family: poppins;
+            background-color: #313265;
+            color:#FFFFFF;
+            padding: 10px;
+            padding-left: 12px;
+
+        }
+
+        .custom-alert .alert-body {
+            font-size: 16px;
+            margin-bottom: 20px;
+            padding: 10px;
+            font-family: poppins;
+            font-size: 14px;
+            font-weight: 500;
+            color:#313265
+        }
+
+        .custom-alert .btn-close {
+            float: right;
+        }
+
+        .custom-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1040;
+        }
+        .close-btn {
+        position: absolute;
+        top: 2px;
+        right: 10px;
+        border: none;
+        background: none;
+        font-size: 22px;
+        cursor: pointer;
+        color: #FFFFFF;
+    }
+    .alert-footer {
+    margin-top:20px;
+    margin-right: 12px;
+    margin-bottom: 10px;
+    text-align: right;
+}
+
+.alert-footer .btn {
+    margin-left: 10px;
+}
+.yes-button{
+  background-color: #313265;
+  color: #f6f8f8;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: poppins;
+}
+.no-button{
+  font-size: 12px;
+  font-weight: 500;
+  font-family: poppins;
+}
+.option_create_text {
+    text-align: -webkit-right;
+    text-decoration: underline;
+    color: blue !important;
+  }
+  #billing_exp_div>thead {
+    background-color: #ebebeb94;
+    color: #8b8988 !important;
+    font-size: 12px;
+    font-weight: 500;
+}
+#billing_exp_div>thead>tr>th {
+  font-weight: 500 !important;
+}
+.select2-container-multi .select2-choices {
+  width:300px;
+}
+.datepicker-fields{
+  font-size: 11px !important;
+  height: 18px;
+}
+.datepicker-fields::placeholder {
+  color: #999; /* Change this to your desired color */
+  font-size: 10px; /* Adjust font size */
+  margin-right: -12px !important;
+}
+.input-group .datepicker-field{
+  width:100% !important;
+  font-size: 14px;
+}
+.btn-info {
+    background-color: #fff8f8;
+    font-size: 10px;
+    /* color: #e07436; */
+    /* border-color: #e07436; */
+    color: black;
+    padding: 3px;
+    font-weight: 400;
+    transition: all 0.3s;
+    border: none;
+    background-color: transparent;
+}
+.resource-active {
+   background-color: transparent;
+   /* margin-top: 0px; */
+}
+.form-inline{
+  margin: 0 !important;
+  background-color: #1F3864;
+  padding: 4px 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  border-top: 1px solid grey;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    padding: 5px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    border-top: 1px solid #ddd;
+}
+.select_persona{
+  padding:0px 0px;
+  height: 20px;
+  background-color: transparent !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  color:#313265 !important;
+}
+.select2-container-multi .select2-choices .select2-search-choice {
+    padding: 3px 5px 3px 17px;
+    /* margin: 3px 0 3px 5px; */
+    position: relative;
+    line-height: 13px;
+    color: #333;
+    cursor: default;
+    font-size: 10px !important;
+    border: none !important;
+    background-color: #2985C11A !important;
+    background-image: none !important;
+    font-family: poppins !important;
+    font-weight: 400 !important;
+    /* border-radius: 3px; */
+    /* -webkit-box-shadow: 0 0 2px #fff inset, 0 1px 0 rgba(0, 0, 0, 0.05); */
+    /* box-shadow: 0 0 2px #fff inset, 0 1px 0 rgba(0, 0, 0, 0.05); */
+    /* background-clip: padding-box; */
+   
+}
+.select2-container-multi .select2-choices .select2-search-field input{
+    height: 1% !important;
+    margin: 0;
+    padding: 0 5px 0 0;
+    position: relative;
+    border: none !important;
+    cursor: text;
+    overflow: hidden;
+  
+}
+.select2-container-multi .select2-choices{
+ border: none !important;
+ box-shadow: none !important;
+}
+.select2-default {
+    color: #818199 !important;
+    font-size: 12px !important;
+}
+.select2-container-multi .select2-choices {
+    height: auto !important;
+    height: 1%;
+    margin: 0;
+    padding: 0 5px 0 0;
+    position: relative;
+    cursor: text;
+    overflow: hidden;
+    font-family: poppins !important;
+    /* background-color: #fff; */
+    /* background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(1%, #eee), color-stop(15%, #fff)); */
+    /* background-image: -webkit-linear-gradient(top, #eee 1%, #fff 15%); */
+    /* background-image: -moz-linear-gradient(top, #eee 1%, #fff 15%); */
+    /* background-image: linear-gradient(to bottom, #eee 1%, #fff 15%); */
+    background-image: none !important;
+}
+.ms-options-wrap.ms-has-selections > button {
+    color: #818199; */
+    font-size: 11px !important;
+    font-weight: 400;
+    /* min-width: 300px; */
+    /* max-width: 450px; */
+    border: 1px solid grey !important;
+    font-family: poppins !important;
+    border-radius: 5px;
+
+}
+.dateDatas {
+    text-align: center;
+    margin-left: 0px;
+}
+/* .col_width_loc .ms-options-wrap {
+    max-width: 140px !important;
+} */
+.ms-options-wrap > .ms-options .ms-selectall {
+    display: inline-block;
+    font-size: 12px !important;
+    text-transform: capitalize;
+    font-weight: 500 !important;
+}
+.ms-options-wrap > .ms-options > .ms-search input {
+    width: 100%;
+    padding: 4px 5px;
+    border: none;
+    border-bottom: 1px groove;
+    outline: none;
+    font-weight: 450 !important;
+}
+.ms-options-wrap > button {
+    position: relative;
+    width: 100%;
+    text-align: left;
+    /* border: none !important; */
+    border: 1px solid grey !important;
+    border-radius : 5px;
+    background-color: #fff;
+    padding: 5px 20px 5px 5px;
+    margin-top: 1px;
+    font-size: 11px;
+    color: #818199;
+    outline-offset: -2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: poppins !important;
+    font-weight: 400 !important;
+}
+.ms-options-wrap.ms-active > .ms-options {
+    visibility: visible;
+    font-size: 11px !important;
+    font-weight: 400 !important;
+    font-family: poppins !important;
+    color:#555555 !important;
+}
+.ms-options-wrap > .ms-options > ul label {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    padding: 6px 6px 6px 20px;
+    margin: 1px 0;
+    border-bottom: 1px solid #D9D9D9;
+    border-top: none !important;
+    font-size: 11px !important;
+    font-weight: 400 !important;
+    color:#555555 !important;
+    font-family: poppins !important;
+}
+.skills_td{
+  width:38% !important;
+}
+.fa-solid.fa-circle-dot {
+    color: #2985C1; /* Change this to your desired color */
+}
+.audit-list{
+    margin-top: 0;
+    margin-bottom: 10px;
+    margin-left: -35px !important;
+}
+.audit-list li {
+    margin-bottom: 10px; /* Space between list items */
+    border-bottom: 1px solid #ddd; /* Light grey line */
+    list-style: none; /* Removes default list styling */
+    display: flex; /* Ensures alignment with icon */
+    align-items: center; /* Vertically align the icon and text */
+}
+
+.audit-item {
+    margin-left: 5px; /* Space between the icon and text */
+    line-height: 2.5; /* Proper line spacing */
+    font-size: 12px !important;    
+}
+
+.audit-list li:last-child {
+    border-bottom: none; /* Remove line after the last item */
+}
+
+
+.audit-item strong {
+    font-weight: 400 !important; /* Bold text */
+    font-size: 13px;
+    color:#313265;
+    font-family: poppins;
+    margin-top: 10px;
+}
+
+.audit-item .audit-details {
+    color: #818199; /* Lighter color for details */
+    font-size: 12px; /* Smaller font size for details */
+    font-weight: 400;
+}
+input:disabled,
+select:disabled,
+textarea:disabled {
+  background-color: transparent !important; /* Set background to white */
+  color: coral; /* Set text color to red */
+  cursor: not-allowed; /* Indicates that the field is non-editable */
+  /* text-align: center !important; */
+  font-weight: 500 !important;
+  font-size: 12px !important;
+}
+.span_font_weight_new{
+  background-color: transparent !important; /* Set background to white */
+  color: coral; /* Set text color to red */
+  cursor: not-allowed; /* Indicates that the field is non-editable */
+  /* text-align: center !important; */
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  font-family: poppins !important;
+}
+.text-account{
+  font-family: poppins !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  color:#fff !important;
+}
+.with-border {
+  position: relative;
+  padding-right: 10px;
+}
+
+.with-border::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  height: 16px;
+  width: 1px;
+  background-color: rgba(255, 255, 255, 0.35);
+}
+.skillDataOpt {
+  background-color: transparent !important;
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Display ellipsis (...) for overflowed text */
+  display: inline-block; /* Ensure the ellipsis works correctly */
+}
+
+.resource_date{
+  color: #878787;
+  font-size: 12px;
+}
+.SerialNumber {
+    /* width: 80px; */
+    overflow: hidden;
+    font-size: 10px !important;
+    font-weight: 500 !important;
+    color: #313265 !important;
+}
+#notesTabDiv{
+  color:#555555 !important;
+  font-size: 11px !important;
+  font-family: poppins;
+  font-weight: 400;
+
+}
+.note-footer{
+  color: #818199 !important;
+    font-size: 12px;
+    font-weight: 400;
+    display: inline;
+}
+.new_note{
+  margin-top: -7px;
+}
+#text-div{
+  color:#313265 !important;
+  font-family: poppins !important;
+  font-size: 14px;
+  text-align: center;
+  font-weight: 500;
+}
+/* Styling for ordered lists (numbered) */
+.new_note ol>li {
+    margin: 8px 0;
+    padding-left: 0px;  /* Adjust spacing as needed */
+    list-style-type: decimal !important;  /* Numbered list */
+    font-family: poppins;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* Styling for unordered lists (circle) */
+.new_note ul>li {
+    margin: 8px 0;
+    padding-left: 0px;  /* Adjust spacing as needed */
+    list-style-type: circle !important;  /* Circular bullets */
+    font-family: poppins;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* Styling for list items */
+.new_note li {
+    margin: 4px 0;  /* Spacing between list items */
+    padding-left: 0px;  /* Adjust padding */
+    
+}
+@media (min-width: 768px) {
+    .col-sm-1 {
+        width: 11.333333%;
+    }
+}
+.resource-scroll {
+  /* max-height: 35vh !important; */
+  height: calc(100vh - 375px);
+  overflow-y: auto !important; /* Enable vertical scrolling */
+  padding: 10px; /* Optional padding for readability */
+}
+.no-break-wrap {
+  white-space: normal;
+  word-break: keep-all;
+}
+.stage_block{
+  margin-top: 5px !important;
+}
+.spnTooltip ul, li {
+    list-style-type: inherit;
+}
+.showAllLogs {
+  border: 1px solid #e3e2e2;
+  position: absolute;
+  right: 40px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  gap: 5px;
+  margin-top: 14px;
+}
+input[type="checkbox"] {
+    margin: 4px 0;
+    line-height: normal;
+    cursor: pointer;
+}
+.audit-item-div {
+  border-bottom: 2px solid #D9D9D9;
+  padding: 0px 15px;
+}
+.audit-item-div:last-child {
+  border-bottom: none;
+}
+#monthlyTableContainer {
+  overflow-x: auto; /* Allow horizontal scrolling */
+  max-width: 100%;
+}
+
+.monthly-breakup-table {
+  width: 100%;
+  border-collapse: none;
+  border-bottom: 1px soild black !important;
+}
+
+.monthly-breakup-table th,
+.monthly-breakup-table td {
+  padding: 0px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.monthly-breakup-table th {
+  background-color: #f4f4f4;
+}
+
+.month-row-wrapper {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping to next line */
+  max-height: 28vh;
+  overflow-y: auto;
+}
+
+.month-cell-wrapper {
+  width: 10%; /* Each cell should take up 10% width */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px; /* Add some space between rows */
+}
+
+.month-cell-wrapper input {
+  width: 100%; /* Ensure input takes the full width of its container */
+  box-sizing: border-box;
+  border: none !important;
+  color:#313265 !important;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+}
+
+.month-cell-wrapper div {
+  width: 100%; /* Ensure the month name also takes full width */
+  text-align: center;
+  font-weight: 500;
+  color: #8b8988;
+  font-size: 12px;
+  font-family: poppins;
+  background-color: #EEEEEE;
+  padding: 5px;
+}
+.monthly-breakup-content{
+  max-height: 28vh;
+  overflow-y: auto;
+  
+}
+.month-breakup-tab {
+  background-color: transparent !important;
+}
+.formatted-number {
+  -moz-appearance: textfield; /* Remove number spinner for Firefox */
+  -webkit-appearance: none; /* Remove for Safari */
+  text-align: center; /* Center text */
+}
+
+/* Remove increment/decrement arrows */
+.formatted-number::-webkit-outer-spin-button,
+.formatted-number::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Style only the placeholder */
+.formatted-number::placeholder {
+  text-align: center; /* Center placeholder */
+  font-style: italic; /* Italic font for placeholder */
+  color: gray; /* Optional: Adjust color */
+
+
+  font-size: 12px;
+  font-weight: 400;
+}
+#sow_renew {
+    display: none; /* Hides the button */
+}
+.no-warp {
+  white-space: nowrap;
+}
+#resource_exist_table thead>tr>th,
+  #available_res_table thead>tr>th,
+  #recommended_table thead>tr>th {
+    background-color: #f2f2f2;
+    text-align: left;
+    color: #8b8988;
+    border-radius: 0px;
+    border: 1px solid #ddd;
+    font-size: 10px !important;
+    font-weight: 500;
+  }
+
+  #resource_exist_body>tr>td,
+  #available_res_body>tr>td,
+  #recommend_team_data>tr>td {
+    border: 1px solid #ddd;
+    font-size: 10px;
+    font-weight: 500;
+  }
+  
+  .border-color-thead {
+    background-color: #ffffff !important;
+    border: 4px solid #f2f2f2 !important;
+    text-align: center !important;
+  }
+  .show-bu-head-data {
+    cursor: pointer;
+    color: #e05e00;
+    font-size: 11px;
+    background-color: #f2f2f2;
+    padding: 0px;
+  }
+
+  .employee_form .form-control {
+    padding: 0px;
+    border: solid 1px #e9e9e9;
+    height: 20px;
+    border-radius: 5px;
+  }
+
+  .placeicon {
+    font-family: "Celias", "Poppins", sans-serif !important;
+    border-radius: 5px !important;
+    font-size: 12px !important;
+  }
+
+  .btn.active.focus,
+  .btn.active:focus,
+  .btn.focus,
+  .btn:active.focus,
+  .btn:active:focus,
+  .btn:focus {
+    outline: none;
+    outline-offset: 0px;
+  }
+  .sow_type_label{
+    float: right;
+    margin-top:10px;
+    margin-right: 25px;
+  }
+  .modal-dialog,
+  .modal-content {
+      /* 100% of window height */
+      /* height: 95%; */
+      max-height: 570px;
+      width: 97%;
+      margin-left: 1%;
+      margin-top: 2%;
+  }
+
+  .modal-body {
+      /* 100% = dialog height, 120px = header + footer */
+      overflow-y: auto;
+      max-height: 450px;
+      min-height: 180px;
+      font-size: 10px;
+      font-weight: 400;
+  }
+  .fixTableHeadRecommend {
+      overflow-y: auto;
+      padding: 5px 10px;
+      /* height: 110px; */
+    }
+  .fixTableHeadRecommend thead th {
+    position: sticky;
+    top: -5px;
+    z-index: 99;
+  }
+  .name_display {
+    display: flex;
+  }
+  .recommended_yes{
+    color:green !important;
+  }
+  .recommended_no{
+    color:red !important;
+  }
+ 
+.more_skill{
+  display: inline-block;
+    width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width:29px !important;
+}
+.expandable-content {
+  /* position: relative; */
+  max-height: 19px; /* Set a maximum height for the content */
+  transition: max-height 0.3s ease; 
+  overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.more {
+  display: inline-block;
+  width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.more:hover {
+  white-space: initial;
+  cursor: pointer;
+  width: 100%;
+}
+
+.expandable-content:hover {
+  max-height: 5em;
+  
+}
+
+.expandable-content button {
+  display: block;
+  background: #e7ffea;
+  padding: 0px 3px;
+  border-radius: 30px;
+  font-size: 10px;
+  color: #1c8a13;
+  border: solid 1px #c2f5c8;
+  margin: 2px 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-height: 1.5em; /* Set the same max-height as parent */
+}
+
+.view_msg {
+  text-align: center;
+  background-color: #fef5e5;
+}
+
+.resource-allocate-msg {
+  background-color: #ebebeb;
+  padding: 5px;
+  border-radius: 15px;
+}
+
+.custom-modal-width {
+  width: 50%;
+  margin-left: 30%;
+}
+.not_allocated_res {
+  color: #8b8988;
+}
+
+.account_div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.main_div_block {
+  display: flex;
+  height: 120px;
+  justify-content: space-around;
+}
+
+.acc_sow_details {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px 0px;
+}
+
+.status_type_details {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px 0px;
+}
+
+.sub_main_text {
+  font-size: 10px;
+}
+
+.sub_main_data {
+  position: relative; /* Required for tooltip positioning */
+  display: inline-block;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.sowTooltiptext {
+    visibility: hidden; /* Initially hide the tooltip */
+    width: 120px;
+    background-color: #fff;
+    color: #e05e00;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    top: 100%; /* Position the tooltip below the text */
+    left: 50%;
+    transform: translateX(-50%); /* Center the tooltip horizontally */
+    opacity: 0;
+    transition: opacity 0.3s;
+    white-space: nowrap; /* Prevent text wrapping */
+    font-size: 10px;
+}
+
+.sub_main_data:hover .sowTooltiptext {
+    visibility: visible; /* Show tooltip on hover */
+    opacity: 1;
+}
+#update_resource_data {
+  position: sticky;
+  bottom: 5px;
+}
+.skill_container {
+  position: relative;
+  display: inline-block;
+}
+
+.skill_count {
+  padding: 4px 8px;
+  border-radius: 5px;
+  background: #cee2f0;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.skill_block {
+  display: inline-block;
+  padding: 4px 8px;
+  margin: 2px;
+  border-radius: 4px;
+  font-size: 0.8em;
+  background-color: #cee2f0;
+  color: #333;
+  white-space: inherit;
+}
+
+.skills_tooltip {
+  display: none;
+  position: absolute;
+  top: 100%;  /* Changed from bottom: 100% */
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  min-width: 120px;
+  max-width: 300px;
+  z-index: 100;
+  width: max-content;
+  margin-top: 5px; /* Added some spacing from the button */
+}
+.no_sow {
+  /* text-align: center; */
+}
+
+.tooltip-container {
+  position: relative;
+}
+
+.custom-tooltip-alloc {
+  visibility: hidden;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  padding: 3px;
+  position: absolute;
+  z-index: 1;
+  bottom: -60%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 1;
+  transition: opacity 0.3s;
+  height: 18px;
+  white-space: nowrap;
+}
+
+.tooltip-container:hover .custom-tooltip-alloc {
+  visibility: visible;
+  opacity: 1;
+}
+
+.sow_link {
+  cursor: pointer;
+}
+
+.sow_link:hover {
+  box-shadow: 0px 0px 10px #c4c0c0;
+}
+
+.skills_wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  max-width: 300px;
+}
+
+.skill_count:hover + .skills_tooltip,
+.skills_tooltip:hover {
+  display: block;
+}
+.currentNewStartDate, .currentNewEndDate {
+  font-size: 10px !important;
+  text-align: justify;
+  padding: 0px;
+}
+.resourceDate {
+  width: 65% !important;
+  background-color: white !important;
+  border: 1px solid #e6e6e6;
+}
+.fixTableHead {
+    /* overflow-y: auto; */
+    /* height: 75vh; */
+    height: calc(100vh - 390px);
+}
+.employee_detail_inside {
+    display: inline-block;
+    width: 100%;
+    margin-top: 0px;
+    padding: 0px;
+    box-shadow: 0px 5px 12px -5px #fff;
+    min-height: auto;
+}
+.border-color-thead {
+  position: sticky;
+  top: -3px !important;
+  z-index: 999;
+}
+#allocation-res-header {
+  position: sticky;
+  top: 23px;
+  z-index: 999;
+}
+#recommend_team_data>tr>td {
+  /* border: 0px solid #ddd; */
+  color: #313265;
+}
+.persona_width,
+#recommend_team_data > tr > td.persona_width {
+  min-width: 80px;
+  width: 80px;
+}
+#resource-th {
+  position: sticky;
+  top: -15px;
+  background-color: #f2f2f2;
+  z-index: 99;
+}
+.dataTables_length, .recommended_table_filter {
+  font-size: 12px;
+}
+#billing_exp_div>thead>tr>th {
+  border: 0px solid #ddd;
+}
+.custom-tooltip {
+  background: #333;
+  color: #fff;
+  padding: 3px 5px;
+  border-radius: 4px;
+  font-size: 10px;
+  z-index: 100;
+  top: 80%;
+  left: 10px;
+  font-weight: 500;
+}
+.persona_skills_td {
+  position: relative; /* Needed so tooltip uses absolute position inside td */
+}
+.allocation-expired {
+  background-color: #fd7e141a;
+}
+.allocation-indication {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 5px;
+  margin-top: -18px;
+  font-size: 10px;
+  color: #313265;
+}
+.allocation-legend-color {
+  width: 15px;
+  height: 15px;
+  background-color: #fd7e141a;
+  border-radius: 3px;
+  border: 1px solid #f9d1d1;
+}
+.text_warining {
+  color: #ff0000 !important;
+}
+.partial_allocation_warning {
+  color: #ff0000 !important;
+}
+#toast-container > .toast-warning {
+  opacity: 1 !important;
+  filter: alpha(opacity=100) !important;
+}
+.current_emp_billing_status {
+  display: none;
+}
+.current_demand_persona {
+  white-space: nowrap;
+}
+b, strong {
+  font-weight: 600 !important;
+}
+
+.sub-grp {
+    display: flex;
+    margin:7px;
+  }
+ .main-grp {
+    width: 85%;
+  }
+
+  .sub_nps_stakeholder {
+    padding: 0px 7px;
+    margin: 10px 5px 5px;
+    width: 150px !important;
+    min-width: 150px !important;
+    flex-shrink: 0 !important;
+  }
+  .sub_nps_stakeholder .ms-options-wrap {
+    width: 100% !important;
+  }
+
+  /* NPS Stakeholder Details Display */
+  .nps-stakeholder-detail-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #2985C11A;
+    border-radius: 4px;
+    padding: 1px 5px;
+    margin-bottom: 5px;
+    font-family: poppins;
+    font-size: 11px;
+    color: #313265;
+    font-weight: 400;
+  }
+  .nps-stakeholder-detail-item .stakeholder-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .nps-stakeholder-detail-item .stakeholder-name {
+    font-weight: 500;
+    font-size: 10px;
+    color: #313265;
+  }
+  .nps-stakeholder-detail-item .stakeholder-meta {
+    font-size: 10px;
+    color: #818199;
+    font-weight: 400;
+  }
+  .nps-stakeholder-detail-item .stakeholder-key-directs {
+    font-size: 10px;
+    color: #e05e00;
+    font-weight: 500;
+    margin-top: 2px;
+  }
+  .nps-stakeholder-detail-item .remove-stakeholder-btn {
+    background: none;
+    border: none;
+    color: #818199;
+    font-size: 8px;
+    cursor: pointer;
+    padding: 0 2px;
+    line-height: 1;
+  }
+  .nps-stakeholder-detail-item .remove-stakeholder-btn:hover {
+    color: #ff4444;
+  }
+  #nps_stakeholder_display {
+    padding: 6px 5px;
+    border: none !important;
+    color: #313265 !important;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    font-family: poppins !important;
+    float: left !important;
+    text-align: start !important;
+  }
+  #nps_stakeholder_display + .ms-options-wrap > .ms-options {
+    max-height: 175px !important;
+    min-height: 175px !important;
+    overflow-y: auto !important;
+  }
+
+  #nps_stakeholder_details_container{
+    max-height: 120px !important;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+  .nps_label {
+    padding: 10px 0px 0px 0px;
+  }
+  .span_font_weight_new_nps {
+    background-color: transparent !important;
+    color: coral;
+    cursor: not-allowed;
+    /* text-align: center !important; */
+    font-weight: 500 !important;
+    font-size: 8px !important;
+    font-family: poppins !important;
+  }
+  /* .recom-filter-container {
+    display: flex !important;
+    align-items: center; 
+    gap: 15px; 
+    padding: 10px 15px; 
+    background: #fff; 
+    border-bottom: 1px solid #eee; 
+    margin-bottom: 10px; 
+    flex-wrap: nowrap;
+  } */
+  .recom-filter-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+  }
+  .ms-options-wrap.ms-active > .ms-options {
+    min-height: 200px !important;
+    max-height: 200px !important;
+  }
+  .ms-options-wrap > button {
+    width: 150px !important;
+  }
+  .recom-data-filter, .recon-search-filter {
+    display: flex !important;
+    align-items: center;
+  }
+  .legend-container {
+    display: flex;
+    gap: 2px;
+    font-size: 8px;
+    color: #444;
+    font-weight: 500;
+    flex-shrink: 0;
+    flex-direction: column;
+  }
+  .partial-alloc-tooltip {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    padding: 15px;
+    max-width: 600px;
+    border: 1px solid #e0e4ff;
+    pointer-events: none;
+  }
+  .rsx-badge {
+    color: #2885c1;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-left: 4px;
+  }
+  .rsx-badge:hover {
+    color: #1a5c8a;
+  }
+  .partial-alloc-tooltip-header {
+    font-weight: 700;
+    font-size: 16px;
+    color: #313265;
+    margin-bottom: 12px;
+    border-bottom: 2px solid #f0f2ff;
+    padding-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .partial-alloc-tooltip-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  .partial-alloc-tooltip-table th {
+    background: #f8faff;
+    color: #5c628b;
+    font-weight: 600;
+    font-size: 11px;
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid #eef0ff;
+  }
+  .partial-alloc-tooltip-table td {
+    padding: 8px 10px;
+    font-size: 12px;
+    color: #313265;
+    border-bottom: 1px solid #f5f7ff;
+  }
+  .partial-alloc-tooltip-table tr:last-child td {
+    border-bottom: none;
+  }
+  .billing-status.billed {
+    color: #10b981;
+    font-weight: 600;
+  }
+  .billing-status.investment {
+    color: #f59e0b;
+    font-weight: 600;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .perosna_width {
+    width: 75px !important;
+  }
+  .notes_table_row {
+    margin: 0px;
+    box-shadow: 0px 5px 12px -5px #989696;
+  }
+  </style>
+
+  <body>
+    <div id="header"></div>
+    <div class="loader">
+      <div class="loader-wheel"></div>
+      <div class="loader-text"></div>
+    </div>
+    <div class="show_page" style="display: none">
+    <div class="wrapper_outer">
+      <div class="container-fluid">
+        <div class="row form-inline">
+          <div class="col-sm-3 with-border">
+            <!-- <label
+              for="account_options"
+              style="margin-right: 5px;"
+              class="label-options"
+              >Select Account <span class="warningMessage">*</span></label
+            > -->
+            <label
+              for="account_options"
+              style="margin-right: 5px;"
+              class="label-options"
+              >Account Name: </label
+            >
+            <span id="acc_name_tit" class="text-account"></span>
+          </div>
+          <div class="col-sm-5">
+            <!-- <label
+              for="sow_new_name"
+              style="margin-right: 5px;"
+              class="label-options"
+              >SOW Name <span class="warningMessage">*</span></label
+            > -->
+            <label
+            for="account_options"
+            style="margin-right: 5px;"
+            class="label-options"
+            >SOW Name:</label
+          >
+
+            <span class="text-account" id="sow_name_tit"></span>
+            <span class="sowTooltiptext" id="sowNameID" style="display: none;"></span>
+          </div>
+          <div class="col-sm-2"></div>
+          <div class="col-sm-2 cstm-text-align-end">
+            <button class="btn btn-secondary save-btn sow_btn_cus_style" type="button" onclick="sow_edit_save()" id="sow_edit">
+              <i class="fa-solid fa-pen-to-square"></i> Edit
+            </button>
+            <button class="btn btn-secondary save-btn sow_btn_cus_style" onclick="renew_button('renew');" id="sow_renew">
+              Renew</button>
+            <button class="btn btn-primary cancel-btn sow_btn_cus_style" type="button"  onclick="sow_view_cancel()">
+               Back
+          </button>
+          
+          </div>
+        </div>
+        <div class="container">
+          <!-- Tabs will be created here by JavaScript -->
+          <div class="row">
+            <div id="tab-buttons" class="tab-buttons"></div>
+          </div>
+
+          <!-- Tab content container -->
+          <div class="row notes_table_row">
+            <div id="tab-content-container"></div>
+          </div>
+        </div>
+        <div class="sub-grp">
+          <div class="main-grp">
+            <div class="stage_block">
+              <div class="stage_sub_block_1">
+                <div class="custom-col">
+                  <label class="label-class"
+                    >FUNNEL STAGE <span class="warningMessage funnel_imp">*</span></label
+                  >
+                  <span class="span_font_weight_new"id="funnel_name"></span>
+                </div>
+                <div class="custom-col">
+                  <label class="label-class"
+                    >PROBABILITY <span class="warningMessage prob_imp">*</span></label
+                  >
+                  <span class="span_font_weight_new" id="probab_name"></span>
+                </div>
+                <div class="custom-col">
+                  <label class="label-class"
+                    >SOW TYPE <span class="warningMessage sow_type_imp">*</span></label
+                  >
+                  <span class="span_font_weight_new"  id="sow_type_name"></span>
+                </div>
+                <div class="custom-col">
+                  <label class="label-class"
+                    >BILLING TYPE <span class="warningMessage billing_imp">*</span></label
+                  >
+                  <span class="span_font_weight_new" id="billing_type_name"></span>
+                </div>
+              </div>
+              <div class="stage_sub_block_2">
+                <div class="custom-col-opp">
+                  <label class="label-class"
+                    >OPPORTUNITY OWNER <span class="warningMessage">*</span></label
+                  >
+                  <span class="span_font_weight_new" id="acc_growth_name"></span>
+                </div>
+                <div class="custom-col-other">
+                  <label class="label-class">BUYING CENTRE <span class="warningMessage billing_imp">*</span></label>
+                  <span class="span_font_weight_new"  id="buying_center"></span>
+                </div>
+                 <div class="custom-col-other">
+                   <label class="label-class">STAKEHOLDER <span class="warningMessage billing_imp">*</span></label>
+                   <span class="span_font_weight_new" id="nps_stakholder"></span>
+                 </div>
+              </div>
+            </div>
+            <div class="stage_block">
+              <div class="stage_sub_block_1 sow_amt_bg">
+                <div class="sow_date_block">
+                  <div><span style="visibility: hidden;">d</span></div>
+                  <div>
+                    <div class="partition-start label-class">START</div>
+                  </div>
+                  <div>
+                    <div class="partition-start label-class">END</div>
+                  </div>
+                </div>
+                <div class="sow_date_block">
+                  <div>
+                    <div class="partition-label label-class">LEGAL DATE <span class="warningMessage">*</span></div>
+                  </div>
+                  <div>
+                    <div class="partition">
+                      <input
+                        type="text"
+                        class="form-control placeicon dateDatas edit_disable datepicker-field"
+                        id="legal_start_date"
+                        placeholder="&#xf073; mm-dd-yy"
+                        name="legal_start_date"
+                        autocomplete="off"
+                        style="z-index: 0;"
+                        onchange="updateAllDates()"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      class="form-control placeicon dateDatas edit_disable datepicker-field"
+                      id="legal_end_date"
+                      placeholder="&#xf073; mm-dd-yy"
+                      name="legal_end_date"
+                      autocomplete="off"
+                      style="z-index: 0;"
+                      onchange="updateAllDates()"
+                    />
+                  </div>
+                </div>
+                <div class="sow_date_block">
+                  <div>
+                    <div class="partition-label label-class">BILLING DATE <span class="warningMessage">*</span></div>
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      class="form-control placeicon dateDatas edit_disable updateStartDate datepicker-field"
+                      id="billing_start_date"
+                      placeholder="&#xf073; mm-dd-yy"
+                      name="billing_start_date"
+                      autocomplete="off"
+                      style="z-index: 0;"
+                      onchange="checkEndDate('billing_start_date','billing_end_date','Billing End date should be after Billing Start date')"
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      class="form-control placeicon dateDatas edit_disable updateEndDate datepicker-field"
+                      id="billing_end_date"
+                      placeholder="&#xf073; mm-dd-yy"
+                      name="billing_end_date"
+                      autocomplete="off"
+                      style="z-index: 0;"
+                    />
+                  </div>
+                </div>
+                <div class="sow_date_block">
+                  <div>
+                    <div class="partition-label label-class">ACTUAL DATE <span class="warningMessage">*</span></div>
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      class="form-control placeicon dateDatas edit_disable updateStartDate datepicker-field"
+                      id="actual_start_date"
+                      placeholder="&#xf073; mm-dd-yy"
+                      name="actual_start_date"
+                      autocomplete="off"
+                      style="z-index: 0;"
+                      onchange="updatePersonaDate()"
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      class="form-control placeicon dateDatas edit_disable updateEndDate datepicker-field"
+                      id="actual_end_date"
+                      placeholder="&#xf073; mm-dd-yy"
+                      name="actual_end_date"
+                      autocomplete="off"
+                      style="z-index: 0;"
+                      onchange="updatePersonaDate()"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="stage_sub_block_2">
+                <div class="custom-col">
+                  <div class="sow_amount_block">
+                    <div>
+                      <label class="label-class team-size">TEAM SIZE</label>
+                    </div>
+                    <div>
+                        <input type="text" class="form-control col-sm-11 placeicon sow_amt_style edit_disable" id="new_team" placeholder="0" name="sow_new_name" autocomplete="off" readonly>
+                    </div>
+                  </div>
+                </div>
+                <div class="custom-col">
+                  <div class="sow_amount_block">
+                    <div>
+                      <label class="label-class team-size">SOW AMOUNT</label>
+                    </div>
+                    <div>
+                      <div class="sow_value_align">
+                        <label class="dollar-label">$</label>
+                        <input type="text" class="form-control col-sm-11 placeicon sow_amt_style edit_disable" id="sow_amount" placeholder="0" name="sow_amount" autocomplete="off" readonly>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="custom-col">
+                  <div class="sow_amount_block">
+                    <div>
+                      <label class="label-class team-size">ACTUAL/PROJ. AMOUNT</label>
+                    </div>
+                    <div>
+                        <div class="sow_value_align">
+                          <label class="dollar-label">$</label>
+                          <input type="text" class="form-control col-sm-11 placeicon sow_amt_style edit_disable" id="proj_amount" placeholder="0" name="proj_amount" autocomplete="off" onkeydown="restrictSpecialCharactersById('proj_amount', 'number')">
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="stage_sub_block_2 sow_amt_bg">
+                <div class="sow_amount_block">
+                  <div>
+                    <label class="label-class team-size">TEAM SIZE</label>
+                  </div>
+                  <div>
+                      <input type="text" class="form-control col-sm-11 placeicon sow_amt_style edit_disable" id="new_team" placeholder="0" name="sow_new_name" autocomplete="off" readonly>
+                  </div>
+                </div>
+                <div class="sow_amount_block">
+                  <div>
+                    <label class="label-class team-size">SOW AMOUNT</label>
+                  </div>
+                  <div>
+                    <div class="sow_value_align">
+                      <label class="dollar-label">$</label>
+                      <input type="text" class="form-control col-sm-11 placeicon sow_amt_style edit_disable" id="sow_amount" placeholder="0" name="sow_amount" autocomplete="off" readonly>
+                    </div>
+                  </div>
+                </div>
+                <div class="sow_amount_block">
+                  <div>
+                    <label class="label-class team-size">ACTUAL/PROJ. AMOUNT</label>
+                  </div>
+                  <div>
+                      <div class="sow_value_align">
+                        <label class="dollar-label">$</label>
+                        <input type="text" class="form-control col-sm-11 placeicon sow_amt_style edit_disable" id="proj_amount" placeholder="0" name="proj_amount" autocomplete="off" onkeydown="restrictSpecialCharactersById('proj_amount', 'number')">
+                      </div>
+                  </div>
+              </div> -->
+            </div>
+          </div>
+          <div class="sub_nps_stakeholder custom-col-other" id="nps_stakeholder_section">
+              <div>
+                  <label class="label-class nps_label">NPS STAKEHOLDER </label>
+              </div>
+              <div id="nps_stakeholder_details_container" style="margin-top: 8px;">
+              </div>
+          </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="recommTeam" role="dialog">
+          <div class="modal-dialog modal-lg">
+          
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="recommendedTeamModalTitle">Recommended Team Members</h4>
+              </div>
+              <div class="modal-body recommend_data fixTableHeadRecommend">
+                <div class="table-loading" id="loading_div">
+                  <div class="loader-div">
+                    <!-- <h1>Loading...</h1> -->
+                    <div class="loader-wheel-div"></div>
+                    <div class="loader-text-div"></div>
+                  </div>
+                </div>
+                <div id="recommend_error_message" style="display: none; padding: 12px 16px; margin: 10px 0; border: 1px solid #f1c0c0; background: #fff4f4; color: #b94a48; border-radius: 6px; font-size: 12px;"></div>
+                <div class="recom-filter-container hidden">
+                  <div class="recon-search-filter">
+                    <!-- DataTables length menu will be moved here via JS -->
+                    <div id="recom_length_placeholder" style="margin-right: 10px;"></div>
+
+                    <div style="width: 1px; height: 24px; background: #ddd; margin: 0 5px;"></div>
+
+                    <div class="search-filter-wrapper" style="position: relative; flex: 1; max-width: 300px; margin: 0 5px;">
+                        <i class="fa fa-search" style="position: absolute; left: 12px; top: 9px; color: #999; font-size: 13px;"></i>
+                        <input type="text" id="recom_search" class="form-control" placeholder="Search" style="width: 100%; height: 34px; padding-left: 35px; font-size: 12px; border-radius: 20px; border: 1px solid #ccc; background: #fcfcfc;">
+                    </div>
+                  </div>
+                  <div class="recom-data-filter">
+                    <div style="display: flex; align-items: center; gap: 15px; flex-shrink: 0;">
+                        <label style="display: flex; align-items: center; gap: 6px; margin-bottom: 0; cursor: pointer; font-size: 12px; color: #333; font-weight: 400;">
+                            <input type="checkbox" id="filter_bench" class="recom-filter-checkbox" style="margin: 0; width: 14px; height: 14px;"> Bench
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 6px; margin-bottom: 0; cursor: pointer; font-size: 12px; color: #333; font-weight: 400;">
+                            <input type="checkbox" id="filter_investment" class="recom-filter-checkbox" style="margin: 0; width: 14px; height: 14px;"> Investment
+                        </label>
+                    </div>
+  
+                    <div style="width: 1px; height: 24px; background: #ddd; margin: 0 5px;"></div>
+  
+                    <div class="department-filter-wrapper" style="flex-shrink: 0;">
+                        <select id="filter_department" class="form-control" multiple="multiple" style="width: 140px; height: 32px; padding: 0 10px; font-size: 12px; border-radius: 8px; border: 1px solid #ccc;">
+                        </select>
+                    </div>
+
+                    <div style="width: 1px; height: 24px; background: #ddd; margin: 0 5px;"></div>
+
+                    <div class="persona-filter-wrapper" style="flex-shrink: 0;">
+                        <select id="filter_persona" class="form-control" multiple="multiple" style="width: 150px; height: 32px; padding: 0 10px; font-size: 12px; border-radius: 8px; border: 1px solid #ccc;">
+                        </select>
+                    </div>
+
+                    <div style="width: 1px; height: 24px; background: #ddd; margin: 0 5px;"></div>
+  
+                    <div class="legend-container">
+                        <div style="display: flex; align-items: center; gap: 4px;"><span style="width: 10px; height: 10px; background: #a7dab6; border-radius: 2px;"></span> Billed</div>
+                        <div style="display: flex; align-items: center; gap: 4px;"><span style="width: 10px; height: 10px; background: #ffff7f; border-radius: 2px;"></span> Inv (Signed/Renewal)</div>
+                        <div style="display: flex; align-items: center; gap: 4px;"><span style="width: 10px; height: 10px; background: #93C6E7; border-radius: 2px;"></span> Inv (Q/P/Pre-Q)</div>
+                    </div>
+                  </div>
+                </div>
+                <table  class="table table-bordered border-primary" id="recommended_table" style="width: 100% !important; display: none;">
+                  <thead>
+                    <tr>
+                      <th width="2%"></th>
+                      <th width="5%">ID</th>
+                      <th width="10%">Name</th>
+                      <th width="10%">Designation</th>
+                      <th width="8%">Current Status</th>
+                      <th width="8%">Available From</th>
+                      <th width="8%">Available To</th>
+                      <th width="5%">Availability (Week Days)</th>
+                      <th class="persona_width">Persona</th>
+                      <th width="10%">Skills</th>
+                      <th width="7%">Past SoWs</th>
+                      <th width="10%">Current SoWs</th>
+                      <th width="12%">Multi Billed SoWs</th>
+                      <th style="display:none;">Persona Priority</th>
+                      <th style="display:none;">Recommendation Days</th>
+                      <th style="display:none;">Persona Level</th>
+                      <th style="display:none;">Persona Sort Name</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recommend_team_data">
+
+                  </tbody>
+                </table>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-id1="" data-start="" data-end="" data-id="" data-id2="" data-id3="" id="recommend_btn" onclick="getEmpId(this, 'recommend')">Select</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="duplicateWarningModal" tabindex="-1" role="dialog" aria-labelledby="duplicateWarningModalLabel">
+          <div class="modal-dialog custom-modal-width" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="duplicateWarningModalLabel">Overlap Warning</h4>
+              </div>
+              <div class="modal-body" id="duplicateWarningModalBody">
+                <!-- Warnings will be injected here -->
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      <div class="custom-overlay"></div>
+<div class="custom-alert">
+    <button class="close-btn" onclick="closeCustomAlert()">×</button>
+    <div class="alert-header">Save Changes?</div>
+    <div class="alert-body">
+        Are you sure you want to save the 10 changes? Doing so will impact and reflect in other places within RRE.
+    </div>
+    <div class="alert-footer">
+      <button class="btn btn-secondary no-button" onclick="closeCustomAlert()">No</button>
+        <button class="btn btn-primary yes-button" onclick="onYesClick()">Yes</button>
+       
+    </div>
+</div>
+
+      <div class="modal fade" id="addCreate" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">
+                &times;
+              </button>
+              <h4 class="modal-title">Add Account</h4>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="form-group col-sm-6">
+                  <label for="aad_account_name">Account Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="aad_account_name"
+                    placeholder="Account Name"
+                    name="aad_account_name"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="form-group col-sm-6">
+                  <label for="add_location">Location </label>
+                  <select class="form-control" id="add_location">
+                    <option value="India">India</option>
+                    <option value="US">US</option>
+                  </select>
+                </div>
+                <div class="form-group col-sm-6">
+                  <label for="add_contact_account"
+                    >Point Of Contact (Account)
+                  </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="add_contact_account"
+                    placeholder="Point of Contact Account"
+                    name="add_contact_account"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="form-group col-sm-6">
+                  <label for="add_contact_factspan"
+                    >Point Of Contact (Factspan)
+                  </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="add_contact_factspan"
+                    placeholder="Factspan Account Head"
+                    name="add_contact_factspan"
+                    autocomplete="off"
+                    style="z-index: 1;"
+                  />
+                </div>
+                <div class="form-group col-sm-3">
+                  <label for="account_class">Class</label>
+                  <select class="form-control" id="account_class"> </select>
+                </div>
+                <div class="form-group col-sm-3">
+                  <label for="account_size">Size </label>
+                  <select class="form-control" id="account_size"> </select>
+                </div>
+                <div class="form-group col-sm-3">
+                  <label for="ms_signed_date">MSA Signed</label>
+                  <input
+                    type="text"
+                    class="form-control placeicon dateData"
+                    id="ms_signed_date"
+                    placeholder="&#xf073; MM-DD-YY"
+                    name="ms_signed_date"
+                    autocomplete="off"
+                    style="z-index: 1;"
+                  />
+                </div>
+                <div class="form-group col-sm-3">
+                  <label for="payment_term">Payment Term</label>
+                  <select class="form-control" id="payment_term"> </select>
+                </div>
+                <div class="form-group col-sm-12">
+                  <label for="special_instr">Special Instructions </label>
+                  <textarea
+                    class="form-control"
+                    id="special_instr"
+                    rows="3"
+                    placeholder="Add notes"
+                    name="special_instr"
+                    autocomplete="off"
+                    maxlength="1000"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-info"
+                onclick="saveAccountData()"
+              >
+                Save
+              </button>
+              <button type="button" class="btn btn-info" data-dismiss="modal">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        assignMetaValue();
+        $("meta[name='google-signin-client_id']").attr("content", metaValue);
+
+        getLocalSessionData();
+        const queryString = window.location.search.substring(1);
+        console.log(queryString);
+        localStorage.removeItem('sow-url-id');
+        const pathname = window.location.pathname;
+        localStorage.setItem('sow-url',queryString)
+        if (sessionName == null) {
+          window.location.href = "index.html";
+          return false;
+        } else {
+          $("body").css("display", "block");
+
+          let accessStatus = checkDashboardPageAccessData()
+          console.log("accessStatus",accessStatus);
+
+          if (accessStatus) {
+          let accessLevel = checkEachPageAccess("Revenue")
+          console.log("accessLevel",accessLevel);
+          
+          if (accessLevel.length > 0) {
+            let environment = accessLevel[0]
+            if (environment == apiValue.environment) {
+              let access_page_list = $.parseJSON(localStorage.getItem("access-page-list"))
+              $.each(access_page_list, function (h, page) {
+                switch (page) {
+                  case "accountDetails.html":
+                    $("#account_details").css("visibility", "visible")
+                  case "All":
+                    $("#account_details").css("visibility", "visible")
+                }
+              })
+              $(".extra_br").show();
+              assignSowData();
+              $(".invoiceClass").hide();
+              $('.input-group-addon').hide();
+              getBusinessRule();
+              let getUserEmail = localStorage.getItem("email");
+              let getUserId = localStorage.getItem("EmpUserID");
+              let getUserRole = localStorage.getItem("user-role");
+              // const isUserInDelivery = deliveryMembers.some(member => member.EMPLOYEE_ID === getUserId);
+              const isUserInDelivery = Array.isArray(deliveryMembers) && deliveryMembers.some(
+                member => member.EMPLOYEE_ID === getUserId
+              );
+              const isUserInGrowth = Array.isArray(growthMembers) && growthMembers.some(
+                member => member.EMPLOYEE_ID === getUserId
+              );
+              let pageLevelAccess = accessLevel[1]
+              let eachLevel = pageLevelAccess.split(',')
+              $.each(eachLevel, function (l, level) {
+                switch (level) {
+                  case "view":
+                    $("#sow_edit").hide()
+                    $("#sow_delete").hide()
+                    $("#invoiceAdd").hide()
+                    // $('#billing_exp_div tr').find('th:last, td:last').hide();
+                    $('.comments_box').hide();
+                    break;
+                  case "edit":
+                    $("#sow_delete").hide()
+                    let sowSelectedSource = localStorage.getItem("sowSelectedSource");
+                    // if (sowSelectedSource == "renew"){
+                    //   $("#sow_edit").hide()
+                    // }else{
+                    //   $("#sow_edit").show()
+                    // }
+                    $("#invoiceAdd").show()
+                    // $('#billing_exp_div tr').find('th:last, td:last').show();
+                    $('.comments_box').show();
+                    break;
+                }
+              })
+              let getEmpDepartment = localStorage.getItem("Department");
+              if (getEmpDepartment.toLowerCase() == "finance") {
+                $("#invoiceAdd").show()
+              } else {
+                $("#invoiceAdd").hide()
+              }
+              
+              console.log("isUserInDelivery sow - ",isUserInDelivery);
+              console.log("isUserInGrowth sow - ",isUserInGrowth);
+              if (isUserInGrowth || getUserRole == "admin" || getUserEmail == 'akhilesh@factspan.com') {
+                $('#sow_edit').show();
+                if (sowSelectedSource == "renew"){
+                  $("#sow_edit").hide()
+                  $("#sow_renew").show()
+                }else{
+                  $("#sow_edit").show()
+                  $("#sow_renew").hide()
+                }
+              } else {
+                $('#sow_edit').hide();
+                $("#sow_renew").hide();
+              }
+              if(isUserInDelivery) $('#sow_edit').show();
+              if(isUserInGrowth && isUserInDelivery) $('#sow_edit').show();
+              if(getEmpDepartment.toLowerCase() == "presales") $('#sow_edit').show();
+            }
+          }
+        } else {
+          window.location.href = "home.html"
+        }
+        }
+
+        $(window).resize(resize);
+        resize();
+        $(".new-sub-menu").hover(function() {
+          $(".sub-menu").css("display", "");
+        });
+      });
+      function resize() {
+        if ($(window).width() < 514) {
+          $("#resp-table").addClass("table-responsive");
+        } else {
+          $("#resp-table").removeClass("table-responsive");
+        }
+      }
+      let skillOptions = "";
+      function getSkillOptions() {
+        $.ajax({
+          url: apiValue.url,
+          type: "POST",
+          dataType: "json",
+          crossDomain: true,
+          format: "json",
+          async: false,
+          mode: "no-cors",
+          data: {
+            query_type: "select",
+            db_name: apiValue.db_name,
+            environment: apiValue.environment,
+            table_name: "SKILL_CONFIG",
+            columns: "",
+            filter: "",
+          },
+          success: function(data) {
+            skillOptions = '<option value="">Select Any Skill</option>';
+            $.each(data.Details, function(value, option) {
+              skillOptions +=
+                '<option value="' +
+                option.SKILL_ID +
+                '">' +
+                option.SKILL_NAME +
+                "</option>";
+            });
+          },
+          error: function(error) {
+            console.log("message Error" + JSON.stringify(error));
+          },
+        });
+      }
+
+      $('#legal_start_date').datepicker({
+      format: 'mm-dd-yy',
+      uiLibrary: 'bootstrap'
+    });
+    $('#legal_end_date').datepicker({
+      format: 'mm-dd-yy',
+      uiLibrary: 'bootstrap'
+    });
+    $('#billing_start_date').datepicker({
+      format: 'mm-dd-yy',
+      uiLibrary: 'bootstrap'
+    });
+    $('#billing_end_date').datepicker({
+      format: 'mm-dd-yy',
+      uiLibrary: 'bootstrap'
+    });
+    $('#actual_start_date').datepicker({
+      format: 'mm-dd-yy',
+      uiLibrary: 'bootstrap'
+    });
+    $('#actual_end_date').datepicker({
+      format: 'mm-dd-yy',
+      uiLibrary: 'bootstrap'
+    });
+    $('#ms_signed_date').datepicker({
+      format: 'mm-dd-yy',
+      uiLibrary: 'bootstrap'
+    });
+    $(".resourceDate").datepicker({
+      format: 'mm-dd-yy',
+      uiLibrary: 'bootstrap'
+    });
+
+      $("#dashboard").click(function() {
+        window.location.href = "home.html";
+        return false;
+      });
+      $("#sow_details_page").click(function() {
+        window.location.href = "revenueDetails.html";
+        return false;
+      });
+      $("#logout").click(function() {
+        localStorage.clear();
+
+        window.location.href = "index.html";
+        return false;
+      });
+      $('.input-group-addon').hide();
+      $(".edit_disable").attr("disabled", true);
+    </script>
+  </body>
+</html>
