@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Factspan - ARCUS</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="css/custom.css">
+  <meta http-equiv='cache-control' content='no-cache'>
+  <meta http-equiv='expires' content='0'>
+  <meta http-equiv='pragma' content='no-cache'>
+  <meta name="google-signin-client_id" content="">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/chatbot.js"></script>
+  <script src="js/workflowDetails.js"></script>
+  <link rel="icon" href="images\factspan.png" type="image/png" sizes="16x16">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="js/fontawesome/fontawesome.js" crossorigin="anonymous"></script>
+  <meta http-equiv="Cache-control" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-store, max-age=0">
+  <!-- <script>
+    $(function () {
+      $('#chatbot-container').load('chatbot.html');
+
+    })
+    
+  </script> -->
+</head>
+
+<style>
+  #app-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #menu {
+    text-align: center;
+
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    background-color: #fff;
+    padding: 0px 20px;
+  }
+
+  #dash-title {
+    text-align: left;
+    font-size: 20px;
+    font-weight: 400;
+    color: #313265;
+    font-family: 'Celias';
+  }
+
+  .center-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 14px;
+    color: #ff7d20;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 0px 44px;
+    cursor: pointer;
+    text-align: left;
+    width: 80%;
+    margin: 5px 0;
+    font-family: 'Celias';
+  }
+
+  .center-menu:hover {
+    box-shadow: 0px 0px 18px rgb(0 0 0 / 50%);
+  }
+
+  .menu-header {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+
+  .navbar-default .navbar-nav>li>a {
+
+    font-weight: 500;
+  }
+
+
+
+
+  .active_grp {
+
+    border-bottom: 2px solid;
+    background-color: white;
+    border-bottom-color: #fc8c15;
+    color: #fc8c15 !important;
+  }
+
+  #profile_div a:hover {
+    color: #eff4f8;
+  }
+
+  .navbar-brand {
+    padding: 0px 15px;
+  }
+
+  .center-menu img {
+    max-width: 50px;
+  }
+
+  .grid_style {
+    font-size: 16px;
+
+  }
+
+  .page_title {
+    display: inline-block;
+    width: 100%;
+    color: #525252;
+    font-size: 20px;
+    font-weight: bold;
+    border-bottom: solid 1px #e2e2e2;
+    padding-bottom: 10px;
+    margin: 5px;
+  }
+
+  #workflow_icon {
+    width: 25px;
+    float: right;
+  }
+
+  a.notif {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    width: 35px;
+    color: #ffffff;
+    background: transparent;
+    text-decoration: none;
+    float: right;
+  }
+
+  a.notif .fa-briefcase {
+    color: #ffffff;
+    font-size: 20px;
+  }
+
+  .num {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: #ff7d20;
+    margin: 0px;
+    padding: 0px 7px 0px 6px;
+    border-radius: 30px;
+  }
+
+  .menu_header {
+    margin-top: 75px;
+  }
+
+  .admin_header_menu {
+    background-color: #03295b;
+    padding: 0px
+  }
+  #chatbot-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+
+}
+
+/* #chatbot-button {
+  background-color:#ff7d20;;
+  color: #fff;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-left: 120px;
+}
+
+#chatbot-window {
+  display: none;
+  position: relative;
+  width: 350px;
+  max-height: 500px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+  padding: 15px;
+  padding-top: 9px;
+  font-family: Arial, sans-serif;
+}
+
+#chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#close-button {
+  background-color: #ddd;
+  color: #555;
+  border: none;
+  font-size: 17px;
+  padding: 1px 6px;
+  border-radius: 45%;
+  cursor: pointer;
+}
+
+#chat-log {
+  margin-bottom: 20px;
+}
+
+#user-input-container {
+  display: flex;
+}
+
+#user-input {
+  flex-grow: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+}
+
+#send-btn {
+  background-color: #ff7d20;;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.user-message {
+  text-align: right;
+ 
+  color: #000000;
+}
+
+.bot-message {
+  text-align: left;
+ 
+  color: #000000;
+} */
+
+.footer-icon:hover{
+  color: #ff7d20;
+}
+.container {
+  width: 100%;
+  padding: 0px 40px;
+}
+#buying_center img, #cnps img {
+    width: 50px;
+    height: 46px;
+    padding: 5px;
+}
+
+/* Keep every home navigation tile and icon visually consistent. */
+.home_menu_modules .center-menu {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 80% !important;
+  height: 55px;
+  min-height: 55px;
+  padding: 0 44px;
+  border: 1px solid #eeeeee;
+  border-radius: 10px;
+}
+
+.home_menu_modules .center-menu > img {
+  flex: 0 0 42px;
+  width: 42px !important;
+  height: 42px !important;
+  max-width: 42px;
+  padding: 7px !important;
+  object-fit: contain;
+  filter: invert(52%) sepia(98%) saturate(3018%) hue-rotate(347deg) brightness(102%) contrast(101%);
+}
+
+.home_menu_modules .center-menu .grid_style {
+  flex: 1;
+  width: auto;
+  padding-left: 28px;
+  float: none;
+}
+
+/* Home header styling based on the ARCUS navigation design. */
+body {
+  background-color: #ffffff;
+}
+
+.show_page > .navbar.navbar-default {
+  min-height: 60px;
+  margin: 0;
+  background: #1F3864;
+  border: 0;
+  border-radius: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: none;
+}
+
+.show_page > .navbar > .container {
+  width: 100%;
+  min-height: 60px;
+  padding: 0 20px;
+}
+
+.show_page .navbar-header {
+  min-height: 60px;
+}
+
+.home-logo {
+  display: block;
+  width: 136px;
+  height: auto;
+  margin-top: 17px;
+}
+
+.home_nav#navigation {
+  min-height: 60px;
+}
+
+.home_nav .navbar-right {
+  display: flex;
+  align-items: center;
+  min-height: 60px;
+  margin: 0;
+}
+
+.home_nav .navbar-right > li {
+  display: flex;
+  align-items: center;
+}
+
+.home_nav .admin_header_menu {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  width: auto;
+  min-height: 30px;
+  margin: 0 18px 0 0;
+  padding: 2px 10px;
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  background-color: transparent;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 400;
+  box-shadow: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.home_nav .admin_header_menu:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  box-shadow: none;
+  transform: translateY(-1px);
+}
+
+.home_nav .admin_header_menu img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  padding: 0;
+  border-radius: 0;
+  background-color: transparent;
+}
+
+.home_nav #user_image_tag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  min-height: 34px;
+  width: 34px;
+  height: 34px;
+  padding: 6px !important;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(118, 162, 233, 0.55);
+  box-shadow: none;
+  overflow: visible;
+}
+
+.home_nav #profileImage {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.home_nav #user_image_tag > i {
+  display: none;
+}
+
+.menu_header {
+  margin-top: 74px;
+  padding: 0;
+  background-color: #ffffff;
+}
+
+#menu {
+  padding: 0;
+  background-color: #ffffff;
+}
+
+#dash-title.page_title {
+  display: flex;
+  align-items: center;
+  min-height: 50px;
+  margin: -15px 0 28px;
+  padding: 0 20px;
+  color: #ffffff;
+  background-color: #1F3864;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  font-family: 'Celias', 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  gap: 10px;
+}
+
+#dash-title .notif {
+  margin-left: auto;
+}
+
+#menu > br {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .show_page > .navbar > .container {
+    padding: 0 20px;
+  }
+
+  .show_page .navbar-toggle {
+    margin-top: 19px;
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  .show_page .navbar-toggle .icon-bar {
+    background-color: #ffffff;
+  }
+
+  .home_nav#navigation {
+    min-height: auto;
+    background-color: #1F3864;
+    border-top-color: rgba(255, 255, 255, 0.14);
+  }
+
+  .home_nav .navbar-right {
+    min-height: 60px;
+    padding: 10px 0;
+  }
+
+  #dash-title.page_title {
+    min-height: 60px;
+    padding: 0 20px;
+    font-size: 19px;
+  }
+}
+
+
+</style>
+
+<body>
+
+
+  <div class="container show_page">
+
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="font-size: 12px;">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation"
+            onclick="$('html').toggleClass('fw-noscroll')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="sr-only">Toggle navigation</span>
+          </button>
+          <a class="" href="adminDashboard.html">
+            <img src="images/arcus_logo_white.svg" alt="ARCUS" class="responsive home-logo">
+          </a>
+        </div>
+        <div class="collapse navbar-collapse home_nav" id="navigation">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <div class="dashboard_box center-menu col-sm-2 admin menu_div admin_header_menu" id="admin_dashboard">
+                <img id="admin_image" src="images/teams_icon.svg" alt="Grant Access">
+                <span>Arcus Access</span>
+              </div>
+            </li>
+            <li>
+              <a href="#" id="user_image_tag" class="profile_pic" data-toggle="collapse" data-target="#profile_down"
+                style="color: #ffffff;"><img id="profileImage" src="images/person_icon.svg" alt="User profile"
+                  onerror="this.onerror=null;this.src='images/person_icon.svg';" />
+                <i class=""><img src="images/down-arrow.png" alt="" /></i>
+              </a>
+            </li>
+          </ul>
+          <div id="profile_down" class="collapse out pull-right">
+            <div id="profile_akhliesh">
+              <center>
+                <div id="profile_div"><a id="profile_name_sign" class="profile_pic">
+                    <img src="images/user.jpg" alt="" />
+                  </a></div>
+                <div style="font-weight: 500;"><span id="display_name"></span></div>
+                <div><span id="email_id"></span></div>
+                <div><span id="emp_id"></span></div>
+                <button class="btn btn-info float-right" id="logout" style="margin: 10px;" onclick="signOut();"> Sign
+                  out</button>
+              </center>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </nav>
+
+  </div>
+
+
+  <div class="wrapper_outer show_page">
+    <div class="container-fluid header_background menu_header">
+      <div id="menu">
+        <div id="dash-title" class="page_title">Welcome <b> <span id="user_welcome"></span></b>
+
+          <a href="workflowDetails.html" class="notif" id="workdflowImage" aria-label="Workflow details">
+            <i class="fa fa-briefcase" aria-hidden="true"></i>
+            <span class="num" id="workflow_count"></span>
+          </a>
+
+        </div>
+        <br>
+        <div id="menu-items ">
+          <div class="col-sm-12 ">
+            <div class="row ">
+              <div class="col-sm-6 ">
+                <img src="images/home_page.png" class="img-rounded" alt="Home Page Image" width="400px">
+
+              </div>
+              <div class="col-sm-6 home_menu_modules" style="margin-top:2%">
+                <div class="dashboard_box center-menu col-sm-2 revenueDetails menu_div" id="sow_resource_req"
+                  style="background-color:#f3f3f3;">
+                  <img id='org_chart_img' src='images/revenue_icon.svg' alt='Revenue'>
+                  <div class="col-sm-10 grid_style">Revenue</div>
+                </div>
+                <div class="dashboard_box center-menu col-sm-2 team menu_div" id="employee_details"
+                  style="background-color:#f3f3f3;">
+                  <img id='org_chart_img' src='images/teams_icon.svg' alt='Team'>
+                  <div class="col-sm-10 grid_style">Team</div>
+                </div>
+                <div class="dashboard_box center-menu col-sm-2 allocationDashboard menu_div" id="res_allocation"
+                  style="background-color:#f3f3f3;">
+                  <img id='sow_chart_img' src='images/allocation_icon.svg' alt='Allocation'>
+                  <div class="col-sm-10 grid_style">Allocation</div>
+                </div>
+                <div class="dashboard_box center-menu col-sm-2 orgChart menu_div" id="buying_center"
+                  style="background-color:#f3f3f3;">
+                  <img id='org_chart_img' src='images/buying_center_icon.svg' alt='Buying Center'>
+                  <div class="col-sm-10 grid_style">Buying Center</div>
+                </div>
+                <div class="dashboard_box center-menu col-sm-2 orgChart menu_div" id="cnps"
+                  style="background-color:#f3f3f3;">
+                  <img id='org_chart_img' src='images/cnps_icon.svg' alt='CNPS'>
+                  <div class="col-sm-10 grid_style">CNPS</div>
+                </div>
+                <div class="dashboard_box center-menu col-sm-2 reportsDashboard menu_div" id="report"
+                  style="background-color:#f3f3f3;">
+                  <img id='org_chart_img' src='images/reports_icon.svg' alt='Reports'>
+                  <div class="col-sm-10 grid_style">Reports</div>
+                </div>
+               
+               
+              </div>
+            
+            </div>
+           
+          </div>
+          
+  
+         
+           
+          </div>
+          
+
+        </div>
+       
+      </div>
+      <div id="chatbot-container">
+        <button class="footer-icon pull-top" title="Release note" onclick="openFile('userManuals/ARCUS_Release_Note_V1.pdf')"><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+        <button class="footer-icon pull-top" title="ARCUS User Guide" onclick="openFile('userManuals/ARCUS_User_manual _V1.pdf')"><i class="fa fa-question-circle" aria-hidden="true"></i></button>
+      </div>
+    </div>
+
+  </div>
+
+
+
+  <script>
+    $(document).ready(function () {
+
+      assignMetaValue();
+      $("meta[name='google-signin-client_id']").attr("content", metaValue);
+
+      getLocalSessionData();
+      empName = localStorage.getItem("EmpUserName");
+      empId = localStorage.getItem("EmpUserID");
+      sessionName = localStorage.getItem("email");
+      $("#display_name").html(empName);
+      $("#email_id").html(sessionName);
+      $("#emp_id").html("#" + empId);
+      if (sessionName == null) {
+        window.location.href = 'index.html';
+        return false;
+      } else {
+        $(".show_page").css("display", "block");
+        $(".menu_div").hide()
+        empName = localStorage.getItem("EmpUserName");
+        empId = localStorage.getItem("EmpUserID");
+        sessionName = localStorage.getItem("email");
+        accese_level = localStorage.getItem("ACCESS_LEVEL");
+        accessData = localStorage.getItem("Access");
+        edit_access = localStorage.getItem("EDIT_ACCESS");
+        groupName = localStorage.getItem("GROUP_NAME");
+        statusDetails = localStorage.getItem("STATUS");
+        getApprovalData();
+        checkDashboardPageAccessData();
+        let user_each_page_access = $.parseJSON(localStorage.getItem("user-access-details"))
+
+        $.each(user_each_page_access, function (i, userAccess) {
+          let access = userAccess.ACCESS_DETAILS;
+          let role = localStorage.getItem("user-role");
+          let roleList = role.split(",")
+          let roleCheck = false;
+          $.each(roleList, function (j, roleName) {
+            if (!roleCheck) {
+              if (roleName == "admin") {
+                $(".admin").css("display", "flex")
+                roleCheck = true
+              } else {
+                $(".admin").hide();
+              }
+            }
+          })
+        })
+      }
+    });
+    $('#buying_center').click(function () {
+      window.location.href = 'buyingCenterDetails.html';
+      return false;
+    });
+    $('#cnps').click(function () {
+      window.location.href = 'nps.html';
+      return false;
+    });
+    $('#logout').click(function () {
+      localStorage.clear();
+      window.location.href = 'index.html';
+      return false;
+    });
+    $('#sow_resource_recom').click(function () {
+      window.location.href = 'employeeProject.html';
+      return false;
+    });
+    $('#employee_details').click(function () {
+      window.location.href = 'team.html';
+      return false;
+    });
+    $('#sow_resource_req').click(function () {
+
+      window.location.href = 'revenueDetails.html';
+      return false;
+    });
+    $('#Metrics').click(function () {
+      window.location.href = 'sowRsrceAllocSummar.html';
+      return false;
+    });
+    $('#workflow_icon').click(function () {
+      window.location.href = 'workflowDetails.html';
+      return false;
+    });
+    $('#report').click(function () {
+      window.location.href = 'reportsDashboard.html';
+      return false;
+    });
+    $('#admin_dashboard').click(function () {
+      window.location.href = 'admin.html';
+      return false;
+    });
+    $('#res_allocation').click(function () {
+      window.location.href = 'allocationDashboard.html';
+      return false;
+    });
+
+    function openFile(file){
+      window.open(file,'_blank')
+    }
+
+
+
+
+
+  </script>
+  <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+
+</body>
+
+</html>

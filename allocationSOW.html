@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Factspan - ARCUS - Allocate SOW</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"
+    />
+    <script
+      type="text/javascript"
+      src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"
+    ></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    <script
+      src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js"
+      type="text/javascript"
+    ></script>
+    <link
+      href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script
+      src="https://kit.fontawesome.com/01f906aa6d.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="css/custom.css" />
+    <script src="js/jquery.tabledit.js"></script>
+
+    <script src="js/common.js"></script>
+    <script src="js/allocationSow.js"></script>
+    <link
+      rel="icon"
+      href="images\factspan.png"
+      type="image/png"
+      sizes="16x16"
+    />
+
+    <script src="lib/jQuery-MultiSelect.js"></script>
+    <link rel="stylesheet" href="css/jquery.multiselect.css" />
+    <script src="js/bootbox.min.js"></script>
+    <script src="js/bootbox.locales.min.js"></script>
+    <script src="js/jquery.table2excel.js"></script>
+    <link rel="stylesheet" href="css/busyLoading.css" />
+    <script>
+      $(function () {
+        $("#header").load("header.html");
+      });
+    </script>
+  </head>
+  <style>
+    .allocation_radio_filter {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background-color: #cecece;
+      width: 520px;
+      height: 25px;
+      border-radius: 9999px;
+      margin-top: 5px;
+      box-shadow: inset 0.5px 0.5px 2px 0 rgb(0 0 0 / 15%);
+    }
+
+    .teams_radio_filter {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background-color: #cecece;
+      width: 250px;
+      height: 25px;
+      border-radius: 9999px;
+      margin-top: 0px;
+      box-shadow: inset 0.5px 0.5px 2px 0 rgb(0 0 0 / 15%);
+    }
+
+    .allocation_radio_filter > input[type="radio"],
+    .teams_radio_filter > input[type="radio"] {
+      appearance: none;
+      display: none;
+    }
+
+    .allocation_radio_filter > label,
+    .sowteam_radio_filter > label,
+    .teams_radio_filter > label {
+      font-family: "Open Sans", sans-serif;
+      font-size: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: inherit;
+      width: 500px;
+      height: 20px;
+      text-align: center;
+      border-radius: 9999px;
+      overflow: hidden;
+      transition: linear 0.3s;
+      color: #6e6e6edd;
+      margin-bottom: 0px;
+      padding-left: 0px;
+      margin: 5px;
+    }
+
+    .allocation_radio_filter > input[type="radio"]:checked + label,
+    .teams_radio_filter > input[type="radio"]:checked + label {
+      background-color: #1e90ff;
+      color: #f1f3f5;
+      font-weight: 900;
+      transition: 0.3s;
+    }
+
+    .sowteam_radio_filter {
+      display: flex;
+      float: right;
+      justify-content: space-around;
+      align-items: center;
+      background-color: #cecece;
+      width: 200px;
+      height: 25px;
+      border-radius: 9999px;
+
+      box-shadow: inset 0.5px 0.5px 2px 0 rgb(0 0 0 / 15%);
+    }
+
+    .sowteam_radio_filter > input[type="radio"] {
+      appearance: none;
+      display: none;
+    }
+
+    .sowteam_radio_filter > input[type="radio"]:checked + label {
+      background-color: #1e90ff;
+      color: #f1f3f5;
+      font-weight: 900;
+      transition: 0.3s;
+    }
+
+    .sow_resrc_style {
+      border-radius: 0px 0px 0 0;
+      text-align: center;
+      background-color: #f2f2f2 !important;
+      font-size: 10px;
+      font-weight: 600;
+      color: #535252;
+      font-family: "Celias", "Poppins", sans-serif;
+      border-left: 1px solid #ffffff;
+    }
+
+    .employee_detail_inside table th {
+      padding: 3px 7px !important;
+    }
+
+    .employee_detail_inside {
+      display: block;
+      width: 100%;
+      margin-top: 0px;
+      padding: 0px;
+      box-shadow: 0px 5px 12px -5px #989696;
+      min-height: 90px;
+    }
+
+    .employee_detail_inside .table td {
+      font-size: 10px;
+      font-weight: 500;
+      color: #4e4e4e;
+      padding: 5px 5px !important;
+    }
+
+    .employee_detail_inside {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      padding: 0px;
+      box-shadow: 0px 5px 12px -5px #989696;
+      min-height: 90px;
+    }
+
+    #emp_table_sow .bench_table_th1 {
+      background-color: #f2f2f2;
+      text-align: center;
+      color: #8b8988;
+      border-radius: 20px;
+    }
+
+    .bench_table_th1 th {
+      padding: 5px;
+      font-size: 14px;
+    }
+
+    #emp_table .bench_table_th1 {
+      background-color: #f2f2f2;
+      text-align: center;
+      color: #8b8988;
+      border-radius: 20px;
+    }
+
+    .bench_table.table_hd1 .bench_table_th1 {
+      text-align: center;
+    }
+
+    #bench_table {
+      width: 100% !important;
+      margin-top: 30px;
+    }
+
+    #sow_res_recom_table_data thead > tr > th {
+      background-color: #fae9e9 !important;
+      text-align: center;
+    }
+
+    .report_sow_account_header {
+      color: black;
+    }
+
+    .fixTableHead {
+      overflow-y: auto;
+      height: 73vh;
+    }
+
+    .fixTableHead thead {
+      position: sticky;
+      top: 0;
+    }
+
+    td {
+      padding: 5px 20px;
+      font-size: 10px;
+      font-weight: 500;
+    }
+
+    .employee_sow_details .table th {
+      border: solid 0px #f8f9fa;
+      border-radius: 0px;
+      font-size: 12px !important;
+      font-weight: 500 !important;
+    }
+
+    .thead-light {
+      background-color: #f2f2f2 !important;
+    }
+
+    #account_head > th {
+      background-color: #f3f3f3;
+    }
+
+    .table_hd1 .assign_header .header1 {
+      text-align: center;
+    }
+
+    #sow_res_recom_table_data thead > tr > th {
+      background-color: #f2f2f2 !important;
+    }
+
+    .header1 {
+      background-color: #fae9e9 !important;
+    }
+
+    .table_hd1 .assign_header2 .header1 {
+      text-align: center;
+    }
+
+    .fas {
+      color: #e68454;
+    }
+
+    .shortageClass {
+      background-color: #ecb092;
+      border: 1px solid white;
+    }
+
+    .equalindus {
+      background-color: lightgreen;
+      border: 1px solid white;
+    }
+
+    .usexcess {
+      background-color: #7c5745;
+    }
+
+    .employee_detail_inside table tbody tr:nth-child(even) {
+      background: #fffcfc;
+      border-top: solid 1px #ffffff;
+    }
+
+    .ind_color {
+      height: 15px;
+      width: 15px;
+      background-color: #ecb092;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .us_color {
+      height: 15px;
+      width: 15px;
+      background-color: #90ee90;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    #ind_legends {
+      display: flex;
+      font-size: 10px;
+      font-weight: 600px !important;
+      justify-content: space-around;
+      align-items: center;
+      margin-left: 600px;
+      width: 250px;
+      height: 33px;
+      border-radius: 9999px;
+    }
+
+    .dataTables_length,
+    .dataTables_filter {
+      font-size: 10px;
+    }
+
+    .team_curr_future {
+      margin-top: -25px;
+    }
+
+    .more {
+      display: inline-block;
+      width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .more:hover {
+      white-space: initial;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .sow_data_name {
+      text-align: center;
+      color: #006eff;
+      cursor: pointer;
+    }
+    .employee_form .btn-info {
+      border-radius: 5px;
+    }
+    .btn-info {
+      padding: 4px;
+    }
+  </style>
+
+  <body>
+    <div class="loader">
+      <div class="loader-wheel"></div>
+      <div class="loader-text"></div>
+    </div>
+    <div class="show_page" style="display: none">
+      <div id="header"></div>
+      <div class="wrapper_outer">
+        <div class="container-fluid">
+          <div class="detail_boxs">
+            <div class="detail_top_bars">
+              <button
+                class="btn btn-info pull-right header-button"
+                id="find_resource_back"
+              >
+                Back
+              </button>
+
+              <div class="allocation_radio_filter sow_details_data">
+                <input
+                  type="radio"
+                  name="sow_acc"
+                  id="ALL"
+                  class="emp_select"
+                  value="CURRENT"
+                  onclick="loadSowDatatotable()"
+                  checked
+                />
+                <label for="ALL">Signed - Current Shortage</label>
+                <input
+                  type="radio"
+                  name="sow_acc"
+                  id="IND"
+                  class="emp_select"
+                  value="FUTURE"
+                  onclick="loadSowDatatotable()"
+                />
+                <label for="IND">Signed - Future Shortage</label>
+                <input
+                  type="radio"
+                  name="sow_acc"
+                  id="US"
+                  class="emp_select"
+                  value="GREEN"
+                  onclick="loadSowDatatotable()"
+                />
+                <label for="US">All Green SOW</label>
+              </div>
+
+              <div
+                class="employee_detail_inside employee_sow_details table-responsive fixTableHead sow_details_data"
+              >
+                <table
+                  calss="table table-bordered border-primary"
+                  id="emp_table_sow"
+                  style="width: 100%"
+                >
+                  <thead
+                    class="thead-light table_hd1"
+                    id="all_sow_allocation"
+                  ></thead>
+                  <tbody
+                    id="sow_allocation_data_body"
+                    style="text-align: center"
+                  ></tbody>
+                </table>
+              </div>
+
+              <button
+                class="btn btn-info pull-right header-button"
+                id="select_sow"
+                onclick="selectSOW()"
+                style="margin: 10px"
+              >
+                Select SOW
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      $(document).ready(function () {
+        assignMetaValue();
+        $("meta[name='google-signin-client_id']").attr("content", metaValue);
+
+        getLocalSessionData();
+        if (sessionName == null) {
+          window.location.href = "index.html";
+          return false;
+        } else {
+          $(".team_details_data").hide();
+          loadSowDatatotable();
+
+          $(".loader").css("display", "none");
+          $(".show_page").css("display", "block");
+        }
+      });
+
+      $("#find_resource_back").click(function () {
+        window.location.href = "allocationDashboard.html";
+        return false;
+      });
+      $("#logout").click(function () {
+        localStorage.clear();
+        window.location.href = "index.html";
+        return false;
+      });
+    </script>
+    <script
+      src="https://apis.google.com/js/platform.js?onload=onLoad"
+      async
+      defer
+    ></script>
+  </body>
+</html>

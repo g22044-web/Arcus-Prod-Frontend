@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Factspan - ARCUS - Report Audit</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv='cache-control' content='no-cache'>
+  <meta http-equiv='expires' content='0'>
+  <meta http-equiv='pragma' content='no-cache'>
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+  </style>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+  <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+  <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+  <script src="https://kit.fontawesome.com/01f906aa6d.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/custom.css" />
+  <script src="js/jquery.tabledit.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/reportAudit.js"></script>
+  <link rel="icon" href="images\factspan.png" type="image/png" sizes="16x16">
+  <!-- JS & CSS library of MultiSelect plugin -->
+  <script src="lib/jQuery-MultiSelect.js"></script>
+  <link rel="stylesheet" href="css/jquery.multiselect.css">
+  <script src="js/bootbox.min.js"></script>
+  <script src="js/bootbox.locales.min.js"></script>
+  <script src="js/jquery.table2excel.js"></script>
+  <link rel="stylesheet" href="css/busyLoading.css">
+
+  <script>
+    $(function () {
+      $('#header').load('header.html');
+     
+    })
+  </script>
+</head>
+<style>
+  
+  .employee_sow_details .table th {
+   
+    border: solid 0px #f8f9fa;
+    border-radius: 0px;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+  }
+
+ 
+  .employee_detail_inside .table th {
+    font-size: 10px;
+    font-weight: 500;
+    color: #8b8988;
+  }
+
+ 
+
+  .employee_detail_inside .table th {
+    width: 4.14% !important;
+  }
+
+  .employee_form .btn-info {
+    background-color: transparent !important;
+    font-size: 12px;
+    color: #fc8c15;
+    border-color: #fc8c15;
+    padding: 10px;
+    font-weight: 400;
+  }
+
+  .employee_detail_inside .table th {
+    font-size: 10px;
+    font-weight: 500;
+    color: #8b8988;
+  }
+  .audit-toolbar {
+    display: flex;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .signed_bg {
+    
+    background-color: #ffffff;
+    
+    color: #252424ad !important;
+    border: #edf6fe !important;
+  }
+
+  .signed_header_bg {
+    background-color: #4CA5FFFF;
+    color: #fff !important;
+    border: #4CA5FFFF !important;
+  }
+
+  .proposal_header_bg {
+    background-color: #17A948FF;
+    color: #fff !important;
+    border: #17A948FF !important;
+  }
+
+  .proposal_bg {
+   
+    background-color: #ffffff;
+    color: #252424ad !important;
+    
+    border: #e9fef0 !important;
+  }
+
+  .all_month_bg {
+    background-color: #007A45FF;
+    color: #fff !important;
+  }
+
+  
+
+  #signed_sow_table>tbody>tr,
+  #proposal_sow_table>tbody>tr {
+    border-bottom: 1px solid #e4e4e4;
+  }
+
+  .emp_filter {
+    margin-top: -19px !important;
+  }
+
+  .emp_radio_filter>label {
+    width: 50px;
+  }
+
+  #report_sow_account {
+    background-color: #f2f2f2;
+  }
+
+  .account_bg,
+  .account_bg>td {
+    background-color: #f2f2f2 !important;
+    color: black !important;
+  }
+
+  .employee_detail_inside table tr:nth-child(even) {
+    background: #f2f2f2;
+    border-top: solid 1px #f2f2f2;
+  }
+
+  hr {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border: 0;
+    border-top: 1px solid #eee;
+  }
+
+  .employee_detail_inside table tr:nth-child(even) {
+    background: #ffffff;
+    border-top: solid 1px #ffffff;
+  }
+
+  .overall_total_bg,
+  .overall_total_bg>td {
+    background-color: #4CA5FFFF;
+    color: #fff !important;
+    border: #4CA5FFFF !important;
+  }
+
+  .overall_total_allSow,
+  .overall_total_allSow>td {
+    background-color: #5ef68f;
+    color: #090909 !important;
+    border: #befcd2 !important;
+    
+  }
+
+
+  .renewal_bg,
+  .renewal_bg>td {
+    background-color: #befcd2;
+    color: #006120 !important;
+    border: #befcd2 !important;
+
+  }
+
+  .proposal_bg,
+  .proposal_bg>td {
+    background-color: #08bb44;
+    color: #fff !important;
+    border: #08bb44 !important;
+  }
+
+  .overall_total,
+  .overall_total>td {
+    background-color: #007A45FF;
+    color: #fff !important;
+    
+    border: #007A45FF !important;
+    
+  }
+
+  .top_space {
+    border-top: 5px solid white !important;
+  }
+
+  .top_broder_bg {
+    border-top: 1.5px solid #eff3ef !important;
+  }
+
+  #report_overall_summary>th {
+    background-color: #f2f2f2;
+  }
+
+  .account_level {
+    background-color: #f2f2f2 !important;
+  }
+
+  .account_level>td {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+  }
+
+  .RED {
+    background-color: rgb(238 46 46 / 24%);
+    color: black !important;
+  }
+
+  .GREEN {
+    background-color: #77cb7742;
+    color: black !important;
+  }
+
+  #excelDownload {
+    padding: 5px 25px;
+    margin-right: 5px;
+  }
+
+  .table_title {
+    margin-bottom: -26px;
+  }
+
+  .audit-toolbar {
+    min-height: 45px;
+    margin: 0 0px 0px;
+    padding: 5px 20px;
+    background: #1F3864;
+    border-top: 0.5px solid #6d6d6d;
+    border-bottom: 6px solid #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 24px;
+  }
+  .employee_form {
+    padding: 0px;
+  }
+
+  .audit-toolbar-title {
+    margin: 0;
+    color: #ffffff;
+    font-family: "Poppins", "Celias", sans-serif;
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .audit-toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-left: auto;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .audit-toolbar-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .audit-toolbar-controls .dataTables_length,
+  .audit-toolbar-controls .dataTables_filter,
+  .audit-toolbar-controls .dataTables_info {
+    margin: 0;
+    float: none !important;
+  }
+
+  .audit-toolbar-controls .dataTables_length,
+  .audit-toolbar-controls .dataTables_filter {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+    font-family: "Poppins", "Celias", sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .audit-toolbar-controls .dataTables_length label,
+  .audit-toolbar-controls .dataTables_filter label {
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+    font-weight: 500;
+  }
+
+  .audit-toolbar-controls .audit-control-label {
+    color: #ffffff;
+    font-family: "Poppins", "Celias", sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .audit-toolbar-controls .dataTables_length select,
+  .audit-toolbar-controls .dataTables_filter input {
+    height: 30px !important;
+    margin: 0 !important;
+    color: #ffffff !important;
+    background-color: transparent !important;
+    border: 1px solid rgba(255, 255, 255, 0.85) !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+    font-family: "Poppins", "Celias", sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+  }
+
+  .audit-toolbar-controls .dataTables_length select {
+    min-width: 120px;
+    padding: 0 36px 0 14px !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='m1 1 6 6 6-6' fill='none' stroke='%23fff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    appearance: none;
+  }
+
+  .audit-toolbar-controls .dataTables_length select option {
+    color: #1F3864;
+    background: #ffffff;
+  }
+
+  .audit-toolbar-controls .dataTables_filter {
+    padding-left: 16px;
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .audit-toolbar-controls .dataTables_filter label {
+    gap: 0;
+  }
+
+  .audit-toolbar-controls .dataTables_filter input {
+    width: 190px;
+    padding: 0 16px 0 42px !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='19' height='19' viewBox='0 0 19 19'%3E%3Cg fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='8' cy='8' r='6'/%3E%3Cpath d='m13 13 4 4'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 14px center;
+  }
+
+  .audit-toolbar-controls .dataTables_filter input::placeholder {
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .audit-toolbar-controls .dataTables_info {
+    color: rgba(255, 255, 255, 0.88) !important;
+    font-family: "Poppins", "Celias", sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 0 !important;
+    white-space: nowrap;
+  }
+
+  .audit-toolbar-btn {
+    min-width: 60px;
+    height: 40px;
+    margin: 0 !important;
+    padding: 0 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.85) !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+    font-family: "Poppins", "Celias", sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+  }
+
+  #excelDownload.audit-toolbar-btn {
+    min-width: 56px;
+    padding: 0;
+  }
+
+  #excelDownload.audit-toolbar-btn i {
+    font-size: 12px;
+  }
+
+  .audit-toolbar-btn:hover,
+  .audit-toolbar-btn:focus,
+  .audit-toolbar-btn:active {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
+    outline: none;
+  }
+
+  .employee_form.sow_detail {
+    padding-top: 0;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .employee_form.sow_detail .detail_top_bar {
+    border-bottom: 0;
+    margin-bottom: 12px;
+    padding-bottom: 0;
+  }
+
+  #audit_report_wrapper .dataTables_info {
+    float: left;
+    padding: 12px 0 0 !important;
+    color: #7b7b7b !important;
+    font-family: "Poppins", "Celias", sans-serif;
+    font-size: 12px !important;
+    font-weight: 400;
+  }
+
+  #audit_report_wrapper .dataTables_paginate {
+    float: right;
+    padding: 6px 0 0;
+  }
+
+  #audit_report_wrapper .dataTables_paginate .paginate_button {
+    min-width: 36px;
+    height: 34px;
+    margin-left: 6px;
+    padding: 7px 12px !important;
+    border: 1px solid #d3d3d3 !important;
+    border-radius: 3px !important;
+    background: #ffffff !important;
+    color: #7b7b7b !important;
+    box-shadow: none !important;
+  }
+
+  #audit_report_wrapper .dataTables_paginate .paginate_button.current,
+  #audit_report_wrapper .dataTables_paginate .paginate_button.current:hover {
+    background: #f5f5f5 !important;
+    color: #6e6e6e !important;
+  }
+
+  #audit_report_wrapper .dataTables_paginate .paginate_button.disabled,
+  #audit_report_wrapper .dataTables_paginate .paginate_button.disabled:hover {
+    border-color: transparent !important;
+    background: transparent !important;
+    color: #9a9a9a !important;
+  }
+
+  @media screen and (max-width: 1280px) {
+    .audit-toolbar {
+      /* align-items: flex-start; */
+      flex-direction: column;
+    }
+
+    .audit-toolbar-right {
+      width: 100%;
+      /* justify-content: flex-start; */
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .audit-toolbar {
+      padding: 16px;
+    }
+
+    .audit-toolbar-title {
+      font-size: 16px;
+    }
+
+    .audit-toolbar-right,
+    .audit-toolbar-controls,
+    .audit-toolbar-controls .dataTables_length,
+    .audit-toolbar-controls .dataTables_filter,
+    .audit-toolbar-controls .dataTables_length label,
+    .audit-toolbar-controls .dataTables_filter label {
+      width: 100%;
+    }
+
+    .audit-toolbar-controls .dataTables_length label {
+      gap: 10px;
+    }
+
+    .audit-toolbar-controls .dataTables_filter {
+      padding-left: 0;
+      border-left: 0;
+    }
+
+    .audit-toolbar-controls .dataTables_length select,
+    .audit-toolbar-controls .dataTables_filter input,
+    .audit-toolbar-btn {
+      width: 100% !important;
+    }
+  }
+
+  .thead-light {
+    background-color: #f3f3f3;
+  }
+
+  #audit_head > th {
+    background-color: #f3f3f3;
+    /* text-align: center; */
+    z-index: 100;
+  }
+  .more {
+    display: inline-block;
+    width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .more:hover {
+    white-space: initial;
+    cursor: pointer;
+    width: 95%;
+  }
+  .row {
+    margin-right: 0px;
+    margin-left:0px;
+  }
+  .employee_detail_inside .table>tbody>tr>td, 
+  .employee_detail_inside .table>tbody>tr>th, 
+  .employee_detail_inside .table>tfoot>tr>td, 
+  .employee_detail_inside .table>tfoot>tr>th, 
+  .employee_detail_inside .table>thead>tr>td, 
+  .employee_detail_inside .table>thead>tr>th {
+    word-break: break-word;
+  }
+ 
+  .skill_data {
+    background: #ffffff;
+    color: #313265;
+    border: solid 1px #ffffff;
+    white-space: initial;
+    border-radius: 0px;
+    padding: 0px 0px;
+    margin: 0px 0px;
+}
+.remove_padding {
+    padding: 0px;
+}
+#audit_body>tr>td {
+  border: 1px solid #ddd;
+}
+
+</style>
+
+<body class="unselectable">
+  <div class="loader">
+    <div class="loader-wheel"></div>
+    <div class="loader-text"></div>
+  </div>
+  <div class="show_page" style="display: none;">
+    <div id="header"></div>
+
+    <div class="wrapper_outer">
+      <div id="loader" class="lds-dual-ring hidden overlay"></div>
+      <div class="container-fluid">
+        <div class="detail_box">
+          <div class="employee_form sow_detail">
+            <div class="detail_top_bar">
+              <div class="audit-toolbar">
+                <h1 class="audit-toolbar-title">Audit Report</h1>
+                <div class="audit-toolbar-right">
+                  <div id="auditToolbarControls" class="audit-toolbar-controls"></div>
+                  <button class="btn btn-info audit-toolbar-btn" id="excelDownload" onclick="downloadExcel()"
+                    title="Excel Download"><i class="fa fa-download" aria-hidden="true"></i></button>
+                  <button class="btn btn-info audit-toolbar-btn" id="reportsBackBtnCustm">Back</button>
+                </div>
+              </div>
+             
+              <div class="employee_detail_inside employee_sow_details table-responsive fixTableHead">
+                <table class="table table-bordered border-primary sow_emp_details_class" id="audit_report">
+                  <thead class="thead-light">
+                    <tr id="audit_head" class="report_sow_account_header">
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Operation</th>
+                      <th>Operation Date</th>
+                      <th>Description</th>
+                      <th>Approval Required</th>
+                      <th>Approval Name</th>
+                      <th>Approval Status</th>
+                      <th>Approved On</th>
+                    </tr>
+                  </thead>
+                  <tbody id="audit_body">
+                   
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+         
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+  
+
+  </div>
+  
+</body>
+
+</html>

@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Factspan - ARCUS - Account Details Edit</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta
+      name="google-signin-client_id"
+      content="776418814053-hccb99mo0ks8o9l3o3e5plhsn43p96rk.apps.googleusercontent.com"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css"
+    />
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <!-- Quill CSS -->
+    <link
+      href="https://cdn.quilljs.com/1.3.7/quill.snow.css"
+      rel="stylesheet"
+    />
+
+    <!-- Quill JS -->
+    <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <script
+      src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js"
+      type="text/javascript"
+    ></script>
+    <link
+      href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    <link rel="stylesheet" href="css/custom.css" />
+    <script src="js/accountEdit.js"></script>
+    <script src="js/common.js"></script>
+    <script src="lib/jQuery-MultiSelect.js"></script>
+    <link rel="stylesheet" href="css/jquery.multiselect.css" />
+    <link
+      rel="icon"
+      href="images\factspan.png"
+      type="image/png"
+      sizes="16x16"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/fontawesome.min.css"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="css/slimselect.min.css" />
+    <script
+      src="https://kit.fontawesome.com/01f906aa6d.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/bootbox.min.js"></script>
+    <script src="js/bootbox.locales.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@3.5.1/select2.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/select2@3.5.1/select2.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      $(function () {
+        $("#header").load("header.html");
+      });
+    </script>
+  </head>
+  <style>
+    body {
+      font-family: "Celias";
+    }
+
+    #app-name {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #menu {
+      text-align: center;
+      box-shadow: 0px 0px 10px #c4c0c0;
+      border-radius: 15px;
+      align-items: center;
+      justify-content: center;
+      width: 85%;
+      background-color: #fff;
+      padding: 40px 60px 60px 60px;
+    }
+
+    @media screen and (max-height: 450px) {
+      .sidenav {
+        padding-top: 15px;
+      }
+
+      .sidenav a {
+        font-size: 12px;
+      }
+    }
+
+    /* Header menu custom style */
+    .navbar-default .navbar-nav > li > a {
+      font-weight: 500;
+    }
+
+    #profile {
+      background-color: cadetblue;
+      border-radius: 124px;
+      font-size: 30px;
+      margin-left: 15px;
+    }
+
+    #profile_div a:hover {
+      color: #eff4f8;
+    }
+
+    .navbar-brand {
+      padding: 0px 15px;
+    }
+
+    .custom_width {
+      width: 75px;
+    }
+
+    .table th,
+    td {
+      text-align: center;
+    }
+
+    .employee_form .form-group {
+      margin-bottom: 10px;
+    }
+
+    .table-bordered {
+      border: 1 !important;
+    }
+
+    .employee_form label {
+      font-size: 9px;
+    }
+
+    .skill_width {
+      width: 250px;
+      max-width: 251px !important;
+    }
+
+    .ms-options-wrap > button:focus,
+    .ms-options-wrap > button {
+      border: 0px solid #fd7e14 !important;
+      border-radius: 5px !important;
+    }
+
+    .ms-options-wrap,
+    .ms-options-wrap * {
+      max-width: 250px !important;
+    }
+
+    .table_align {
+      margin-top: 10px !important;
+    }
+
+    .header_col {
+      font-weight: 500;
+      font-size: 12px;
+    }
+
+    .add_account {
+      border: 1px solid #fd7e14;
+      margin-left: 10px;
+      padding: 2px 10px 2px 10px;
+      color: #fd7e14;
+      border-radius: 5px;
+    }
+
+    .option_create_text {
+      text-align: -webkit-right;
+      text-decoration: underline;
+      color: blue !important;
+    }
+
+    .table-bordered > tbody > tr > td,
+    .table-bordered > tbody > tr > th,
+    .table-bordered > tfoot > tr > td,
+    .table-bordered > tfoot > tr > th,
+    .table-bordered > thead > tr > td,
+    .table-bordered > thead > tr > th {
+      border: 1px solid #f6f6f6 !important;
+    }
+    .tab-buttons-account {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      border-bottom: 0;
+      margin-top: 19px;
+    }
+    .tab-button-account {
+      padding: 0 2px 10px;
+      position: relative;
+      cursor: pointer;
+      border: none;
+      background: none;
+      outline: none;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.92) !important;
+      font-size: 12px;
+      font-family: "Poppins", "Celias", sans-serif;
+      font-weight: 400;
+      border-radius: 0;
+    }
+    .tab-button-account.active {
+      color: #ffffff !important;
+      font-weight: 400;
+      border-bottom: 0;
+    }
+    .tab-button-account.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 3px;
+      border-radius: 999px;
+      background: #ff7d20;
+    }
+    .tab-content-account {
+      display: none;
+      padding: 10px;
+      padding-top: 15px;
+      padding-bottom: 0px;
+      background-color: #f9f9f9;
+      margin-top: 10px;
+      /* height: 35vh; */
+      height: calc(100vh - 520px);
+      overflow-y: auto !important;
+      border-radius: 8px;
+      /* overflow: visible !important; */
+    }
+
+    .tab-content-account.active {
+      display: block;
+      /* height: 35vh !important; */
+      height: calc(100vh - 380px);
+    }
+    .comment-section textarea {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+    }
+    .comment-section button {
+      margin-top: 10px;
+      padding: 8px 16px;
+      font-size: 14px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .comment-section button:hover {
+      background-color: #0056b3;
+    }
+    .comment-section {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box; /* Ensures padding is included in width */
+      margin-top: 8px;
+      font-family: poppins;
+      color: #818199;
+      font-style: italic;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .comment-section textarea {
+      width: 100%;
+      height: 150px; /* Set a desired height */
+      margin-top: 10px;
+      padding: 8px;
+      resize: vertical; /* Allow vertical resizing only */
+      box-sizing: border-box; /* Ensures padding is included in width */
+      font-size: 16px;
+    }
+
+    .comment-section button {
+      margin-top: 10px;
+      padding: 8px 16px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .ql-toolbar.ql-snow {
+      padding: 8px !important;
+      background-color: #ffffff;
+    }
+    .ql-editor {
+      background-color: #ffffff;
+    }
+    .ql-snow.ql-toolbar button,
+    .ql-snow .ql-toolbar button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: inline-block;
+      float: left;
+      height: 24px;
+      padding: 3px 5px;
+      width: 28px;
+    }
+    .active {
+      color: rgb(73, 71, 71) !important;
+    }
+    .custom-row {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: nowrap; /* Prevents columns from wrapping to the next line */
+      margin-top: 15px;
+    }
+
+    .custom-col {
+      /* text-align: center; */
+      border-radius: 8px; /* Optional for visual clarity */
+      padding: 10px;
+      box-sizing: border-box;
+      margin: 3px;
+      background: #ed7d2d1a;
+    }
+    .custom-col-opp {
+      /* text-align: center; */
+      border-radius: 8px; /* Optional for visual clarity */
+      padding: 10px;
+      box-sizing: border-box;
+      margin: 3px;
+      background: #f9f9f9;
+    }
+    .custom-col-other {
+      /* text-align: center; */
+      border-radius: 8px; /* Optional for visual clarity */
+      padding: 10px;
+      box-sizing: border-box;
+      margin: 3px;
+      background: #00bdd61a;
+    }
+    .label-class {
+      font-size: 12px;
+      font-family: poppins;
+      font-weight: 400;
+      color: #818199;
+      line-height: 21px;
+    }
+    .account-header {
+      display: flex;
+      justify-content: space-between;
+    }
+    .table_title {
+      padding: 5px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px !important;
+    }
+    .account-edit-toolbar {
+      min-height: 30px;
+      margin: 0 -13px 0px;
+      padding: 0px 5px;
+      background: #1F3864;
+      border-top: 0.5px solid #6d6d6d;
+      border-bottom: 6px solid #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .account-edit-toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 34px;
+      min-width: 0;
+      flex-wrap: wrap;
+    }
+    .account-edit-title {
+      margin: 0;
+      padding: 0 12px 0px;
+      color: #ffffff;
+      font-family: "Poppins", "Celias", sans-serif;
+      font-size: 12px !important;
+      line-height: 1.2;
+      font-weight: 500 !important;
+      white-space: nowrap;
+    }
+    .acc-font-style {
+      font-family: poppins;
+      font-size: 12px;
+      color: #fff;
+      font-weight: 500;
+    }
+    .sow_btn_cus_style {
+      min-width: 80px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      gap: 5px;
+      color: #fd7e14;
+      background-color: #fff;
+      border: 1px solid #fd7e14;
+      font-size: 12px;
+      font-family: 00;
+      font-family: poppins;
+      padding: 5px 10px;
+    }
+    .sow_btn_cus_style:hover,
+    .sow_btn_cus_style:active:focus {
+      color: #fff;
+      background-color: #fd7e14;
+      border: 1px solid #fd7e14;
+    }
+    .acc-btn-div {
+      display: flex;
+      justify-content: end;
+    }
+    .account-edit-toolbar-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-left: auto;
+      flex-wrap: wrap;
+    }
+    .account-edit-toolbar-right .col-sm-2 {
+      width: auto;
+      float: none;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .account-edit-toolbar-right .sow_btn_cus_style {
+      min-width: 100px;
+      height: 30px;
+      margin: 0 !important;
+      padding: 0 20px;
+      justify-content: center;
+      gap: 8px;
+      color: #ffffff !important;
+      background: transparent !important;
+      border: 1px solid rgba(255, 255, 255, 0.85) !important;
+      border-radius: 10px !important;
+      box-shadow: none !important;
+      font-family: "Poppins", "Celias", sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+    }
+    .account-edit-toolbar-right .sow_btn_cus_style:hover,
+    .account-edit-toolbar-right .sow_btn_cus_style:focus,
+    .account-edit-toolbar-right .sow_btn_cus_style:active {
+      color: #ffffff !important;
+      background: rgba(255, 255, 255, 0.08) !important;
+      border-color: rgba(255, 255, 255, 0.85) !important;
+      outline: none;
+    }
+    .account-edit-toolbar-right .cancel-btn {
+      min-width: 100px;
+    }
+    #account-creation-page > hr {
+      display: none;
+    }
+    #account-creation-page > .container.main-content {
+      margin-top: -4px;
+    }
+    @media screen and (max-width: 960px) {
+      .account-edit-toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .account-edit-toolbar-left,
+      .account-edit-toolbar-right {
+        width: 100%;
+      }
+      .account-edit-toolbar-right {
+        justify-content: flex-start;
+      }
+    }
+    @media screen and (max-width: 640px) {
+      .account-edit-toolbar {
+        padding: 16px;
+      }
+      .account-edit-toolbar-left {
+        gap: 18px;
+      }
+      .tab-buttons-account {
+        gap: 18px;
+      }
+      .account-edit-toolbar-right .col-sm-2 {
+        width: 100%;
+        flex-wrap: wrap;
+      }
+      .account-edit-toolbar-right .sow_btn_cus_style {
+        width: 100%;
+      }
+    }
+    .warningMessage {
+      color: #ff0000;
+      font-size: 10px;
+      font-weight: 500;
+    }
+    .account_sec_block {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .each_acc_block {
+      display: flex;
+      flex-direction: column;
+      background-color: #ed7d2d1a;
+      padding: 10px;
+      border-radius: 5px;
+      width: 100%;
+      justify-content: space-evenly;
+    }
+    /* .form-control {
+      display: inline-block !important;
+    } */
+    .select2-container .select2-choice {
+      height: 34px;
+      border: 1px solid #aaa;
+      background-image: none !important;
+      line-height: 34px;
+    }
+    #account-creation-page {
+      width: 98%;
+      margin: auto;
+    }
+    .acc-label-block {
+      display: flex;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      z-index: 1;
+    }
+
+    /* .main-content {
+      position: relative;
+      z-index: 10;
+      background-color: #fff; 
+      border-radius: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    } */
+
+    #popup,
+    #popup_nps {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 300px;
+      background-color: #9095a0;
+      color: white;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+      display: none;
+    }
+
+    #popup label,
+    #popup_nps label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    #popup input,
+    #popup_nps input {
+      width: calc(100% - 10px);
+      padding: 5px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      color: black;
+    }
+
+    #popup button,
+    #popup_nps button {
+      padding: 8px 15px;
+      background-color: #ffffff;
+      color: #fd7e14;
+      border: 1px solid #fd7e14;
+      border-radius: 3px;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    #popup button:hover,
+    #popup_nps button:hover {
+      background-color: #fd7e14;
+      color: #fff;
+      font-weight: 500;
+      font-size: 14px;
+      border: 1px solid #fd7e14;
+    }
+    .acc_view,
+    #account_name_view {
+      background-color: transparent !important;
+      color: coral;
+      cursor: not-allowed;
+      /* text-align: center !important; */
+      font-weight: 500 !important;
+      font-size: 14px !important;
+      font-family: poppins !important;
+    }
+    .audit-item strong {
+      font-weight: 400;
+      font-size: 14px;
+      color: #313265;
+      font-family: poppins;
+      margin-top: 10px;
+    }
+    .fa-solid.fa-circle-dot {
+      color: #2985c1;
+    }
+    .audit-list {
+      margin-top: 0;
+      margin-bottom: 10px;
+      margin-left: -35px !important;
+    }
+    .audit-item {
+      margin-left: 5px;
+      font-family: Poppins, sans-serif !important;
+      line-height: 2.5;
+    }
+    #notesTabDiv {
+      color: #555555 !important;
+      font-size: 11px;
+      font-family: poppins;
+      font-weight: 400;
+    }
+    .audit-item .audit-details {
+      color: #818199;
+      font-size: 12px;
+      font-weight: 400;
+    }
+    #s2id_growth_members, #s2id_delivery_members {
+      width: 100%;
+    }
+    /* .growth_data {
+      margin-top: 10px;
+    } */
+    @media screen and (min-width: 1200px) and (max-width: 1350px) {
+      .each_acc_block {
+        padding: 5px;
+      }
+      .account_sec_block {
+        display: flex;
+        gap: 5px;
+        margin-top: 5px;
+      }
+      .tab-content-account {
+        height: calc(100vh - 415px);
+      }
+    }
+    .btn.focus,
+    .btn:focus,
+    .btn:hover {
+      color: #fff;
+      background-color: #fd7e14;
+      text-decoration: none;
+    }
+    hr {
+      margin-top: 5px;
+      margin-bottom: 5px;
+      border: 0;
+      border-top: 1px solid #eee;
+    }
+    .spnTooltip ul, li {
+      list-style-type: inherit;
+    }
+    .audit-item-div {
+      border-bottom: 2px solid #D9D9D9;
+      padding: 0px 15px;
+    }
+    .audit-item-div:last-child {
+      border-bottom: none;
+    }
+    #s2id_add_buying_center {
+      width: 80%;
+    }
+    #view_edit_buying_center {
+      color: #fc8c15;
+      border: 1px solid #fc8c15;
+      background-color: transparent;
+      padding: 8px 6px; 
+      font-size: 11px;
+    }
+    #view_edit_buying_center:hover {
+      background-color: #fc8c15;
+      color: white;
+      border: 1px solid #fc8c15;
+      outline: none;
+    }
+  </style>
+
+  <body style="display: none">
+    <div id="header"></div>
+    <div id="account-creation-page">
+      <div class="account-edit-toolbar">
+        <div class="account-edit-toolbar-left">
+          <div class="account-edit-title acc-font-style">Account Details</div>
+          <div id="tab-buttons-account" class="tab-buttons-account"></div>
+        </div>
+        <div class="account-edit-toolbar-right">
+          <div class="col-sm-2 cstm-text-align-end">
+            <button
+              class="btn save-btn sow_btn_cus_style acc-font-style"
+              type="button"
+              id="updateAccountData"
+              onclick="updateAccountData()"
+            >
+              <i class="fa-regular fa-floppy-disk fa-lg"></i>Update
+            </button>
+            <button
+              class="btn cancel-btn sow_btn_cus_style acc-font-style"
+              type="button"
+              id="cancelAccount"
+              onclick="cancelAccount()"
+            >
+              <i class="fa-regular fa-circle-xmark"></i> Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="container main-content">
+        <!-- Tab content container -->
+        <div class="row">
+          <div id="tab-content-container-account"></div>
+        </div>
+      </div>
+      <div class="account_sec_block">
+        <div class="each_acc_block">
+          <div class="acc-label-block">
+            <label for="aad_account_name">
+              Account Name <span class="warningMessage">*</span>
+            </label>
+          </div>
+          <div class="account_fields" id="account_name_view">Test Account</div>
+        </div>
+        <div class="each_acc_block">
+          <label for="add_location">
+            Location <span class="warningMessage">*</span></label
+          >
+          <div class="account_fields acc_view" id="account_location_view">
+            India
+          </div>
+          <select id="add_location" class="acc_edit">
+            <option value="-1">Select Location</option>
+            <option value="India">India</option>
+            <option value="US">US</option>
+          </select>
+        </div>
+        <div class="each_acc_block">
+          <div class="buying_label_data">
+            <div>Buying Center <span class="warningMessage">*</span></div>
+            <div style="display: none;">
+              <button type="button" class="btn buying_center_btn" id="view_edit_buying_center" style="padding: 3px 6px; font-size: 11px;" onclick="newBuyingCenter()">+ New</button>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center;">
+            <div class="account_fields acc_view" id="buying_center_view">
+              Buying Center
+            </div>
+            <select id="add_buying_center" class="acc_edit" onchange="changeBuyingCenter(this)" style="margin-right: 5px;">
+            </select>
+            <button type="button" class="btn buying_center_btn" id="view_edit_buying_center" onclick="viewEditBuyingCenter()">View/Edit</button>
+          </div>
+        </div>
+        <div class="each_acc_block">
+          <label for="stakeHolder"
+            >NPS Stake Holder <span class="warningMessage">*</span></label
+          >
+          <div class="account_fields acc_view" id="nps_stakeholder_view">
+            NPS Stack Holder
+          </div>
+          <select id="add_nps_holder" class="acc_edit" onchange="changeNPSStakeHolder(this)">
+            
+          </select>
+        </div>
+      </div>
+      <div class="account_sec_block">
+        <div class="each_acc_block">
+          <div class="acc-label-block">
+            <label for="add_contact_account"
+              >Account Head <span class="warningMessage">*</span>
+            </label>
+          </div>
+          <div class="account_fields acc_view" id="account_head_view">
+            Account Head
+          </div>
+          <select id="add_contact_account" class="acc_edit"></select>
+        </div>
+        <div class="each_acc_block">
+          <div class="acc-label-block">
+            <label for="add_contact_factspan"
+              >Business Head <span class="warningMessage">*</span>
+            </label>
+          </div>
+          <div class="account_fields acc_view" id="business_head_view">
+            Business Head
+          </div>
+          <select id="add_business_head" class="acc_edit"></select>
+        </div>
+        <div class="each_acc_block">
+          <div class="acc-label-block">
+            <label for="add_contact_factspan"
+              >Delivery Head <span class="warningMessage">*</span>
+            </label>
+          </div>
+          <div class="account_fields acc_view" id="delivery_head_view">
+            Delivery Head
+          </div>
+          <select id="add_delivery_head" class="acc_edit"></select>
+        </div>
+        <div class="each_acc_block">
+          <div class="acc-label-block">
+            <label for="account_size"
+              >Size <span class="warningMessage">*</span>
+            </label>
+          </div>
+          <div class="account_fields acc_view" id="size_view">Size</div>
+          <select id="account_size" class="acc_edit"></select>
+        </div>
+      </div>
+      <div class="account_sec_block">
+        <div class="each_acc_block">
+          <div class="acc-label-block">
+            <label for="min_bill_rate_uscan">Min Bill Rate - USCAN </label>
+          </div>
+          <div class="account_fields acc_view" id="min_uscan_view">USCAN</div>
+          <input
+            type="number"
+            class="form-control acc_edit"
+            id="min_bill_rate_uscan"
+            placeholder="Min Bill Rate - USCAN "
+            name="min_bill_rate_uscan"
+            autocomplete="off"
+            min="0"
+          />
+        </div>
+        <div class="each_acc_block">
+          <div class="acc-label-block">
+            <label for="min_bill_rate_ind">Min Bill Rate - IND</label>
+          </div>
+          <div class="account_fields acc_view" id="min_ind_view">INDIA</div>
+          <input
+            type="number"
+            class="form-control acc_edit"
+            id="min_bill_rate_ind"
+            placeholder="Min Bill Rate - IND"
+            name="min_bill_rate_ind"
+            autocomplete="off"
+            min="0"
+          />
+        </div>
+        <div class="each_acc_block">
+          <div class="acc-label-block">
+            <label for="ms_signed_date"
+              >MSA Signed
+            </label>
+          </div>
+          <div class="account_fields acc_view" id="msa_signed_view">
+            MSA Signed
+          </div>
+          <input
+            type="text"
+            class="form-control placeicon dateData acc_edit"
+            id="ms_signed_date"
+            placeholder="&#xf073; MM-DD-YY"
+            name="ms_signed_date"
+            autocomplete="off"
+            style="z-index: 1"
+          />
+        </div>
+        <div class="each_acc_block">
+          <div class="acc-label-block">
+            <label for="payment_term"
+              >Payment Term </label
+            >
+          </div>
+          <div class="account_fields acc_view" id="payment_term_view">
+            Payment Term
+          </div>
+          <select id="payment_term" class="acc_edit"></select>
+        </div>
+      </div>
+      <div class="account_sec_block">
+        <div class="each_acc_block growth_data">
+          <div class="acc-label-block">
+            <label for="growth_members"
+              >Growth Members</label
+            >
+          </div>
+          <div>
+            <select class="account_edit_field add_growth_head" id="growth_members" data-placeholder="Growth Members" name="add_growth_head[]" multiple></select>
+          </div>
+        </div>
+        <div class="each_acc_block growth_data">
+          <div class="acc-label-block">
+            <label for="growth_members"
+              >Delivery Members</label
+            >
+          </div>
+          <div>
+            <select class="account_edit_field add_delivery_member" id="delivery_members" data-placeholder="Growth Members" name="add_delivery_member[]" multiple></select>
+          </div>
+        </div>
+      </div>
+      <!-- Overlay for background blur -->
+      <div id="overlay"></div>
+
+      <!-- Popup -->
+      <div id="popup">
+        <label for="field1">Buying Center</label>
+        <input type="text" id="new_buying_center_name" placeholder="Enter Buying Center" autocomplete="off" />
+
+        <label for="field2">NPS Stake Holder</label>
+        <input type="text" id="new_nps_name" placeholder="Enter NPS Stake Holder"  autocomplete="off"/>
+
+        <button id="closePopup">Cancel</button>
+        <button id="closePopup" onclick="saveBuyingCenter()">Save</button>
+      </div>
+      <div id="popup_nps">
+        <label for="field1">Buying Center Name : <span id="already_buying_center"></span></label>
+        <label for="field2">NPS Stake Holder</label>
+        <input type="text" id="only_new_nps_name" placeholder="Enter NPS Stake Holder" autocomplete="off"/>
+
+        <button id="closeNPSPopup">Cancel</button>
+        <button id="closePopup" onclick="saveNpsStakeholder()">Save</button>
+      </div>
+    </div>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        assignMetaValue();
+        $("meta[name='google-signin-client_id']").attr("content", metaValue);
+        getLocalSessionData();
+        if (sessionName == null) {
+          window.location.href = "index.html";
+          return false;
+        } else {
+          $("body").css("display", "block");
+          getSowViewData();
+          AccountDataView();
+          // createAccount();
+          $("#add_contact_factspan").select2({});
+          $("#add_contact_account").select2({});
+          $("#add_business_head").select2({});
+          $("#add_delivery_head").select2({});
+          $("#add_location").select2({});
+          $("#account_size").select2({});
+          $("#payment_term").select2({});
+          $("#add_buying_center").select2({});
+          $("#add_nps_holder").select2({});
+
+          $(".input-group-addon").hide();
+          $("#accWarningMsg").hide();
+          $("#closePopup").click(function () {
+            $("#popup").fadeOut(200);
+            $("#popup_nps").fadeOut(200);
+            $("#overlay").removeClass("overlay");
+          });
+          $("#closeNPSPopup").click(function () {
+            $("#popup_nps").fadeOut(200);
+            $("#overlay").removeClass("overlay");
+          });
+        }
+
+        $(window).resize(resize);
+        resize();
+        $(".new-sub-menu").hover(function () {
+          $(".sub-menu").css("display", "");
+        });
+      });
+      function resize() {
+        if ($(window).width() < 514) {
+          $("#resp-table").addClass("table-responsive");
+        } else {
+          $("#resp-table").removeClass("table-responsive");
+        }
+      }
+      let skillOptions = "";
+
+      $("#ms_signed_date").datepicker({
+        format: "mm-dd-yy",
+        uiLibrary: "bootstrap",
+      });
+
+      $("#dashboard").click(function () {
+        window.location.href = "home.html";
+        return false;
+      });
+      $("#sow_creation_page").click(function () {
+        window.location.href = "sowCreate.html";
+        return false;
+      });
+      $("#logout").click(function () {
+        localStorage.clear();
+        window.location.href = "index.html";
+        return false;
+      });
+    </script>
+    <script
+      src="https://apis.google.com/js/platform.js?onload=onLoad"
+      async
+      defer
+    ></script>
+  </body>
+</html>

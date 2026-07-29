@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Factspan - ARCUS - Account Details</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv='cache-control' content='no-cache'>
+  <meta http-equiv='expires' content='0'>
+  <meta http-equiv='pragma' content='no-cache'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+  </style>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+  <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+  <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+  <script src="https://kit.fontawesome.com/01f906aa6d.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/custom.css" />
+  <script src="js/jquery.tabledit.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/accountDetails.js"></script>
+
+  <link rel="icon" href="images\factspan.png" type="image/png" sizes="16x16">
+
+  <script src="lib/jQuery-MultiSelect.js"></script>
+  <link rel="stylesheet" href="css/jquery.multiselect.css">
+  <script src="js/bootbox.min.js"></script>
+  <script src="js/bootbox.locales.min.js"></script>
+  <script src="js/jquery.table2excel.js"></script>
+  <link rel="stylesheet" href="css/busyLoading.css">
+  <link href="https://cdn.jsdelivr.net/npm/select2@3.5.1/select2.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@3.5.1/select2.js"></script>
+
+  <script>
+    $(function () {
+      $('#header').load('header.html');
+
+    })
+  </script>
+</head>
+<style>
+  .employee_sow_details .table th {
+
+    border: solid 0px #f8f9fa;
+    border-radius: 0px;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+  }
+
+
+  .employee_detail_inside .table th {
+    font-size: 10px;
+    font-weight: 500;
+    color: #8b8988;
+  }
+
+  .inactive-account{
+    background-color: #e3e2e263;
+    padding: 4px;
+    /* border-radius: 5px; */
+    /* cursor: pointer; */
+    border-radius: 15px;
+    text-align: center;
+    font-weight: 500;
+    color: #a19b9b;
+  }
+
+
+
+  .employee_detail_inside .table th {
+    width: 4.14% !important;
+  }
+
+  .employee_detail_inside .table th {
+    font-size: 10px;
+    font-weight: 500;
+    color: #8b8988;
+  }
+
+  .signed_bg {
+
+    background-color: #ffffff;
+
+    color: #252424ad !important;
+    border: #edf6fe !important;
+  }
+
+  .signed_header_bg {
+    background-color: #4CA5FFFF;
+    color: #fff !important;
+    border: #4CA5FFFF !important;
+  }
+
+  .proposal_header_bg {
+    background-color: #17A948FF;
+    color: #fff !important;
+    border: #17A948FF !important;
+  }
+
+  .proposal_bg {
+
+    background-color: #ffffff;
+    color: #252424ad !important;
+
+    border: #e9fef0 !important;
+  }
+
+  .all_month_bg {
+    background-color: #007A45FF;
+    color: #fff !important;
+  }
+
+
+
+  #signed_sow_table>tbody>tr,
+  #proposal_sow_table>tbody>tr {
+    border-bottom: 1px solid #e4e4e4;
+  }
+
+  .emp_filter {
+    margin-top: -19px !important;
+    margin-right: 2px;
+  }
+
+  .emp_radio_filter>label {
+    width: 68px;
+  }
+
+  #report_sow_account {
+    background-color: #f2f2f2;
+  }
+
+  .account_bg,
+  .account_bg>td {
+    background-color: #f2f2f2 !important;
+    color: black !important;
+  }
+
+  .employee_detail_inside table tr:nth-child(even) {
+    background: #f2f2f2;
+    border-top: solid 1px #f2f2f2;
+  }
+
+  hr {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border: 0;
+    border-top: 1px solid #eee;
+  }
+
+  .employee_detail_inside table tr:nth-child(even) {
+    background: #ffffff;
+    border-top: solid 1px #ffffff;
+  }
+
+  .overall_total_bg,
+  .overall_total_bg>td {
+    background-color: #4CA5FFFF;
+    color: #fff !important;
+    border: #4CA5FFFF !important;
+  }
+
+  .overall_total_allSow,
+  .overall_total_allSow>td {
+    background-color: #5ef68f;
+    color: #090909 !important;
+    border: #befcd2 !important;
+
+  }
+
+
+  .renewal_bg,
+  .renewal_bg>td {
+    background-color: #befcd2;
+    color: #006120 !important;
+    border: #befcd2 !important;
+
+  }
+
+  .proposal_bg,
+  .proposal_bg>td {
+    background-color: #08bb44;
+    color: #fff !important;
+    border: #08bb44 !important;
+  }
+
+  .overall_total,
+  .overall_total>td {
+    background-color: #007A45FF;
+    color: #fff !important;
+
+    border: #007A45FF !important;
+
+  }
+
+  .top_space {
+    border-top: 5px solid white !important;
+  }
+
+  .top_broder_bg {
+    border-top: 1.5px solid #eff3ef !important;
+  }
+
+  #report_overall_summary>th {
+    background-color: #f2f2f2;
+  }
+
+  .account_level {
+    background-color: #f2f2f2 !important;
+  }
+
+  .account_level>td {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+  }
+
+  .RED {
+    background-color: rgb(238 46 46 / 24%);
+    color: black !important;
+  }
+
+  .GREEN {
+    background-color: #77cb7742;
+    color: black !important;
+  }
+
+  #excelDownload {
+    padding: 5px 25px;
+    margin-right: 5px;
+  }
+
+  .table_title {
+    margin-bottom: -26px;
+  }
+
+  .thead-light {
+    background-color: #f3f3f3;
+  }
+
+  #account_head>th {
+    background-color: #f3f3f3;
+  }
+
+  .employee_form .btn-info-account {
+    background-color: #fff;
+    font-size: 12px;
+
+    padding: 10px;
+    font-weight: 500;
+    transition: all 0.3s;
+    border-radius: 5px;
+    padding: 0px 3px;
+  }
+
+  .employee_form .btn-info-account:hover {
+    color: #fc8c15;
+  }
+
+  .account_edit_field {
+    display: none;
+
+  }
+
+  .form-control {
+    padding: 3px 4px !important;
+  }
+
+  .table_z_index {
+    z-index: 100;
+  }
+
+  .select2-container .select2-choice>.select2-chosen {
+    margin-right: 0px;
+  }
+
+  .show_delete_app {
+    background-color: #ecb09257 !important;
+  }
+  .fa-toggle-on::before{
+    color: orange;
+  }
+  .disable-acc{
+    cursor: not-allowed !important;
+    pointer-events: none;
+    color: #ccc !important;
+  }
+
+
+  #ind_legends {
+    display: flex;
+    font-size: 10px;
+    font-weight: 600px !important;
+    justify-content: space-around;
+    align-items: center;
+    display: none;
+    width: 140px;
+    height: 33px;
+    border-radius: 9999px;
+    float: right;
+  }
+  .employee_detail_inside {
+    display: inline-block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 0px;
+    box-shadow: 0px 5px 12px -5px #989696;
+    min-height: 400px;
+  }
+
+  .fixTableHead {
+    overflow-y: auto;
+    height: calc(100vh - 135px);
+  }
+
+  .ind_color {
+    height: 15px;
+    width: 15px;
+    background-color: #ecb09257;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .emp_radio_filter {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #cecece;
+    width: 260px;
+    height: 25px;
+    border-radius: 9999px;
+    margin-top: 15px;
+    box-shadow: inset 0.5px 0.5px 2px 0 rgb(0 0 0 / 15%);
+  }
+
+  .account-filter-toolbar {
+    min-height: 40px;
+    margin: 0 -10px 0 -15px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: nowrap;
+    background: #1F3864;
+    border-top: 1px solid #777675;
+    overflow-x: auto;
+  }
+
+  .account-filter-title {
+    display: none;
+  }
+  .emp_radio_filter>label, .year_radio_filter>label {
+    height: 20px !important;
+  }
+
+  .account-toolbar-left,
+  .account-toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+  }
+
+  .account-filter-toolbar .emp_radio_filter {
+    width: auto;
+    min-height: 30px;
+    margin: 0;
+    padding: 0.5rem;
+    gap: 0.35rem;
+    justify-content: flex-start;
+    background: #16243e;
+    border-radius: 999px;
+    box-shadow: none;
+  }
+  .employee_form {
+    /* height: calc(100vh - 100px); */
+    height: calc(100vh - 60px);
+    overflow-y: hidden;
+  }
+
+  .account-filter-toolbar .emp_radio_filter>input[type="radio"] {
+    display: none;
+  }
+
+  .account-filter-toolbar .emp_radio_filter>label {
+    width: auto;
+    margin: 0;
+    padding: 2px 10px;
+    border-radius: 999px;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .account-filter-toolbar .emp_radio_filter>label:hover {
+    color: #fff;
+  }
+
+  .account-filter-toolbar .emp_radio_filter>input[type="radio"]:checked+label {
+    background: #ff7d20;
+    color: #fff;
+    font-weight: 500;
+  }
+
+  .account-toolbar-btn,
+  .account-filter-toolbar .account-select-wrap,
+  .account-filter-toolbar .account-search-field {
+    height: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.78);
+    border-radius: 10px;
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    color: #fff !important;
+    box-shadow: none !important;
+  }
+  label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 0px;
+    font-weight: 400;
+  }
+
+  .account-toolbar-btn {
+    padding: 0 22px !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    float: none;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    text-shadow: none;
+    border-color: rgba(255, 255, 255, 0.78) !important;
+    border-radius: 10px !important;
+  }
+
+  .account-toolbar-btn:hover,
+  .account-toolbar-btn:focus {
+    color: #fff !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    background-image: none !important;
+    border-color: #fff !important;
+    outline: none;
+  }
+
+  .account-reorder-btn {
+    min-width: 175px;
+  }
+
+  .employee_form label {
+    font-size: 12px;
+    color: #fff;
+    font-weight: 400;
+  }
+  .account-reorder-btn .sort-arrows {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    font-size: 12px;
+    line-height: 1;
+  }
+
+  .account-table-length {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .account-select-wrap {
+    position: relative;
+    min-width: 120px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .account-select-wrap select {
+    /* width: 100%; */
+    /* height: 100%; */
+    padding: 0 25px 0 15px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent !important;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 400;
+    appearance: none;
+    outline: none;
+    box-shadow: none;
+  }
+
+  .account-select-wrap select option {
+    color: #1d2843;
+  }
+
+  .account-select-wrap::after {
+    content: "\f107";
+    font-family: FontAwesome;
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+    pointer-events: none;
+    font-size: 16px;
+  }
+
+  .account-toolbar-divider {
+    width: 1px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.28);
+  }
+
+.account-search-field {
+    min-width: 190px;
+    margin: 0;
+    padding: 0px 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .account-search-field i {
+    font-size: 12px;
+  }
+
+  .account-search-field input {
+    width: 100%;
+    border: 0;
+    background: transparent !important;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 400;
+    outline: none;
+    box-shadow: none;
+}
+
+  .account-search-field input::placeholder {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .account-back-btn {
+    min-width: 70px;
+    padding: 0 12px !important;
+  }
+
+  .account-back-btn i {
+    font-size: 12px;
+    line-height: 1;
+  }
+
+  @media (max-width: 1200px) {
+    .account-filter-toolbar {
+      padding: 12px 18px;
+      flex-wrap: wrap;
+      overflow-x: visible;
+    }
+
+    .account-toolbar-right {
+      width: 100%;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .account-filter-toolbar {
+      margin: 0 -10px 0 -15px;
+      padding: 14px;
+      flex-wrap: wrap;
+    }
+
+    .account-toolbar-left,
+    .account-toolbar-right {
+      width: 100%;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .account-reorder-btn,
+    .account-search-field,
+    .account-select-wrap,
+    .account-back-btn {
+      width: 100%;
+    }
+
+    .account-toolbar-divider {
+      display: none;
+    }
+  }
+  .second_top_header {
+    position: sticky !important;
+    top: 27px !important;
+    background-color: #f3f3f3 !important;
+  }
+  th.table_z_index.cust_width {
+    width: 1% !important;
+  }
+  th.table_z_index.growth_width {
+    width: 4% !important;
+  }
+  .add_growth_head input.select2-input {
+    width: 120px !important;
+  }
+
+  /* ---- Account Reorder Modal ---- */
+  :root {
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f8f9fa;
+    --color-background-success: #e8f5e9;
+    --color-background-info: #E6F1FB;
+    --border-radius-xl: 12px;
+    --border-radius-md: 6px;
+    --color-border-primary: #4CA5FF;
+    --color-border-secondary: #e0e0e0;
+    --color-border-tertiary: #f0f0f0;
+    --color-border-info: #185FA5;
+    --color-text-primary: #313265;
+    --color-text-tertiary: #888888;
+    --color-text-success: #2e7d32;
+  }
+  .overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+  }
+  .overlay.show { display: flex !important; }
+  
+  .overlay .modal {
+    background: var(--color-background-primary);
+    border-radius: var(--border-radius-xl);
+    border: 0.5px solid var(--color-border-secondary);
+    width: 100%;
+    max-width: 560px;
+    display: flex !important;
+    flex-direction: column;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+  }
+  .overlay .mhead {
+    padding: 1.1rem 1.25rem 1rem;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1F3864;
+  }
+  .overlay .mhead h2 { font-size: 12px; font-weight: 400; color: var(--color-background-primary); margin: 0; }
+  .overlay .mhead span { font-size: 12px; color: var(--color-text-tertiary); cursor: pointer; }
+  
+  .overlay .sbar { padding: 0.65rem 1.25rem; border-bottom: 0.5px solid var(--color-border-tertiary); position: relative; background-color: #1F3864;}
+  .overlay .sbar input {
+    width: 100%; padding: 7px 12px 7px 32px; border: 0.5px solid var(--color-border-secondary);
+    border-radius: var(--border-radius-md); font-size: 13px; background: #1F3864;
+    color: #fff; outline: none;
+  }
+  .overlay .sbar input:focus { border-color: var(--color-border-primary); background: #1F3864; color }
+  .overlay .sbar .ti { position: absolute; left: 24px; top: 50%; transform: translateY(-50%); color: #fff; font-size: 12px; pointer-events: none; }
+  
+  .overlay .list-wrap {
+    padding: 0.5rem 1rem;
+    max-height: 50vh;
+    overflow-y: auto;
+  }
+  .overlay .row { display: flex; align-items: center; gap: 15px; padding: 12px 16px; margin: 0; border-bottom: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); transition: background 0.2s; outline: none; }
+  .overlay .row:hover { background: var(--color-background-secondary); }
+  .overlay .row:focus { outline: 2px solid #fc8c15; outline-offset: -2px; background: var(--color-background-secondary); }
+  .overlay .row.drag-over { border-top: 2px solid #fc8c15; background: var(--color-background-secondary); }
+  .overlay .row.dragging { opacity: 0.5; }
+  .overlay .row .grip { color: var(--color-text-tertiary); font-size: 16px; cursor: grab; flex-shrink: 0; padding: 0 4px; }
+  .overlay .row .num { font-size: 11px; color: var(--color-text-tertiary); min-width: 18px; text-align: right; flex-shrink: 0; }
+  .overlay .row .name { font-size: 12px; color: var(--color-text-primary); flex: 1; font-weight: 500; }
+  .overlay .row .badge { font-size: 11px; padding: 2px 8px; border-radius: 20px; background: var(--color-background-success); color: var(--color-text-success); flex-shrink: 0; }
+  
+  .overlay .mfoot { padding: 0.9rem 1.25rem; border-top: 0.5px solid var(--color-border-tertiary); display: flex; align-items: center; justify-content: space-between; }
+  .overlay .mfoot span { font-size: 12px; color: var(--color-text-tertiary); }
+  .overlay .btns { display: flex; gap: 8px; }
+  .overlay .btn-custom { 
+      background-color: #fff;
+      font-size: 10px; 
+      color: #fc8c15;
+      border: 1px solid #fc8c15;
+      font-weight: 500;
+      transition: all 0.3s;
+      border-radius: 30px;
+      padding: 5px 20px;
+      cursor: pointer;
+  }
+  .overlay .btn-custom:hover { 
+      background-color: #e07436;
+      color: #fff;
+  }
+  .overlay .btn-save { 
+      background-color: #fc8c15;
+      color: #fff;
+      border-color: #fc8c15;
+  }
+  .overlay .btn-save:hover { 
+      background-color: #e07436; 
+      color: #fff; 
+  }
+  .overlay .saved { color: var(--color-text-success); font-size: 12px; opacity: 0; transition: opacity 0.3s; }
+  .overlay .saved.show { opacity: 1; }
+  /* .acc_name_buying_data{
+    cursor: pointer;
+    color: #006eff;
+  }
+  .acc_name_buying_data:hover{
+    box-shadow: 0px 0px 10px #c4c0c0;
+  } */
+</style>
+
+<body class="unselectable">
+  <div class="loader">
+    <div class="loader-wheel"></div>
+    <div class="loader-text"></div>
+  </div>
+  <div class="show_page" style="display: none;">
+    <div id="header"></div>
+
+    <div class="wrapper_outer">
+      <div id="loader" class="lds-dual-ring hidden overlay"></div>
+      <div class="container-fluid">
+        <div class="detail_box">
+          <div class="employee_form sow_detail">
+            <div class="detail_top_bar account-filter-toolbar">
+              <div class="table_title account-filter-title">Account Details</div>
+              <div class="account-toolbar-left">
+                <div class="emp_radio_filter">
+                  <input type="radio" name="res_acc" id="ALL" class="emp_select" value="ALL"
+                    onclick="assignDataToAccount()">
+                  <label for="ALL">All</label>
+                  <input type="radio" name="res_acc" id="ACTIVE" class="emp_select" value="ACTIVE"
+                    onclick="assignDataToAccount()" checked>
+                  <label for="ACTIVE">Active</label>
+                  <input type="radio" name="res_acc" id="INACTIVE" class="emp_select" value="INACTIVE"
+                    onclick="assignDataToAccount()">
+                  <label for="INACTIVE">Inactive</label>
+                </div>
+                <button class="btn btn-info account-toolbar-btn account-reorder-btn" id="reorderAccountsBtn" onclick="openReorderPopup()" style="display:none;" type="button">
+                  Reorder Accounts
+                  <span class="sort-arrows" aria-hidden="true">&uarr; &darr;</span>
+                </button>
+              </div>
+              <div class="account-toolbar-right">
+                <div class="account-table-length">
+                  <label for="accountEntriesSelect">Show</label>
+                  <div class="account-select-wrap">
+                    <select id="accountEntriesSelect" aria-label="Show entries">
+                      <option value="10">10 Entries</option>
+                      <option value="25">25 Entries</option>
+                      <option value="50" selected>50 Entries</option>
+                      <option value="100">100 Entries</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="account-toolbar-divider" aria-hidden="true"></div>
+                <label class="account-search-field" for="accountTableSearch">
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                  <input type="search" id="accountTableSearch" placeholder="Search" autocomplete="off">
+                </label>
+                <button class="btn btn-info account-toolbar-btn account-back-btn" id="revenueBackBtnCustm" type="button">
+                   Back
+                </button>
+              </div>
+            </div>
+              <span id="ind_legends" class="sow_details_data">
+                <span>
+                  <!-- <span class="ind_color"></span> -->
+                </span>
+                <div>
+                  <!-- <span>Delete Under Approval</span> -->
+                </div>
+
+              </span>
+
+              <div class="employee_detail_inside employee_sow_details table-responsive fixTableHead">
+
+                <table class="table table-bordered border-primary sow_emp_details_class" id="account_report" style="width: 100%;">
+                  <thead class="thead-light">
+                    <tr id="account_head" class="report_sow_account_header">
+                      <th rowspan="2" class="table_z_index">Account</th>
+                      <th rowspan="2" class="table_z_index">MSA Signed</th>
+                      <th rowspan="2" class="table_z_index cust_width">Location</th>
+                      <th rowspan="2" class="table_z_index">Payment Term</th>
+                      <th rowspan="2" class="table_z_index cust_width">Stake Holder</th>
+                      <th rowspan="2" class="table_z_index">Account Head</th>
+                      <th rowspan="2" class="table_z_index">Bussiness Head</th>
+                      <th rowspan="2" class="table_z_index">Delivery Head</th>
+                      <th rowspan="2" class="table_z_index growth_width">Growth Members</th>
+                      <th rowspan="2" class="table_z_index growth_width">Delivery Members</th>
+                      <th rowspan="2" class="table_z_index cust_width">Size</th>
+                      <th colspan="2" class="table_z_index">Min Bill Rate</th>
+                      <th rowspan="2" class="table_z_index cust_width action_data">Action</th>
+                    </tr>
+                    <tr class="report_sow_account_header" style="background-color: #f3f3f3;">
+                      <th class="table_z_index second_top_header cust_width">USCAN</th>
+                      <th class="table_z_index second_top_header cust_width">IND</th>
+                    </tr>
+                  </thead>
+                  <tbody id="account_body">
+
+                  </tbody>
+                </table>
+              </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  </div>
+  <script>
+    $(document).ready(function () {
+      assignMetaValue();
+      $("meta[name='google-signin-client_id']").attr("content", metaValue);
+
+      getLocalSessionData();
+      applySavedAccountFilter();
+      if (sessionName == null) {
+        window.location.href = 'index.html';
+        return false;
+      } else {
+        let accessStatus = checkDashboardPageAccessData()
+        if (accessStatus) {
+          let accessLevel = checkEachPageAccess("Account details")
+          if (accessLevel.length > 0) {
+            let environment = accessLevel[0]
+            if (environment == apiValue.environment) {
+              let pageLevelAccess = accessLevel[1]
+              // let eachLevel = pageLevelAccess.split(',')
+              $('.input-group-addon').hide();
+              getAccountDetailsJson(pageLevelAccess);
+              $(".loader").css("display", "none");
+              $(".show_page").css("display", "block");
+              // $.each(eachLevel, function (l, level) {
+              //   switch (level) {
+              //     case "delete":
+              //       $(".delete_button").show()
+              //       break;
+              //     case "edit":
+              //       $(".delete_button").hide()
+              //       $('#account_report tr').find('th:last, td:last').show();
+              //       break;
+              //     case "view":
+              //       $('#account_report tr').find('th:last, td:last').hide();
+              //       break;
+              //   }
+              // })
+              let getUserRole = localStorage.getItem("user-role");
+              let useremail = localStorage.getItem("email");
+              if (getUserRole.toLocaleLowerCase() == "admin" || useremail.toLocaleLowerCase() == "akhilesh@factspan.com") {
+                $('.action_data').show();
+                $('#reorderAccountsBtn').show();
+              }else {
+                $('.action_data').hide();
+              }
+            } else {
+              window.location.href = "home.html"
+            }
+          }
+        } else {
+          window.location.href = "home.html"
+        }
+
+
+
+      }
+      $(".new-sub-menu").hover(function () {
+        $('.sub-menu').css('display', '')
+
+      });
+    });
+    $('#dashboard').click(function () {
+      window.location.href = 'home.html';
+      return false;
+    });
+    $('#sow_Res_page').click(function () {
+      localStorage.setItem("addRequest", true);
+      localStorage.setItem("editRequest", false);
+      window.location.href = 'sowCreate.html';
+      return false;
+    });
+    $('#userManual').click(function () {
+
+      window.location.href = 'RRESOWUserManual.html';
+      return false;
+    });
+    $('#revenueBackBtnCustm').click(function () {
+
+      window.location.href = 'revenueDetails.html';
+      return false;
+    });
+    $('#logout').click(function () {
+      localStorage.clear();
+      window.location.href = 'index.html';
+      return false;
+    });
+
+  </script>
+  
+  <!-- Account Reorder Modal -->
+  <div class="overlay" id="reorderOverlay">
+    <div class="modal">
+      <div class="mhead">
+        <h2>Account display order (Active Accounts)</h2>
+        <div>
+          <span style="margin-right: 15px; font-size: 12px; color: #888;">Drag or Key &uarr; &darr; to reorder</span>
+          <i class="fa fa-times" onclick="closeReorderPopup()" style="font-size: 10px; cursor: pointer; color: #fff; border: 1px solid #ccc; border-radius: 50%; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center;" title="Close"></i>
+        </div>
+      </div>
+      <div class="sbar">
+        <i class="fa fa-search ti" aria-hidden="true"></i>
+        <input type="text" id="reorderSearch" placeholder="Search…" oninput="filterReorderList()" autocomplete="off" />
+      </div>
+      <div class="list-wrap" id="reorderList"></div>
+      <div class="mfoot">
+        <span class="saved" id="savedIndicator"><i class="fa fa-check" aria-hidden="true"></i> Saved — all views updated</span>
+        <div class="btns">
+          <!-- <button class="btn-custom" onclick="closeReorderPopup()">Cancel</button> -->
+          <button class="btn-custom" onclick="undoReorder()" id="undoBtn" style="opacity:0.4;pointer-events:none">Undo</button>
+          <button class="btn-custom btn-save" onclick="saveAccountOrder()" id="saveOrderBtn">Apply</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

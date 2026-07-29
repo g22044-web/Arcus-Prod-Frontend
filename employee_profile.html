@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Factspan - ARCUS - Employee Details</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-signin-client_id" content="776418814053-hccb99mo0ks8o9l3o3e5plhsn43p96rk.apps.googleusercontent.com">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+  </style>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+  <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+  <link rel="stylesheet" href="css/custom.css" />
+  <script src="js/empdata.js"></script>
+  <script src="js/common.js"></script>
+  <link rel="icon" href="images\factspan.png" type="image/png" sizes="16x16">
+  <script>
+    $(function(){
+       $('#header').load('header.html');
+    })
+ </script>
+</head>
+<style>
+  #app-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #menu {
+    text-align: center;
+    box-shadow: 0px 0px 10px #c4c0c0;
+    border-radius: 15px;
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    width: 85%;
+    /* height: 100%; */
+    background-color: #fff;
+    padding: 40px 60px 60px 60px;
+  }
+
+  #dash-title {
+    text-align: left;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .center-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    height: 120px;
+    color: #fff;
+    font-size: 20px;
+    box-shadow: 0px 0px 10px #571b1b;
+    font-weight: 600;
+  }
+
+  .menu-header {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+
+
+
+  @media screen and (max-height: 450px) {
+    .sidenav {
+      padding-top: 15px;
+    }
+
+    .sidenav a {
+      font-size: 12px;
+    }
+  }
+
+  #emp_table thead>tr>th {
+    background-color: #fae9e9;
+  }
+
+  #emp_table td,
+  #customers th {
+    border: 0.5px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+
+  /* Header menu custom style */
+  .navbar-default .navbar-nav>li>a {
+    /* color: #363535 !important; */
+    font-weight: 500;
+  }
+
+  /* .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+      background-color: #f38e22;
+      color: white !important;
+    } */
+
+  /* .border-style {
+      border-right: 1px solid #707072;
+    } */
+  #profile {
+    background-color: cadetblue;
+    border-radius: 124px;
+    font-size: 30px;
+    margin-left: 15px;
+  }
+
+
+
+  #profile_div a:hover {
+    color: #eff4f8;
+  }
+
+  .navbar-brand {
+    padding: 0px 15px;
+  }
+</style>
+
+<body>
+  <div id="header"></div>
+
+  <!-- <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container" style="margin-top: 10px;">
+      <div class="inner_header">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation"
+            onclick="$('html').toggleClass('fw-noscroll')">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="sr-only">Toggle navigation</span>
+          </button>
+          <a class="" href="home.html">
+            <img src="images\logo.png" alt="Factspan Logo" class="responsive" height="60px" style="display: block;">
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse menusec" id="">
+          <div class="container-fluid">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="revenueDetails.html" id="sow_resource_req" class="border-style "><span
+                    class="hover-underline-animation">
+                    <center><img src="images/icon01.png" height="25px" /><br>SOW Resource Requirement</center>
+                  </span></a></li>
+                  <li class="dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#" id="sow_res_recom" class="border-style ">
+                       <span class="hover-underline-animation">
+                          <center><img src="images/icon05.png" height="25px" /><br>Resource Allocation <b class="caret"></b></center>
+                       </span>
+                    </a>
+                    <ul class="dropdown-menu">
+                       <li><a href="sowResRecom.html"><span class="hover-underline-animation">Project Allocation</span></a></li>
+                       <li><a href="employeeProject.html"><span class="hover-underline-animation">Employee Allocation</span></a></li>
+                    </ul>
+                 </li>
+              <li><a href="team.html" id="employee_details" class="border-style selected_menu"><span
+                    class="hover-underline-animation active_grp">
+                    <center><img src="images/icon03.png" height="25px" /><br>Employee Details</center>
+                  </span></a></li>
+              <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#" id="Metrics" class="border-style ">
+                  <span class="hover-underline-animation">
+                    <center><img src="images/icon05.png" height="25px" /><br>Metrics <b class="caret"></b></center>
+                  </span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="sowRsrceAllocSummar.html"><span class="hover-underline-animation">SOW Resource Allocation
+                        Summary</span></a></li>
+                  <li><a href="allCmpnyUsIndSummary.html"><span class="hover-underline-animation">Resource
+                        Utilization</span></a></li>
+                  <li><a href="availResProjAttr.html"><span class="hover-underline-animation">Available Resigned &
+                        Projected Attrition</span></a></li>
+                  <li class="dropdown-submenu new-sub-menu">
+                    <a tabindex="-1" href="#" class="dropdown-submenu-toggle"><span
+                        class="hover-underline-animation">Exception <b class="caret"></b></span></a>
+                    <ul class="dropdown-menu sub-menu" style="display: none;">
+                      <li><a href="exceptionResult.html"><span class="hover-underline-animation">Revenue Loss</span></a>
+                      </li>
+                      <li><a href="overStaff.html"><span class="hover-underline-animation">Overstaff</span></a></li>
+                      <li><a href="priority_hiring.html"><span class="hover-underline-animation">Prioritize
+                            Hiring</span></a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li><a href="orgChart.html" id="employee_details" class="border-style"><span
+                    class="hover-underline-animation">
+                    <center><img src="images/icon04.png" height="25px" /><br>Org Chart</center>
+                  </span></a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navigation">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="#" id="profile" class="profile_pic" data-toggle="collapse" data-target="#profile_down"
+                style="color: #ffffff;"><img src="images/user.jpg" alt="" />
+                <i class=""><img src="images/down-arrow.png" alt="" /></i>
+              </a>
+            </li>
+          </ul>
+          <div id="profile_down" class="collapse out pull-right">
+            <div id="profile_akhliesh">
+              <center>
+                <div id="profile_div"><a id="profile_name_sign" class="profile_pic">
+                    <img src="images/user.jpg" alt="" />
+                  </a></div>
+                  <div style="font-weight: 500;"><span id="display_name"></span></div>
+                  <div><span id="email_id"></span></div>
+                <button class="btn btn-info float-right" id="logout" style="margin: 10px;" onclick="signOut();"> Sign out</button>
+              </center>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav> -->
+
+  <div class="wrapper_outer">
+    <div class="container-fluid">
+      <div class="detail_box">
+        <div class="employee_form" id="emp_form">
+          <div class="detail_top_bar">
+            <div class="table_title">Employee Details</div>
+            <button class="btn btn-info pull-right" id="employee" style="margin: 10px;">Back</button>
+          </div>
+          <div class="employee_create_inside">
+            <form>
+              <div class="form-group col-sm-6">
+                <center>
+                  <img src="images\profile_demo.png" alt="Factspan Logo" class="responsive" width="250px"
+                    height="250px">
+                </center>
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="employee_id">EMPLOYEE ID </label>
+                <input type="text" class="form-control" id="employee_id" placeholder="Enter Employee ID"
+                  name="employee_id">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="pwd">NAME </label>
+                <input type="text" class="form-control" id="name" placeholder="Enter Name" name="name">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="designation">Job Title </label>
+                <input type="text" class="form-control" id="designation" placeholder="Enter Job Title"
+                  name="designation">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="emp_email_id">Email Id </label>
+                <input type="text" class="form-control" id="emp_email_id" placeholder="Enter Email id"
+                  name="emp_email_id">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="reporting_manager">Reporting Manager </label>
+                <input type="text" class="form-control" id="reporting_manager" placeholder="Enter Reporting Manager"
+                  name="reporting_manager">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="cus_name">Customer Name </label>
+                <input type="text" class="form-control" id="cus_name" placeholder="Enter Customer Name" name="cus_name">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="bill_status">Billing Status </label>
+                <input type="text" class="form-control" id="bill_status" placeholder="Enter Billing Status"
+                  name="bill_status">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="join_date">Join Date </label>
+                <input type="text" class="form-control" id="join_date" placeholder="Enter Join Date" name="join_date">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="end_date">End Date </label>
+                <input type="text" class="form-control" id="end_date" placeholder="Enter End Date" name="end_date">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="project_alloc_start_date">Project Allocation Start Date </label>
+                <input type="text" class="form-control" id="project_alloc_start_date"
+                  placeholder="Enter Project Allocation Start Date" name="project_alloc_start_date">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="project_alloc_end_date">Project Allocation End Date </label>
+                <input type="text" class="form-control" id="project_alloc_end_date"
+                  placeholder="Enter Project Allocation End Date" name="project_alloc_end_date">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="location">Location </label>
+                <input type="text" class="form-control" id="location" placeholder="Enter Location" name="location">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="function">Function </label>
+                <input type="text" class="form-control" id="function" placeholder="Enter Function" name="function">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="status">Status </label>
+                <input type="text" class="form-control" id="status" placeholder="Enter Status" name="status">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="key_skill">Key Skill </label>
+                <!-- <input type="text" class="form-control" id="key_skill" placeholder="Enter Key Skill" name="key_skill"> -->
+                <div id="key_skill"></div>
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="next_skill_to_learn ">Next Skill to Learn </label>
+                <input type="text" class="form-control" id="next_skill_to_learn" placeholder="Enter Next Skill to Learn"
+                  name="next_skill_to_learn">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="skill_they_can_teach">Skills they can teach </label>
+                <input type="text" class="form-control" id="skill_they_can_teach"
+                  placeholder="Enter Skills they can teach" name="skill_they_can_teach">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="career_aspiration">Career Aspirations </label>
+                <input type="text" class="form-control" id="career_aspiration" placeholder="Enter Career Aspirations"
+                  name="career_aspiration">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="pros_next_proj_assign">Prospective next project assignment </label>
+                <input type="text" class="form-control" id="pros_next_proj_assign"
+                  placeholder="Enter Prospective next project assignment" name="pros_next_proj_assign">
+              </div>
+              <!-- <button type="submit" class="btn btn-danger pull-right" style="margin: 10px;">Delete</button> -->
+              <!-- <button type="submit" class="btn btn-default pull-right" style="margin: 10px;">Edit</button> -->
+              <button type="button" class="btn btn-primary employeeBtn pull-right" style="margin: 10px;"
+                onclick="createEmpDetails()">Save</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      assignMetaValue();
+      $("meta[name='google-signin-client_id']").attr("content", metaValue);
+      // sessionName = localStorage.getItem("email");
+      // //sessionName = sessionStorage.getItem('name');
+      // // sessionStorage.setItem('name','sravan')
+      // console.log("Session name - " + sessionName);
+      getLocalSessionData();
+      if (sessionName == null) {
+        window.location.href = 'index.html';
+        return false;
+      } else {
+        local_emp_profile_data = localStorage.getItem("emp_profile_id_data");
+        var sow_id = localStorage.getItem("employee_id_data");
+        // console.log("next page - ", local_emp_profile_data);
+        var semployee_id_data = [];
+        employee_id_data = $.parseJSON('[' + local_emp_profile_data + ']');
+        if (employee_id_data[0].END_DATE == "0000-00-00") {
+          endDate = "";
+        } else {
+          endDate = convert(employee_id_data[0].END_DATE);
+        }
+        console.log("employee_id_data - ", employee_id_data);
+        $("#employee_id").val(employee_id_data[0].EMPLOYEE_ID);
+        $("#name").val(employee_id_data[0].EMPLOYEE_NAME);
+        $("#designation").val(employee_id_data[0].JOB_ROLE_ID);
+        $("#emp_email_id").val(employee_id_data[0].EMAIL_ID);
+        $("#join_date").val(convert(employee_id_data[0].JOIN_DATE));
+        $("#end_date").val(endDate);
+        $("#project_alloc_start_date").val(convert(employee_id_data[0].PROJECT_ALLOCATION_START_DATE));
+        $("#project_alloc_end_date").val(convert(employee_id_data[0].PROJECT_ALLOCATION_END_DATE));
+        $("#reporting_manager").val(employee_id_data[0].REPORTING_MANAGER);
+        $("#cus_name").val(employee_id_data[0].CUSTOMER_NAME);
+        $("#bill_status").val(employee_id_data[0].BILLING_STATUS);
+        $("#location").val(employee_id_data[0].LOCATION);
+        $("#function").val(employee_id_data[0].FUNCTION);
+        $("#status").val(employee_id_data[0].STATUS);
+        let emp_skills = employee_id_data[0].SKILL_DATA;
+        let emp_skill_data = "";
+        // let emp_skill_hide_data = "";
+        $.each(emp_skills, function (value, skills) {
+          // mang_name_options_sow += '<option value="' + mangName.REPORTING_MANAGER_ID + '">' + mangName.REPORTING_MANAGER_NAME + '</option>';
+          emp_skill_data += `<button class="skill_data">${skills.SKILL} - ${skills.LEVEL}</button>`
+          // emp_skill_hide_data += `${skills.SKILL} ${skills.LEVEL}, `
+        });
+        if (emp_skill_data == "") {
+          emp_skill_data = `<button class="skill_data">No skills available to show</button><br><br>`
+        }
+        $("#key_skill").html(emp_skill_data);
+        $(".new-sub-menu").hover(function () {
+          $('.sub-menu').css('display', '')
+          // }, function () {
+          //    alert("hi out");
+        });
+      }
+    });
+    $('input[name=proj_alloc_end_date]').change(function() { console.log("testt") });
+    $('#dashboard').click(function () {
+      window.location.href = 'home.html';
+      return false;
+    });
+    $('#logout').click(function () {
+      localStorage.clear();
+      console.log("sessionName - " + sessionName);
+      window.location.href = 'index.html';
+      return false;
+    });
+    $('#employee').click(function () {
+      window.location.href = 'team.html';
+      return false;
+    });
+
+    $('#join_date').datepicker({
+      format: 'mm-dd-yy',
+      uiLibrary: 'bootstrap'
+    });
+    $('#end_date').datepicker({
+      format: 'mm-dd-yy',
+      uiLibrary: 'bootstrap'
+    });
+    $('#project_alloc_start_date').datepicker({
+      format: 'mm-dd-yy',
+      uiLibrary: 'bootstrap'
+    });
+    $('#project_alloc_end_date').datepicker({
+      format: 'mm-dd-yy',
+      uiLibrary: 'bootstrap'
+    });
+
+
+    function convert(str) {
+      var date = new Date(str),
+        mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+        day = ("0" + date.getDate()).slice(-2);
+      return [mnth, day, date.getFullYear().toString().substr(2, 2)].join("-");
+    }
+    console.log(convert("Mon, 11 Nov 2013 00:00:00 GMT"))
+
+  </script>
+  <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+
+</body>
+
+</html>

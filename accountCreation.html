@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Factspan - ARCUS - Account Creation</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta
+      name="google-signin-client_id"
+      content="776418814053-hccb99mo0ks8o9l3o3e5plhsn43p96rk.apps.googleusercontent.com"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css"
+    />
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <!-- Quill CSS -->
+    <link
+      href="https://cdn.quilljs.com/1.3.7/quill.snow.css"
+      rel="stylesheet"
+    />
+
+    <!-- Quill JS -->
+    <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <script
+      src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js"
+      type="text/javascript"
+    ></script>
+    <link
+      href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    <link rel="stylesheet" href="css/custom.css" />
+    <script src="js/sowCreate.js?v=1.2"></script>
+    <script src="js/common.js"></script>
+    <script src="lib/jQuery-MultiSelect.js"></script>
+    <link rel="stylesheet" href="css/jquery.multiselect.css" />
+    <link
+      rel="icon"
+      href="images\factspan.png"
+      type="image/png"
+      sizes="16x16"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/fontawesome.min.css"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="css/slimselect.min.css" />
+    <script
+      src="https://kit.fontawesome.com/01f906aa6d.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/bootbox.min.js"></script>
+    <script src="js/bootbox.locales.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@3.5.1/select2.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/select2@3.5.1/select2.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      $(function () {
+        $("#header").load("header.html");
+      });
+    </script>
+  </head>
+  <style>
+    body {
+      font-family: "Celias";
+    }
+
+    #app-name {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #menu {
+      text-align: center;
+      box-shadow: 0px 0px 10px #c4c0c0;
+      border-radius: 15px;
+      align-items: center;
+      justify-content: center;
+      width: 85%;
+      background-color: #fff;
+      padding: 40px 60px 60px 60px;
+    }
+
+    @media screen and (max-height: 450px) {
+      .sidenav {
+        padding-top: 15px;
+      }
+
+      .sidenav a {
+        font-size: 12px;
+      }
+    }
+
+    /* Header menu custom style */
+    .navbar-default .navbar-nav > li > a {
+      font-weight: 500;
+    }
+
+    #profile {
+      background-color: cadetblue;
+      border-radius: 124px;
+      font-size: 30px;
+      margin-left: 15px;
+    }
+
+    #profile_div a:hover {
+      color: #eff4f8;
+    }
+
+    .navbar-brand {
+      padding: 0px 15px;
+    }
+
+    .custom_width {
+      width: 75px;
+    }
+
+    .table th,
+    td {
+      text-align: center;
+    }
+
+    .employee_form .form-group {
+      margin-bottom: 10px;
+    }
+
+    .table-bordered {
+      border: 1 !important;
+    }
+
+    .employee_form label {
+      font-size: 9px;
+    }
+
+    .skill_width {
+      width: 250px;
+      max-width: 251px !important;
+    }
+
+    .ms-options-wrap > button:focus,
+    .ms-options-wrap > button {
+      border: 0px solid #fd7e14 !important;
+      border-radius: 5px !important;
+    }
+
+    .ms-options-wrap,
+    .ms-options-wrap * {
+      max-width: 250px !important;
+    }
+
+    .table_align {
+      margin-top: 10px !important;
+    }
+
+    .header_col {
+      font-weight: 500;
+      font-size: 12px;
+    }
+
+    .add_account {
+      border: 1px solid #fd7e14;
+      margin-left: 10px;
+      padding: 2px 10px 2px 10px;
+      color: #fd7e14;
+      border-radius: 5px;
+    }
+
+    .option_create_text {
+      text-align: -webkit-right;
+      text-decoration: underline;
+      color: blue !important;
+    }
+
+    .table-bordered > tbody > tr > td,
+    .table-bordered > tbody > tr > th,
+    .table-bordered > tfoot > tr > td,
+    .table-bordered > tfoot > tr > th,
+    .table-bordered > thead > tr > td,
+    .table-bordered > thead > tr > th {
+      border: 1px solid #f6f6f6 !important;
+    }
+    .tab-buttons-account {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      border-bottom: 0;
+      margin-top: 0;
+    }
+    .tab-button-account {
+      padding: 0 2px 14px;
+      position: relative;
+      cursor: pointer;
+      border: none;
+      background: none;
+      outline: none;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.92) !important;
+      font-size: 14px;
+      font-family: "Poppins", "Celias", sans-serif;
+      font-weight: 500;
+      border-radius: 0;
+    }
+    .tab-button-account.active {
+      color: #ffffff !important;
+      font-weight: 500;
+      border-bottom: 0;
+    }
+    .tab-button-account.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 3px;
+      border-radius: 999px;
+      background: #ff7d20;
+    }
+    .tab-content-account {
+      display: none;
+      padding: 10px;
+      padding-top: 15px;
+      padding-bottom: 0px;
+      background-color: #f9f9f9;
+      margin-top: 10px;
+      /* height: 35vh; */
+      height: calc(100vh - 460px);
+      overflow-y: auto;
+      border-radius: 8px;
+      overflow: visible !important;
+    }
+
+    .tab-content-account.active {
+      display: block;
+      /* height: 35vh !important; */
+      height: calc(100vh - 380px);
+    }
+    .comment-section textarea {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+    }
+    .comment-section button {
+      margin-top: 10px;
+      padding: 8px 16px;
+      font-size: 14px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .comment-section button:hover {
+      background-color: #0056b3;
+    }
+    .comment-section {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box; /* Ensures padding is included in width */
+      margin-top: 8px;
+      font-family: poppins;
+      color: #818199;
+      font-style: italic;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .comment-section textarea {
+      width: 100%;
+      height: 150px; /* Set a desired height */
+      margin-top: 10px;
+      padding: 8px;
+      resize: vertical; /* Allow vertical resizing only */
+      box-sizing: border-box; /* Ensures padding is included in width */
+      font-size: 16px;
+    }
+
+    .comment-section button {
+      margin-top: 10px;
+      padding: 8px 16px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .ql-toolbar.ql-snow {
+      padding: 8px !important;
+      background-color: #ffffff;
+    }
+    .ql-editor {
+      background-color: #ffffff;
+    }
+    .ql-snow.ql-toolbar button,
+    .ql-snow .ql-toolbar button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: inline-block;
+      float: left;
+      height: 24px;
+      padding: 3px 5px;
+      width: 28px;
+    }
+    .active {
+      color: rgb(73, 71, 71) !important;
+    }
+    .custom-row {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: nowrap; /* Prevents columns from wrapping to the next line */
+      margin-top: 15px;
+    }
+
+    .custom-col {
+      /* text-align: center; */
+      border-radius: 8px; /* Optional for visual clarity */
+      padding: 10px;
+      box-sizing: border-box;
+      margin: 3px;
+      background: #ed7d2d1a;
+    }
+    .custom-col-opp {
+      /* text-align: center; */
+      border-radius: 8px; /* Optional for visual clarity */
+      padding: 10px;
+      box-sizing: border-box;
+      margin: 3px;
+      background: #f9f9f9;
+    }
+    .custom-col-other {
+      /* text-align: center; */
+      border-radius: 8px; /* Optional for visual clarity */
+      padding: 10px;
+      box-sizing: border-box;
+      margin: 3px;
+      background: #00bdd61a;
+    }
+    .label-class {
+      font-size: 12px;
+      font-family: poppins;
+      font-weight: 400;
+      color: #818199;
+      line-height: 21px;
+    }
+    .account-header {
+      display: flex;
+      justify-content: space-between;
+    }
+    .table_title {
+      padding: 5px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px !important;
+    }
+    .account-create-toolbar {
+      min-height: 60px;
+      margin: 0 -13px 18px;
+      padding: 0px 18px;
+      background: #1F3864;
+      border-top: 0.5px solid #6d6d6d;
+      border-bottom: 6px solid #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .account-create-toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 34px;
+      min-width: 0;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .account-create-title {
+      margin: 0;
+      padding: 0 2px 14px;
+      color: #ffffff;
+      font-family: "Poppins", "Celias", sans-serif;
+      font-size: 18px;
+      line-height: 1.2;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .acc-font-style {
+      font-family: poppins;
+      font-size: 14px;
+      color: #fff;
+      font-weight: 500;
+    }
+    .sow_btn_cus_style {
+      min-width: 80px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      gap: 5px;
+      color: #fd7e14;
+      background-color: #fff;
+      border: 1px solid #fd7e14;
+      font-size: 12px;
+      font-family: 400;
+      font-family: poppins;
+      padding: 5px 10px;
+    }
+    .sow_btn_cus_style:hover .sow_btn_cus_style:active:focus {
+      color: #fff;
+      background-color: #fd7e14;
+      border: 1px solid #fd7e14;
+    }
+    .acc-btn-div {
+      display: flex;
+      justify-content: end;
+    }
+    .account-create-toolbar-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-left: auto;
+      flex-wrap: wrap;
+    }
+    .account-create-toolbar-right .col-sm-2 {
+      width: auto;
+      float: none;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .account-create-toolbar-right .sow_btn_cus_style {
+      min-width: 100px;
+      height: 40px;
+      margin: 0 !important;
+      padding: 0 20px;
+      justify-content: center;
+      gap: 8px;
+      color: #ffffff !important;
+      background: transparent !important;
+      border: 1px solid rgba(255, 255, 255, 0.85) !important;
+      border-radius: 10px !important;
+      box-shadow: none !important;
+      font-family: "Poppins", "Celias", sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+    }
+    .account-create-toolbar-right .sow_btn_cus_style:hover,
+    .account-create-toolbar-right .sow_btn_cus_style:focus,
+    .account-create-toolbar-right .sow_btn_cus_style:active {
+      color: #ffffff !important;
+      background: rgba(255, 255, 255, 0.08) !important;
+      border-color: rgba(255, 255, 255, 0.85) !important;
+      outline: none;
+    }
+    .account-create-toolbar-right .cancel-btn {
+      min-width: 100px;
+    }
+    #account-creation-page > hr {
+      display: none;
+    }
+    #account-creation-page > .container.main-content {
+      margin-top: -4px;
+    }
+    @media screen and (max-width: 960px) {
+      .account-create-toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .account-create-toolbar-left,
+      .account-create-toolbar-right {
+        width: 100%;
+      }
+      .account-create-toolbar-right {
+        justify-content: flex-start;
+      }
+    }
+    @media screen and (max-width: 640px) {
+      .account-create-toolbar {
+        padding: 16px;
+      }
+      .account-create-toolbar-left {
+        gap: 18px;
+      }
+      .tab-buttons-account {
+        gap: 18px;
+      }
+      .account-create-toolbar-right .col-sm-2 {
+        width: 100%;
+        flex-wrap: wrap;
+      }
+      .account-create-toolbar-right .sow_btn_cus_style {
+        width: 100%;
+      }
+    }
+    .warningMessage {
+      color: #ff0000;
+      font-size: 10px;
+      font-weight: 500;
+    }
+    .account_sec_block {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .each_acc_block {
+      display: flex;
+      flex-direction: column;
+      background-color: #ed7d2d1a;
+      padding: 10px;
+      border-radius: 5px;
+      width: 100%;
+    }
+    .form-control {
+      display: inline-block !important;
+    }
+    .select2-container .select2-choice {
+      height: 34px;
+      border: 1px solid #aaa;
+      background-image: none !important;
+      line-height: 34px;
+    }
+    #account-creation-page {
+      width: 98%;
+      margin: auto;
+    }
+    .acc-label-block {
+      display: flex;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      z-index: 1;
+    }
+
+    /* .main-content {
+      position: relative;
+      z-index: 10;
+      background-color: #fff; 
+      border-radius: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    } */
+
+    #popup,
+    #popup_nps {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 300px;
+      background-color: #9095a0;
+      color: white;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+      display: none;
+    }
+
+    #popup label,
+    #popup_nps label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    #popup input,
+    #popup_nps input {
+      width: calc(100% - 10px);
+      padding: 5px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+    }
+
+    #popup button,
+    #popup_nps button {
+      padding: 8px 15px;
+      background-color: #ffffff;
+      color: #fd7e14;
+      border: 1px solid #fd7e14;
+      border-radius: 3px;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    #popup button:hover,
+    #popup_nps button:hover {
+      background-color: #fd7e14;
+      color: #fff;
+      font-weight: 500;
+      font-size: 14px;
+      border: 1px solid #fd7e14;
+    }
+    @media screen and (min-width: 1200px) and (max-width: 1350px) {
+      .each_acc_block {
+        padding: 5px;
+      }
+      .account_sec_block {
+        display: flex;
+        gap: 5px;
+        margin-top: 5px;
+      }
+      .tab-content-account {
+        height: calc(100vh - 365px);
+      }
+    }
+    .audit-list-create {
+      text-align: center;
+      font-family: poppins;
+      font-weight: 500;
+      color: #313265;
+    }
+    .btn.focus,
+    .btn:focus,
+    .btn:hover {
+      color: #fff;
+      background-color: #fd7e14;
+      text-decoration: none;
+    }
+    .buying_center_btn {
+      color: #fc8c15;
+      border: 1px solid #fc8c15;
+      background-color: transparent;
+      width: 100%;
+      height: 32px;
+    }
+    .buying_center_btn:hover {
+      background-color: #fc8c15;
+      color: white;
+      border: 1px solid #fc8c15;
+      outline: none;
+    }
+  </style>
+
+  <body style="display: none">
+    <div id="header"></div>
+    <div id="account-creation-page">
+      <div class="account-create-toolbar">
+        <div class="account-create-toolbar-left">
+          <div class="account-create-title acc-font-style">Account Creation</div>
+          <div id="tab-buttons-account" class="tab-buttons-account"></div>
+        </div>
+        <div class="account-create-toolbar-right">
+          <div class="col-sm-2 cstm-text-align-end">
+            <button
+              id="accDataSave"
+              class="btn save-btn sow_btn_cus_style acc-font-style"
+              type="button"
+              onclick="saveAccountData()"
+            >
+              <i class="fa-regular fa-floppy-disk fa-lg"></i>Save
+            </button>
+            <button
+              class="btn cancel-btn sow_btn_cus_style acc-font-style"
+              type="button"
+              onclick="cancelAccount()"
+            >
+              <i class="fa-regular fa-circle-xmark"></i> Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="container main-content">
+        <!-- Tab content container -->
+        <div class="row">
+          <div id="tab-content-container-account"></div>
+        </div>
+      </div>
+      <div class="account_sec_block">
+        <div class="each_acc_block">
+          <div class="acc-label-block">
+            <label for="aad_account_name">
+              Account Name <span class="warningMessage">*</span>
+            </label>
+            <span class="warningMessage" id="accWarningMsg"
+              >Account already exists</span
+            >
+          </div>
+          <input
+            type="text"
+            class="form-control"
+            id="aad_account_name"
+            placeholder="Account Name"
+            name="aad_account_name"
+            autocomplete="off"
+            onkeyup="checkAccountName()"
+          />
+        </div>
+        <div class="each_acc_block">
+          <label for="add_location">
+            Location <span class="warningMessage">*</span></label
+          >
+          <select id="add_location">
+            <option value="-1">Select Location</option>
+            <option value="India">India</option>
+            <option value="US">US</option>
+          </select>
+        </div>
+        <div class="each_acc_block">
+          <label for="add_location">
+            Buying Center <span class="warningMessage">*</span></label
+          >
+          <!-- <div>
+            <button type="button" 
+              class="btn buying_center_btn" 
+              id="view_edit_buying_center" 
+              style="padding: 3px 6px; font-size: 11px;" 
+              onclick="accountNewBuyingCenter()">+ New Buying Center
+            </button>
+          </div> -->
+          <input
+            type="text"
+            class="form-control"
+            id="buyingCenter"
+            placeholder="Buying Center"
+            name="buyingCenter"
+            autocomplete="off"
+            onkeydown="restrictSpecialCharactersById('buyingCenter')"
+          />
+          
+          <!-- <select id="add_buying_center">
+            <option value="-1">Select Buying Center</option>
+            <option value="new_buying_create" class="option_create_text">
+              + Add Buying Center
+            </option>
+          </select> -->
+        </div>
+        <div class="each_acc_block">
+          <label for="stakeHolder"
+            >NPS Stake Holder <span class="warningMessage">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="stakeHolder"
+            placeholder="Stake Holder"
+            name="stakeHolder"
+            autocomplete="off"
+            onkeydown="restrictSpecialCharactersById('stakeHolder')"
+          />
+          <!-- <select id="add_nps_holder">
+            <option value="-1">Select NPS Stake Holder</option>
+            <option value="new_nps_create" class="option_create_text">
+              + Add NPS Stake Holder
+            </option>
+          </select> -->
+        </div>
+      </div>
+      <div class="account_sec_block">
+        <div class="each_acc_block">
+          <div class="acc-label-block">
+            <label for="add_contact_account"
+              >Account Head <span class="warningMessage">*</span>
+            </label>
+          </div>
+          <select id="add_contact_account"></select>
+        </div>
+        <div class="each_acc_block">
+          <div class="acc-label-block">
+            <label for="add_contact_factspan"
+              >Business Head <span class="warningMessage">*</span>
+            </label>
+          </div>
+          <select id="add_business_head"></select>
+        </div>
+        <div class="each_acc_block">
+          <div class="acc-label-block">
+            <label for="add_contact_factspan"
+              >Delivery Head <span class="warningMessage">*</span>
+            </label>
+          </div>
+          <select id="add_delivery_head"></select>
+        </div>
+        <div class="each_acc_block">
+          <div class="acc-label-block">
+            <label for="account_size"
+              >Size <span class="warningMessage">*</span>
+            </label>
+          </div>
+          <select id="account_size"></select>
+        </div>
+      </div>
+      <div class="account_sec_block">
+        <div class="each_acc_block">
+          <div class="acc-label-block">
+            <label for="min_bill_rate_uscan">Min Bill Rate - USCAN </label>
+          </div>
+          <input
+            type="number"
+            class="form-control"
+            id="min_bill_rate_uscan"
+            placeholder="Min Bill Rate - USCAN "
+            name="min_bill_rate_uscan"
+            autocomplete="off"
+            min="0"
+          />
+        </div>
+        <div class="each_acc_block">
+          <div class="acc-label-block">
+            <label for="min_bill_rate_ind">Min Bill Rate - IND</label>
+          </div>
+          <input
+            type="number"
+            class="form-control"
+            id="min_bill_rate_ind"
+            placeholder="Min Bill Rate - IND"
+            name="min_bill_rate_ind"
+            autocomplete="off"
+            min="0"
+          />
+        </div>
+        <div class="each_acc_block">
+          <div class="acc-label-block">
+            <label for="ms_signed_date"
+              >MSA Signed 
+            </label>
+          </div>
+          <input
+            type="text"
+            class="form-control placeicon dateData"
+            id="ms_signed_date"
+            placeholder="&#xf073; MM-DD-YY"
+            name="ms_signed_date"
+            autocomplete="off"
+            style="z-index: 1"
+          />
+        </div>
+        <div class="each_acc_block">
+          <div class="acc-label-block">
+            <label for="payment_term"
+              >Payment Term </label
+            >
+          </div>
+          <select id="payment_term"></select>
+        </div>
+      </div>
+      <!-- Overlay for background blur -->
+      <!-- <div id="overlay"></div> -->
+
+      <!-- Popup -->
+      <!-- <div id="popup">
+        <label for="field1">Buying Center</label>
+        <input type="text" id="field1" placeholder="Enter Buying Center" />
+
+        <label for="field2">NPS Stake Holder</label>
+        <input type="text" id="field2" placeholder="Enter NPS Stake Holder" />
+
+        <button id="closePopup">Cancel</button>
+        <button id="closePopup">Save</button>
+      </div>
+      <div id="popup_nps">
+        <label for="field1">Buying Center Name : </label>
+        <label for="field2">NPS Stake Holder</label>
+        <input type="text" id="field2" placeholder="Enter NPS Stake Holder" />
+
+        <button id="closeNPSPopup">Cancel</button>
+        <button id="closePopup">Save</button>
+      </div> -->
+    </div>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        assignMetaValue();
+        $("meta[name='google-signin-client_id']").attr("content", metaValue);
+        getLocalSessionData();
+        if (sessionName == null) {
+          window.location.href = "index.html";
+          return false;
+        } else {
+          $("body").css("display", "block");
+          getSowViewData();
+          createAccount();
+          $("#add_contact_factspan").select2({});
+          $("#add_contact_account").select2({});
+          $("#add_business_head").select2({});
+          $("#add_delivery_head").select2({});
+          $("#add_location").select2({});
+          $("#account_size").select2({});
+          $("#payment_term").select2({});
+          $("#add_buying_center").select2({});
+          $("#add_nps_holder").select2({});
+
+          $(".input-group-addon").hide();
+          $("#accWarningMsg").hide();
+          $("#add_buying_center").change(function () {
+            const selectedOption = $(this).val();
+            console.log("selectedOption - ", selectedOption);
+            if (selectedOption) {
+              showPopup();
+            }
+          });
+          $("#add_nps_holder").change(function () {
+            const selectedOption = $(this).val();
+            console.log("selectedOption - ", selectedOption);
+            if (selectedOption) {
+              ShowNpsPopup();
+            }
+          });
+
+          function showPopup() {
+            $("#popup").fadeIn(200);
+            $("#overlay").addClass("overlay");
+          }
+
+          function ShowNpsPopup() {
+            $("#popup_nps").fadeIn(200);
+            $("#overlay").addClass("overlay");
+          }
+
+          $("#closePopup").click(function () {
+            $("#popup").fadeOut(200);
+            $("#popup_nps").fadeOut(200);
+            $("#overlay").removeClass("overlay");
+          });
+          $("#closeNPSPopup").click(function () {
+            $("#popup_nps").fadeOut(200);
+            $("#overlay").removeClass("overlay");
+          });
+        }
+
+        $(window).resize(resize);
+        resize();
+        $(".new-sub-menu").hover(function () {
+          $(".sub-menu").css("display", "");
+        });
+      });
+      function resize() {
+        if ($(window).width() < 514) {
+          $("#resp-table").addClass("table-responsive");
+        } else {
+          $("#resp-table").removeClass("table-responsive");
+        }
+      }
+      let skillOptions = "";
+
+      $("#ms_signed_date").datepicker({
+        format: "mm-dd-yy",
+        uiLibrary: "bootstrap",
+      });
+
+      $("#dashboard").click(function () {
+        window.location.href = "home.html";
+        return false;
+      });
+      $("#sow_creation_page").click(function () {
+        window.location.href = "sowCreate.html";
+        return false;
+      });
+      $("#logout").click(function () {
+        localStorage.clear();
+        window.location.href = "index.html";
+        return false;
+      });
+    </script>
+    <script
+      src="https://apis.google.com/js/platform.js?onload=onLoad"
+      async
+      defer
+    ></script>
+  </body>
+</html>

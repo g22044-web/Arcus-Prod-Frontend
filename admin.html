@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Factspan - ARCUS - Admin Dashboard</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv='cache-control' content='no-cache'>
+  <meta http-equiv='expires' content='0'>
+  <meta http-equiv='pragma' content='no-cache'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+  <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+  <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="js/jquery.ajax-cross-origin.min.js"></script>
+  <link rel="stylesheet" href="css/custom.css" />
+  <script src="js/common.js"></script>
+  <script src="js/admin.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/fontawesome.min.css"
+    type="text/css" />
+  <script src="https://kit.fontawesome.com/01f906aa6d.js" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="css/busyLoading.css" />
+  <link rel="icon" href="images\factspan.png" type="image/png" sizes="16x16">
+
+  <link rel="stylesheet" href="css/jquery.multiselect.css">
+  <script src="lib/jQuery-MultiSelect.js"></script>
+  <script src="js/bootbox.min.js"></script>
+  <script src="js/bootbox.locales.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@3.5.1/select2.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@3.5.1/select2.js"></script>
+  <script>
+    $(function () {
+      $('#header').load('header.html');
+    })
+  </script>
+</head>
+<style>
+  #app-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #menu {
+    text-align: center;
+    box-shadow: 0px 0px 10px #c4c0c0;
+    border-radius: 15px;
+
+    align-items: center;
+    justify-content: center;
+    width: 85%;
+
+    background-color: #fff;
+    padding: 40px 60px 60px 60px;
+  }
+
+  #dash-title {
+    text-align: left;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .center-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    height: 120px;
+    color: #fff;
+    font-size: 20px;
+    box-shadow: 0px 0px 10px #571b1b;
+    font-weight: 600;
+  }
+
+  .menu-header {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+
+
+
+  @media screen and (max-height: 450px) {
+    .sidenav {
+      padding-top: 15px;
+    }
+
+    .sidenav a {
+      font-size: 12px;
+    }
+  }
+
+  #role_table thead>tr>th,
+  #team_table thead>tr>th {
+    background-color: #f2f2f2;
+    z-index: 100;
+  }
+
+  #role_table td,
+  #team_table td {
+    /* border: 0.5px solid #ddd; */
+    padding: 8px;
+
+  }
+
+
+  .navbar-default .navbar-nav>li>a {
+
+    font-weight: 500;
+  }
+
+
+  #profile {
+    background-color: cadetblue;
+    border-radius: 124px;
+    font-size: 30px;
+    margin-left: 15px;
+  }
+
+
+
+  #profile_div a:hover {
+    color: #eff4f8;
+  }
+
+  .navbar-brand {
+    padding: 0px 15px;
+  }
+
+  .employee_form .btn-info {
+    margin: 0 !important;
+    padding: 1px 3px;
+  }
+
+  .emp_filter {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+    margin-top: -40px;
+  }
+
+  .emp_radio_filter {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #cecece;
+    width: 115px;
+    height: 25px;
+    border-radius: 9999px;
+    box-shadow: inset 0.5px 0.5px 2px 0 rgba(0, 0, 0, 0.15);
+    margin-top: -38px;
+    margin-right: 110px;
+  }
+
+  input[type="radio"] {
+    appearance: none;
+    display: none;
+  }
+
+  .emp_radio_filter>label {
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: inherit;
+    width: 50px;
+    height: 20px;
+    text-align: center;
+    border-radius: 9999px;
+    overflow: hidden;
+    transition: linear 0.3s;
+    color: #6e6e6edd;
+    margin-bottom: 0px;
+  }
+
+  input[type="radio"]:checked+label {
+    background-color: #1e90ff;
+    color: #f1f3f5;
+    font-weight: 900;
+    transition: 0.3s;
+  }
+
+  .col_width {
+    width: 40px !important;
+
+  }
+
+  .col_width_1 {
+    width: 75px !important;
+    word-break: break-word;
+  }
+
+  .col_skill_width {
+    width: 250px !important;
+  }
+
+
+
+  .skillClass {
+    width: 25%;
+  }
+
+  ul {
+    padding-inline-start: 0px !important;
+  }
+
+  .ms-options {
+    min-height: auto !important;
+    width: auto !important;
+    max-height: 200px !important;
+  }
+
+  .ms-options-wrap {
+    width: 90px;
+  }
+
+  #emp_table_wrapper {
+    min-height: 420px !important;
+  }
+
+  .ms-options-wrap>button:focus,
+  .ms-options-wrap>button {
+    padding: 0px 13px 0px 5px !important;
+    border-radius: 5px;
+  }
+
+
+
+  .employee_detail_inside .table th {
+    padding: 3px 7px !important;
+  }
+
+  .bench_class {
+    border-radius: 0 !important;
+  }
+
+  .ms-options-wrap>.ms-options>.ms-search input {
+    color: black;
+  }
+
+  [data-title]:hover:after {
+    opacity: 1;
+    transition: all 0.1s ease 0.5s;
+    visibility: visible;
+  }
+
+  [data-title]:after {
+    content: attr(data-title);
+    background-color: #00FF00;
+    color: #111;
+    font-size: 12px;
+    position: absolute;
+    padding: 1px 5px 2px 5px;
+    bottom: -1.6em;
+    left: 30%;
+    white-space: nowrap;
+    box-shadow: 1px 1px 3px #222222;
+    opacity: 0;
+    border: 1px solid #111111;
+    z-index: 99;
+    visibility: hidden;
+  }
+
+  [data-title] {
+    position: relative;
+  }
+
+  .more {
+    display: inline-block;
+    width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .team_role_data_more {
+    display: inline-block;
+    width: 450px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .team_role_data_more:hover {
+    white-space: initial;
+    cursor: pointer;
+    width: 95%;
+  }
+
+  .more:hover {
+    white-space: initial;
+    cursor: pointer;
+    width: 95%;
+  }
+
+  #employee {
+    padding: 10px 25px;
+  }
+
+  #use_bench_data {
+    padding: 10px 25px !important;
+  }
+
+  .current_filter {
+    display: flex;
+    margin-bottom: -50px;
+    margin-right: 220px;
+    padding: 5px;
+  }
+
+  .label_name {
+    font-weight: 500 !important;
+    padding: 8px;
+  }
+
+  .filter_button_changes {
+    border-color: white !important;
+    border-radius: 5px !important;
+    padding: 0px 5px !important;
+    background-color: #fff !important;
+    color: black !important;
+  }
+
+  .filter_button_changes:hover {
+    color: #000000 !important;
+  }
+
+  .status_of_style {
+    width: 100%;
+  }
+
+  /* .ms-options-wrap.ms-active>.ms-options {
+    margin-top: 30px;
+  } */
+
+  .fixTableHead thead {
+    position: sticky;
+    top: 0;
+  }
+
+  table.dataTable {
+    width: 100% !important;
+  }
+
+  .role_desc {
+    width: 10%;
+  }
+
+  .role_edit_btn {
+    background-color: #ffffff;
+  }
+
+  .btn-info-account {
+    background-color: #fff;
+    font-size: 12px;
+    padding: 10px;
+    font-weight: 500;
+    transition: all 0.3s;
+    border-radius: 5px;
+    padding: 0px 3px;
+  }
+  .btn-info-account-create {
+    background-color: #f2f2f2;
+  }
+  .btn-info-account-create:hover {
+    color: #fc8c15;
+  }
+
+  .btn-info-account:hover {
+    color: #fc8c15;
+  }
+  .select2-container-multi .select2-choices {
+    height: 60px !important;
+    border-radius: 5px;
+    overflow-y: auto;
+  }
+  .employee_form .form-control {
+    border: solid 1px #ffffff;
+    box-shadow: none;
+    height: 30px;
+}
+.team_list_select {
+  height: 60px !important;
+}
+.input_field_style {
+  border: solid 1px #d5d3d3 !important;
+}
+.teams_edit_btn {
+  width: 0.5% !important;
+}
+.team_role {
+  float: none;
+}
+
+.admin-toolbar {
+  min-height: 40px;
+  margin: 0 -10px 18px -15px;
+  padding: 0px 15px;
+  background: #1F3864;
+  border-top: 0.5px solid #6d6d6d;
+  border-bottom: 6px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.admin-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+  min-width: 0;
+}
+
+.admin-toolbar-title {
+  margin: 0;
+  color: #ffffff;
+  font-family: "Poppins", "Celias", sans-serif;
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.admin-toolbar .emp_filter {
+  margin: 0;
+}
+
+.admin-toolbar .emp_radio_filter {
+  width: auto;
+  height: auto;
+  margin: 0 !important;
+  padding: 0;
+  gap: 0;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.admin-toolbar .emp_radio_filter > label {
+  width: auto;
+  height: 40px;
+  margin: 0 14px 0 0;
+  padding: 0 5px 0px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.92);
+  font-family: "Poppins", "Celias", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  position: relative;
+}
+
+.admin-toolbar .emp_radio_filter > input[type="radio"]:checked + label {
+  background: transparent !important;
+  color: #ffffff;
+  font-weight: 500;
+  box-shadow: none !important;
+}
+
+.admin-toolbar .emp_radio_filter > input[type="radio"]:checked + label::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  border-radius: 999px;
+  background: #ff7d20;
+}
+
+.admin-toolbar-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-left: auto;
+}
+
+.admin-toolbar .team_role label {
+  display: none;
+}
+
+.admin-toolbar .team_role input {
+  width: 216px;
+  height: 30px;
+  padding: 0 16px 0 44px;
+  color: #ffffff;
+  background-color: transparent;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 21 21'%3E%3Cg fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='9' cy='9' r='7'/%3E%3Cpath d='m14 14 5 5'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 14px center;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 10px;
+  box-shadow: none;
+  font-family: "Poppins", "Celias", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.admin-toolbar .team_role input::placeholder {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.admin-toolbar .team_role input:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: rgba(255, 255, 255, 0.95);
+}
+
+.employee_form#emp_form {
+  padding-top: 0;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.employee_form#emp_form .detail_top_bar {
+  border-bottom: 0;
+  margin-bottom: 12px;
+  padding-bottom: 0;
+}
+
+#role_table_wrapper .dataTables_filter {
+  display: none !important;
+}
+
+@media screen and (max-width: 900px) {
+  .admin-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-toolbar-left,
+  .admin-toolbar-right {
+    width: 100%;
+  }
+
+  .admin-toolbar-right {
+    justify-content: flex-start;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .admin-toolbar {
+    padding: 16px;
+  }
+
+  .admin-toolbar-left {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .admin-toolbar .team_role,
+  .admin-toolbar .team_role input {
+    width: 100%;
+  }
+}
+</style>
+
+<body>
+  <!-- <div class="loader">
+    <div class="loader-wheel"></div>
+    <div class="loader-text"></div>
+  </div> -->
+
+  <div class="show_page">
+    <div id="header"></div>
+    <div class="wrapper_outer">
+
+      <div class="container-fluid">
+        <div class="detail_box" id="teams_div">
+          <div class="employee_form" id="emp_form">
+            <div class="detail_top_bar">
+              <div class="admin-toolbar">
+                <div class="admin-toolbar-left">
+                  <h1 class="admin-toolbar-title">Admin Dashboard</h1>
+                  <div class="emp_filter">
+                    <div class="emp_radio_filter">
+                      <input type="radio" name="emp_radio" id="role_filter" class="emp_select" value="Role"
+                        onclick="getRoleTeamData()" checked>
+                      <label for="role_filter">Role</label>
+                      <input type="radio" name="emp_radio" id="team_filter" class="emp_select" value="Team"
+                        onclick="getRoleTeamData()">
+                      <label for="team_filter">Team</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="admin-toolbar-right">
+                  <div class="team_role">
+                    <label>Search : </label>
+                    <input type="text" id="team_role" placeholder="Search" onkeyup="searchTeamData()"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="employee_detail_inside table-responsive fixTableHead">
+              <table class="table table-bordered border-primary" id="role_table" style="width: 100%;">
+                <thead>
+                  <tr>
+                    <th>Role Name</th>
+                    <th>Description</th>
+                    <th style="display: none;">Access Type</th>
+                    <th>Assigned To</th>
+                    <th><button class="btn btn-info-account-create role_edit_btn" 
+                      onclick="addRole()"
+                      title= "Create role">
+                      <i class="fa fa-plus-square" aria-hidden="true">
+                      </i>
+                  </button></th>
+                  </tr>
+                </thead>
+                <tbody id="role_body_data">
+
+                </tbody>
+              </table>
+              <table class="table table-bordered border-primary" id="team_table" style="width: 100%;">
+                <thead>
+                  <tr>
+                    <th style="width: 35% !important;">Name</th>
+                    <th style="width: 60% !important;">Access Role</th>
+                    <th class="teams_edit_btn" style="width: 5% !important;">
+                      <button class="btn btn-info-account-create role_edit_btn" 
+                        onclick="addteam()"
+                        title= "Create team member role">
+                        <i class="fa fa-plus-square" aria-hidden="true">
+                        </i>
+                      </button>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="team_body_data">
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+</body>
+
+</html>

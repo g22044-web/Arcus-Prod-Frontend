@@ -1,0 +1,2726 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <title>ARCUS - Executive Summary Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    </style>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://kit.fontawesome.com/01f906aa6d.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/custom.css" />
+    <script src="js/jquery.tabledit.js"></script>
+    <script src="js/common.js"></script>
+    <!-- <script src="js/NewOverallSummary.js"></script> -->
+    <script src="js/reportOverallSummary.js"></script>
+    <script src="js/buying_center_level_updated.js"></script>
+    <script src="js/reportSowBySOWNew.js"></script>
+    <link rel="icon" href="images\factspan.png" type="image/png" sizes="16x16">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script src="lib/jQuery-MultiSelect.js"></script>
+    <link rel="stylesheet" href="css/jquery.multiselect.css">
+    <script src="js/bootbox.min.js"></script>
+    <script src="js/bootbox.locales.min.js"></script>
+    <script src="js/jquery.table2excel.js"></script>
+    <link rel="stylesheet" href="css/busyLoading.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <script>
+        $(function () {
+            $("#header").load("header.html");
+        });
+    </script>
+    <style>
+        /* Base body styles */
+        body {
+            /* font-family: "Poppins", sans-serif; */
+            font-family: "Celias", "Poppins", sans-serif;
+        }
+
+        .executive-summary-container {
+            box-shadow: 0px 0px 10px #c4c0c0;
+            padding: 5px;
+            margin: 15px 15px -35px 15px;
+        }
+
+        /* Container */
+        .main-container {
+            width: 100%;
+            /* max-width: 1280px; */
+            /* Standard container max-width, adjust as needed */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .employee_form {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            height: calc(100vh - 70px);
+        }
+
+        /* Dashboard Layout */
+        .dashboard-layout {
+            /* Default: stacks vertically */
+            display: flex;
+            gap: 2rem;
+            height: 305px;
+        }
+
+        @media (min-width: 768px) {
+
+            /* md breakpoint */
+            /* .dashboard-layout { */
+            /* display: flex; */
+            /* gap: 2rem; */
+            /* Equivalent to md:gap-8 */
+            /* } */
+        }
+
+        .dashboard-column {
+            /* Default: full width */
+            margin-bottom: 2rem;
+            /* Equivalent to mb-8 for the first column on mobile */
+        }
+
+        @media (min-width: 768px) {
+
+            /* md breakpoint */
+            .dashboard-column {
+                width: 50%;
+                /* Equivalent to md:w-1/2 */
+                margin-bottom: 0;
+                /* Equivalent to md:mb-0 */
+            }
+        }
+
+        .dashboard-column:last-child {
+            /* Remove margin from last column on mobile */
+            margin-bottom: 0;
+        }
+
+        /* Headings */
+        .section-heading {
+            font-size: 1.25rem;
+            /* text-xl */
+            line-height: 1.75rem;
+            font-weight: 600;
+            /* font-semibold */
+            color: #555555;
+            /* text-gray-700 */
+            margin-bottom: 1rem;
+            /* mb-4 */
+        }
+
+        /* Executive Summary Grid */
+        .exec-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            /* grid-cols-1 */
+            gap: 1.5rem;
+            /* gap-6 */
+        }
+
+        @media (min-width: 640px) {
+
+            /* sm breakpoint */
+            .exec-summary-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                /* sm:grid-cols-2 */
+            }
+        }
+
+        .exec-summary-grid-item-span-2 {
+            /* For Type Split card */
+            grid-column: span 1 / span 1;
+            /* Default */
+        }
+
+        @media (min-width: 640px) {
+
+            /* sm breakpoint */
+            .exec-summary-grid-item-span-2 {
+                grid-column: span 2 / span 2;
+                /* sm:col-span-2 */
+            }
+        }
+
+        /* Card base style (already custom) */
+        .card {
+            background-color: #fff8f0;
+            /* Light orange-cream background for cards */
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            position: relative;
+            /* For positioning info popups */
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            /* Changed from items-center for better alignment with multi-line titles */
+            margin-bottom: 0.25rem;
+            /* mb-1 */
+        }
+
+        .card-title {
+            font-size: 10px;
+            line-height: 1.25rem;
+            /* Added for consistency */
+            color: #6b7280;
+            /* text-gray-500 */
+            font-weight: 600;
+            text-transform: uppercase;
+            /* uppercase */
+            /* leading-tight can be adjusted if needed, line-height: 1.25 is often similar */
+        }
+
+        /* Card Value Styles */
+        .card-value {
+            font-weight: 700;
+            /* font-bold is common */
+        }
+
+        .card-value-revenue-ytd,
+        .card-value-revenue-projected {
+            font-size: 14px;
+            line-height: 2.25rem;
+            font-weight: 700;
+            color: #ED7D2D;
+            /* text-orange-600 */
+        }
+
+        .card-value-opi,
+        .card-value-actual-projected {
+            font-size: 14px;
+            line-height: 2rem;
+            font-weight: 700;
+            color: #ED7D2D;
+            /* text-gray-700 */
+            /* color is handled by negative-value class or default (red-500 was for negative) */
+        }
+
+        .card-value-sows {
+            font-size: 14px;
+            line-height: 2.25rem;
+            font-weight: 700;
+            color: #ED7D2D;
+            /* text-gray-700 */
+        }
+
+        .card-value-billing,
+        .card-value-typesplit {
+            font-weight: 700;
+            color: #ED7D2D;
+            /* text-gray-700 */
+        }
+
+        .card-value-billing {
+            font-size: 14px;
+            line-height: 2.25rem;
+        }
+
+        .card-value-typesplit {
+            font-size: 14px;
+            line-height: 2.25rem;
+        }
+
+        /* Info Icon (already custom) */
+        .info-icon-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .info-icon {
+            width: 1rem;
+            height: 1rem;
+            color: #9ca3af;
+            /* Gray-400 */
+            cursor: pointer;
+        }
+
+        /* Chart Container Wrapper */
+        .chart-container-wrapper {
+            background-color: #ffffff;
+            /* bg-white */
+            padding: 1rem;
+            /* p-4 */
+            border-radius: 0.5rem;
+            /* rounded-lg */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+                0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            /* shadow-lg */
+            position: relative;
+            /* relative */
+            height: 100%;
+            /* h-full */
+        }
+
+        @media (min-width: 768px) {
+
+            /* md breakpoint */
+            .chart-container-wrapper {
+                padding: 1.5rem;
+                /* md:p-6 */
+            }
+        }
+
+        /* Popups (already custom - .chart-tooltip, .info-popup and their children) */
+        .chart-tooltip,
+        .info-popup {
+            position: absolute;
+            background-color: white;
+            border: 1px solid #e5e7eb;
+            /* Gray-200 */
+            border-radius: 0.375rem;
+            /* rounded-md */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+                0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 0.75rem;
+            /* p-3 */
+            z-index: 50;
+            opacity: 0;
+            transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+            pointer-events: none;
+            min-width: 280px;
+            transform: translateY(10px);
+        }
+
+        .chart-tooltip.show,
+        .info-popup.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .popup-title {
+            font-weight: 600;
+            /* font-semibold */
+            margin-bottom: 0.5rem;
+            /* mb-2 */
+            font-size: 12px;
+            color: #313265;
+        }
+
+        .popup-table {
+            width: 100%;
+            font-size: 12px
+        }
+
+        .popup-table th,
+        .popup-table td {
+            text-align: left;
+            padding: 3px !important
+            /* py-1 px-2 */
+        }
+
+        .popup-table th {
+            color: #6b7280;
+            font-size: 10px;
+            /* text-gray-500 */
+        }
+
+        #infoPopupTableBody tr:last-child td {
+            border-bottom: 1.5px solid #ddd;
+        }
+
+        .popup-table-amount-cell {
+            /* For amounts in popup tables */
+            text-align: end !important;
+        }
+
+        .popup-summary {
+            margin-top: 0.5rem;
+            font-size: 10px;
+            color: #818199;
+            font-weight: 600;
+        }
+
+        .negative-value {
+            /* Utility class for negative numbers */
+            color: #ef4444 !important;
+            /* red-500 */
+        }
+
+        /* Chart Canvas Container (already custom) */
+        #revenueChartContainer {
+            position: relative;
+            height: 40vh;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+
+            /* md breakpoint */
+            /* #revenueChartContainer {
+                height: 60vh;
+            } */
+        }
+
+        .container-fluid {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        #revenueChart {
+            height: 250px !important;
+            width: 100% !important;
+            padding: 0px 10px;
+        }
+
+        #infoPopupTableBody {
+            color: #313265;
+        }
+
+        /* overall Summary style */
+        .employee_sow_details .table th {
+            border: solid 0px #f8f9fa;
+            border-radius: 0px;
+            font-size: 12px !important;
+            font-weight: 600 !important;
+        }
+
+        .employee_detail_inside .table th {
+            font-size: 10px;
+            font-weight: 500;
+            color: #8b8988 !important;
+            padding: 5px 5px !important;
+            text-align: center;
+        }
+
+        .employee_detail_inside .table td {
+            font-size: 10px;
+            font-weight: 500;
+            color: #313265;
+            padding: 5px 5px !important;
+            border-top: 1px solid #DDDDDD !important;
+            /* Top border */
+            border-left: 1px solid #DDDDDD !important;
+            /* Left border */
+            border-bottom: 1px solid #DDDDDD !important;
+            /* Bottom border */
+            border-right: 1px solid #DDDDDD !important;
+            /* Right border (2px) */
+        }
+
+
+
+        .employee_detail_inside .table th {
+            width: 4.14% !important;
+        }
+
+        .employee_detail_inside .table th {
+            font-size: 10px;
+            font-weight: 500;
+            color: #8b8988;
+        }
+
+        .signed_bg {
+
+            background-color: #ffffff;
+
+            color: #252424ad !important;
+            border: #edf6fe !important;
+        }
+
+        .signed_header_bg {
+            background-color: #4CA5FFFF;
+            color: #fff !important;
+            border: #4CA5FFFF !important;
+        }
+
+        .proposal_header_bg {
+            background-color: #17A948FF;
+            color: #fff !important;
+            border: #17A948FF !important;
+        }
+
+        .proposal_bg {
+
+            background-color: #ffffff;
+            color: #252424ad !important;
+
+            border: #e9fef0 !important;
+        }
+
+        .all_month_bg {
+            background-color: #007A45FF;
+            color: #fff !important;
+        }
+
+
+
+        #signed_sow_table>tbody>tr,
+        #proposal_sow_table>tbody>tr {
+            border-bottom: 1px solid #e4e4e4;
+        }
+
+        .emp_filter {
+            margin-top: -10px !important;
+        }
+
+        .emp_radio_filter>label {
+            width: 145px;
+            cursor: pointer;
+        }
+
+        .emp_radio_filter {
+            width: 450px;
+            z-index: 10;
+        }
+
+        #report_sow_account {
+            background-color: #f2f2f2;
+        }
+
+        .account_bg,
+        .account_bg>td .account_bg_new_logo,
+        .account_bg_new_logo>td {
+            background-color: #f2f2f2 !important;
+            color: black !important;
+        }
+
+        .employee_detail_inside table tr:nth-child(even) {
+            background: #f2f2f2;
+            border-top: solid 1px #f2f2f2;
+        }
+
+        hr {
+            margin-top: 2px;
+            margin-bottom: 2px;
+            border: 0;
+            border-top: 1px solid #eee;
+        }
+
+        .employee_detail_inside table tr:nth-child(even) {
+            background: #ffffff;
+            border-top: solid 1px #ffffff;
+        }
+
+        .overall_total_bg,
+        .overall_total_bg>td {
+            background-color: #4CA5FFFF;
+            color: #fff !important;
+            border: #4CA5FFFF !important;
+        }
+
+        .overall_total_allSow,
+        .overall_total_allSow>td {
+            background-color: #5ef68f;
+            color: #090909 !important;
+            border: #befcd2 !important;
+
+        }
+
+
+        .renewal_bg,
+        .renewal_bg>td {
+            background-color: #befcd2;
+            color: #006120 !important;
+            border: #befcd2 !important;
+
+        }
+
+        .proposal_bg,
+        .proposal_bg>td {
+            background-color: #08bb44;
+            color: #fff !important;
+            border: #08bb44 !important;
+        }
+
+        .overall_total,
+        .overall_total>td {
+            background-color: #007A45FF;
+            color: #fff !important;
+
+            border: #007A45FF !important;
+
+        }
+
+        .top_space {
+            border-top: 5px solid white !important;
+        }
+
+        .top_broder_bg {
+            border-top: 1.5px solid #eff3ef !important;
+        }
+
+        .report_sow_account_header>th {
+            background-color: #f2f2f2;
+            border: 1px soild black !important;
+            font-weight: 600 !important;
+            color: #818199 !important;
+
+        }
+
+        .account_level {
+            background-color: #f2f2f2 !important;
+        }
+
+        .account_level>td {
+            font-size: 14px !important;
+            font-weight: 600 !important;
+        }
+
+        /* .RED {
+    background-color: rgb(238 46 46 / 24%);
+    color: black !important;
+  }
+
+  .GREEN {
+    background-color: #77cb7742;
+    color: black !important;
+  } */
+
+        #excelDownload {
+            padding: 5px 25px;
+            margin-right: 5px;
+        }
+
+        .table_title {
+            margin-bottom: -26px;
+        }
+
+        @media screen and (min-width: 1200px) and (max-width: 1350px) {
+            .employee_sow_details .table th {
+                font-size: 10px !important;
+            }
+        }
+
+        .title-sub {
+            font-size: 10px;
+        }
+
+        .singedGroup {
+            display: none;
+        }
+
+        .signed_data {
+            cursor: pointer !important;
+        }
+
+        .signed_data:hover {
+            background-color: #ffebdd;
+        }
+
+        .show_hide_new_logo {
+            cursor: pointer !important;
+        }
+
+        .show_hide_new_logo:hover {
+            color: #ffffff;
+            background-color: #e05e00;
+        }
+
+        .icon-custom-style {
+            color: #fc8c15;
+            margin-left: 5px;
+        }
+
+        .status_btn_show_hide {
+            border: 1px solid #fc8c15;
+            padding: 5px;
+            border-radius: 10px;
+        }
+
+        .CellWithComment {
+            position: relative;
+            cursor: default;
+            text-align: center;
+            border-right: 1px solid #DDDDDD !important;
+            /* Override border-right to 1px */
+        }
+
+        .employee_detail_inside .table td.CellWithComment {
+            border-right: 1px solid #DDDDDD !important;
+            /* Override border-right to 1px */
+            color: #818199
+        }
+
+        .employee_detail_inside .table td.account_bg,
+        .employee_detail_inside .table td.account_bg_new_logo {
+            border-right: 1px solid #DDDDDD !important;
+            /* Override border-right to 1px */
+            color: #313265 !important;
+            font-weight: 600;
+            background-color: #f2f2f2;
+        }
+
+        .CellComment {
+            display: none;
+            position: absolute;
+            z-index: 100;
+            border: 1px;
+            background-color: white;
+            border-style: solid;
+            border-width: 1px;
+            border-color: #e05e00;
+            padding: 0px 3px;
+            color: #e05e00;
+            top: 30px;
+            left: 30px;
+            border-radius: 3px;
+        }
+
+        .CellWithComment:hover span.CellComment {
+            display: block;
+        }
+
+        #bu_header_select {
+            font-weight: 500 !important;
+            width: 155px;
+            border-radius: 4px !important;
+            border: 1px solid #313265 !important;
+            color: #818199;
+            padding: 5px 5px !important;
+            position: relative;
+            vertical-align: middle;
+            /* Align the icon vertically */
+            transition: transform 0.3s ease;
+            /* Smooth transition for rotation */
+        }
+
+        #bu_header_select.open i {
+            transform: rotate(180deg);
+        }
+
+        #year_dropdown_btn {
+
+            font-weight: 500 !important;
+            width: 122px;
+            border-radius: 4px !important;
+            border: 1px solid #313265 !important;
+            color: #818199;
+            padding: 6px 5px !important;
+            position: relative;
+            vertical-align: middle;
+            /* Align the icon vertically */
+            transition: transform 0.3s ease;
+            /* Smooth transition for rotation */
+
+            font-size: 11px;
+            background-color: transparent;
+        }
+
+        #year_dropdown_btn.open i {
+            transform: rotate(180deg);
+        }
+
+        #year_dropdown_btn_container .dropdown-menu {
+            width: 118px;
+            /* Set the width to match the button */
+            max-width: 100%;
+            /* Ensure it doesn't exceed the button's width */
+            border-radius: 4px;
+            /* Match the button's border radius */
+            border: 1px solid #313265;
+            /* Match the button's border color */
+            background-color: white;
+            /* Set a background color for visibility */
+            z-index: 1000;
+            /* Ensure it appears above other elements */
+            min-width: 118px !important;
+        }
+
+        th.qtr-header {
+            z-index: 101 !important;
+            background-color: #FFF2CC !important;
+            font-weight: bold;
+        }
+
+        .quarter_class_ex {
+            display: none !important;
+        }
+
+        .icon-custom-style {
+            cursor: pointer;
+        }
+
+        .quarter-class {
+            background-color: #FFF2CC !important;
+            /* Or whichever color you'd like */
+        }
+
+        .quarter_class_ex {
+            background-color: #FFF2CC !important;
+            /* Or whichever color you'd like */
+
+        }
+
+        .total-class {
+            background-color: #DFEDF6 !important;
+            /* Example styling for TOTAL rows */
+            font-weight: bold !important;
+            /* You can add any style here */
+        }
+
+        .quarter-class-acc {
+            background-color: #FFF2CC !important;
+            /* Or whichever color you'd like */
+        }
+
+        .total-class-acc {
+            background-color: #DFEDF6 !important;
+            /* Example styling for TOTAL rows */
+            font-weight: bold !important;
+            /* You can add any style here */
+        }
+
+        th.total-class {
+            background-color: #DFEDF6 !important;
+            /* Example styling for TOTAL rows */
+            font-weight: bold !important;
+            /* You can add any style here */
+        }
+
+        .account-leader-container {
+            display: flex;
+            align-items: center;
+            /* Vertically aligns the label and select field */
+            gap: 10px;
+            /* Adjust the spacing between the label and the select field */
+        }
+
+        .year-container {
+            display: flex;
+            align-items: center;
+            /* Vertically aligns the label and select field */
+            gap: 10px;
+            /* Adjust the spacing between the label and the select field */
+            margin-top: 13px;
+            margin-left: 12px;
+        }
+
+        .form-control {
+            min-width: 50px;
+            /* Set a minimum width for the select field */
+        }
+
+        .account-header-label {
+            font-size: 13px !important;
+            font-family: barlow !important;
+            font-weight: 500 !important;
+            color: #818199 !important;
+            margin-top: 6px;
+
+        }
+
+        .dropdown-menu {
+            margin-right: 0px;
+            min-width: 154px !important;
+        }
+
+        .form-check {
+            display: flex;
+            /* Use flexbox for alignment */
+            align-items: center;
+            /* Center vertically */
+            max-width: 118px;
+            /* Set this to the width of your button */
+        }
+
+        .form-check-input {
+            margin-top: 0 !important;
+            /* Remove margin to avoid vertical misalignment */
+            position: relative;
+            width: 11px;
+            /* Size of the checkbox */
+            height: 11px;
+            /* Size of the checkbox */
+            cursor: pointer;
+            -webkit-appearance: none;
+            /* Remove default styles */
+            -moz-appearance: none;
+            appearance: none;
+            border: 2px solid #313265;
+            /* Border color */
+            border-radius: 2px;
+            background-color: #fff;
+            /* Unchecked background */
+            outline: none;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            /* Add vertical alignment */
+            display: inline-block;
+            /* Ensure it's an inline block */
+        }
+
+        .form-check-label {
+            margin-left: 5px;
+            /* Space between checkbox and label */
+            line-height: 1.2;
+            /* Adjust line height for spacing */
+            overflow-wrap: break-word;
+            /* Allow word wrapping */
+            word-wrap: break-word;
+            /* Older browsers support */
+            max-width: calc(118px - 20px);
+            /* Fit text within the button width */
+            display: block;
+            /* Ensure the label wraps correctly */
+        }
+
+
+
+        .dropdown-item {
+            margin: 8px;
+            width: 90%;
+        }
+
+        .dropdown-list {
+            margin-left: 5px;
+            padding: 2px;
+        }
+
+        .form-check {
+            margin-top: 7px !important;
+        }
+
+        #select-all,
+        #deselect-all {
+            background-color: #F6F8F8;
+            ;
+            /* Grey when greyed out */
+            color: black;
+            border: 1px solid #313265 !important;
+            /* Ensure border stays the same */
+            border-radius: 8px 7px;
+            padding: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 13px;
+            font-weight: 400;
+            font-family: barlow;
+        }
+
+        #select-all.greyed-out,
+        #deselect-all.greyed-out {
+
+            background-color: #F6F8F8;
+            ;
+            /* Initial white color */
+            color: #d9d9d9;
+            border: 1px solid #d9d9d9 !important;
+            /* Light grey border */
+            cursor: not-allowed;
+            font-size: 13px;
+            font-weight: 400;
+            font-family: barlow;
+        }
+
+        .form-check-label {
+            margin-top: 8px;
+            color: #313265 !important;
+            font-weight: 500 !important;
+            /* font-size: 12px !important; */
+        }
+
+        .form-check-input {
+            appearance: none;
+            /* Remove default styles */
+            width: 13px;
+            /* Set width */
+            height: 13px;
+            /* Set height */
+            cursor: pointer;
+            /* Change cursor to pointer */
+            border: 2px solid #313265;
+            /* Set the border color */
+            border-radius: 2px;
+            /* Optional: Add rounded corners */
+            background-color: #fff;
+            /* Set the unchecked background */
+            box-sizing: border-box;
+            /* Ensure consistent size */
+            position: relative;
+            /* Positioning for checkmark */
+        }
+
+        /* When the checkbox is checked */
+        .form-check-input:checked {
+            background-color: #313265;
+            /* Set background color when checked */
+            border-color: #313265;
+            /* Keep border same as background */
+        }
+
+        /* Add a white checkmark when the checkbox is checked */
+        .form-check-input:checked::before {
+            content: '\2713';
+            /* Unicode checkmark */
+            color: white;
+            /* White checkmark */
+            font-size: 10px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /* Center the checkmark */
+            font-weight: 500;
+        }
+
+        /* Prevent any border or size change when clicked or focused */
+        .form-check-input:focus {
+            outline: none !important;
+            /* Disable focus outline */
+            box-shadow: none !important;
+            /* Remove any focus box-shadow */
+        }
+
+        /* Override default active state styles to prevent blue border */
+        .form-check-input:active {
+            outline: none !important;
+            /* Disable outline on active */
+            box-shadow: none !important;
+            /* Remove any box-shadow on active */
+            border-color: #313265;
+            /* Ensure border remains consistent */
+        }
+
+        /* Ensure no outline or border change on focus */
+        .form-check-input:focus-visible {
+            outline: none !important;
+            /* Disable focus outline for accessibility */
+            box-shadow: none !important;
+            /* Remove any focus box-shadow */
+        }
+
+
+
+        /* Style to place Cancel and Apply buttons next to each other */
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            /* Optional: Add padding around the buttons */
+        }
+
+        .dropdown-item-apply {
+            width: 48%;
+            /* Make the buttons take equal width and leave some space between them */
+            margin: 0;
+            /* Remove extra margin from buttons */
+            padding: 5px;
+            /* Optional: Adjust padding if necessary */
+            text-align: center;
+            background-color: #313265;
+            /* Adjust button background color */
+            border: 1px solid #ddd;
+            /* Adjust button border */
+            cursor: pointer;
+            border-radius: 5px;
+            color: white;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .dropdown-item-cancel {
+            width: 48%;
+            /* Make the buttons take equal width and leave some space between them */
+            margin: 0;
+            /* Remove extra margin from buttons */
+            padding: 5px;
+            /* Optional: Adjust padding if necessary */
+            text-align: center;
+            background-color: #f8f9fa;
+            /* Adjust button background color */
+            border: 1px solid #313265;
+            /* Adjust button border */
+            cursor: pointer;
+            border-radius: 5px;
+            color: black;
+            font-size: 11px;
+            font-weight: 500;
+
+        }
+
+        .dropdown-year-apply {
+            width: 48%;
+            /* Make the buttons take equal width and leave some space between them */
+            margin: 0;
+            /* Remove extra margin from buttons */
+            padding: 5px;
+            /* Optional: Adjust padding if necessary */
+            text-align: center;
+            background-color: #313265;
+            /* Adjust button background color */
+            border: 1px solid #ddd;
+            /* Adjust button border */
+            cursor: pointer;
+            border-radius: 5px;
+            color: white;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .dropdown-year-cancel {
+            width: 50%;
+            /* Make the buttons take equal width and leave some space between them */
+            margin: 0;
+            /* Remove extra margin from buttons */
+            padding: 5px;
+            /* Optional: Adjust padding if necessary */
+            text-align: center;
+            background-color: #f8f9fa;
+            /* Adjust button background color */
+            border: 1px solid #313265;
+            /* Adjust button border */
+            cursor: pointer;
+            border-radius: 5px;
+            color: black;
+            font-size: 11px;
+            font-weight: 500;
+            margin-left: -3px;
+
+        }
+
+        #cancel-all:hover,
+        #apply-all:hover {
+            background-color: #e2e6ea;
+            /* Change background color on hover */
+        }
+
+        #year_filter {
+            background-color: white;
+            /* Set the dropdown background to white */
+        }
+
+        #year_filter option {
+            background-color: white;
+            /* Set each option background to white */
+        }
+
+        /* .form-control {
+            background-color: white !important;
+        } */
+
+        #reportsBackBtnCustm {
+
+            margin-top: 13px;
+        }
+
+        #excelDownload {
+            margin-left: 10px;
+            margin-top: 13px;
+        }
+
+        .sow_emp_details_class {
+            margin-top: 0px;
+        }
+
+        .hideMnthReport {
+            display: none;
+        }
+
+        .employee_detail_inside .table th {
+            white-space: nowrap;
+        }
+
+        .arrow_cursor {
+            cursor: pointer;
+            margin-right: 20px;
+        }
+
+        .arrow {
+            margin-right: 10px;
+        }
+
+        .nowarp_header {
+            white-space: nowrap;
+        }
+
+        .legend-wrapper {
+            position: absolute;
+            right: 0;
+            /* Pushes the legend to the right side */
+            top: 475px;
+            /* Adds some spacing between the table and legend */
+            width: auto;
+            /* Adjust width accordingly */
+        }
+
+        legend {
+            display: inline-flex;
+            gap: 5px;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            font-size: 12px !important;
+            margin-right: 25px !important;
+            border-bottom: 0px solid #e5e5e5;
+        }
+
+        .color-box {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            margin-right: 0px;
+            background-color: white;
+            border: 1px solid black;
+            border-radius: 3px;
+        }
+
+        legend span:nth-of-type(2) {
+            background-color: #FFF2CC;
+            /* Example of a different color */
+            border: 1px solid black;
+        }
+
+        legend span:nth-of-type(3) {
+            background-color: #DFEDF6;
+            /* Example of a different color */
+            border: 1px solid black;
+        }
+
+
+        .account_bg,
+        .account_bg_new_logo {
+            text-align: center;
+        }
+
+        .margin-top-custom {
+            margin-top: 10px;
+            /* Adjust as needed */
+        }
+
+
+        /* .sow_emp_details_class td:first-child, th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 102;
+}
+.sow_emp_details_class td:nth-child(2), th:nth-child(2) {
+  position: sticky;
+  left: 100px !important;
+  z-index: 102;
+  background-color: white;
+} */
+        .first_column {
+            position: sticky;
+            left: 0;
+            z-index: 102;
+        }
+
+        .second_colum {
+            position: sticky;
+            left: 84px !important;
+            z-index: 102;
+            background-color: white;
+        }
+
+        .third_colum {
+            position: sticky;
+            left: 0px !important;
+            z-index: 102;
+            background-color: white;
+            border-top: 0px solid #DDDDDD !important;
+            border-left: 3px solid #DDDDDD !important;
+            border-bottom: 1px solid #DDDDDD !important;
+            border-right: 3px solid #DDDDDD !important;
+        }
+
+        #reportsBackBtnCustm {
+            height: 30px;
+            margin: 0px;
+            background: transparent;
+            border: 1px solid #fff;
+            font-weight: 400;
+            color: #fff;
+            font-size: 12px;
+            border-radius: 10px;
+        }
+
+        .actual-projected-class {
+            font-size: 10px;
+            font-weight: 500;
+            color: #313265;
+        }
+
+        .CellWithComment .actual-projected-class {
+            font-weight: 600;
+            color: #313265;
+        }
+
+        .actual-projected-class-label {
+            color: #313265;
+        }
+
+        .other-status-class {
+            color: #818199;
+        }
+
+        .header-col {
+            font-weight: bold;
+        }
+
+        .detail_top_bar {
+            /* display: flex; */
+            align-items: center;
+            /* Center align items vertically */
+            justify-content: space-between;
+            /* Space items out */
+            border-bottom: none;
+        }
+
+        .table_title {
+            display: flex;
+            align-items: center;
+            /* Center align items vertically */
+            flex: 1;
+            /* Allow it to take available space */
+        }
+
+        .title-content {
+            margin-top: 0px;
+        }
+
+        #year_select_div {
+            display: flex;
+            gap: 10px;
+            margin-left: 10px;
+            justify-content: center;
+            align-items: center;
+            margin-top: -1px;
+            position: absolute;
+            top: 65px;
+            right: 25px;
+        }
+
+        .ms-options {
+            min-height: 80px !important;
+        }
+
+        .ms-options-wrap {
+            width: 135px !important;
+        }
+
+        .ms-options-wrap>button {
+            font-weight: 500 !important;
+            color: #818199 !important;
+            border-radius: 4px !important;
+            border: 1px solid #818199 !important;
+            font-size: 11px !important;
+        }
+
+        .year_text {
+            font-weight: 500 !important;
+            color: #313265;
+            font-size: 11px !important;
+        }
+
+        #bu_header_select,
+        #year_select_data {
+            appearance: none;
+            -webkit-appearance: none;
+            /* For Safari */
+            -moz-appearance: none;
+            /* For Firefox */
+            background-image: url('images/dropdown_icon.png');
+            /* Add your icon path */
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            /* Adjust position as needed */
+            padding-right: 20px;
+            /* Adjust based on icon size */
+        }
+
+        #year_select_data {
+            width: 60px;
+        }
+
+        .first_column {
+            position: sticky;
+            left: 0;
+            z-index: 102;
+        }
+
+        .second_colum {
+            position: sticky;
+            left: 98px !important;
+            z-index: 102;
+            background-color: white;
+        }
+
+        .third_colum {
+            position: sticky;
+            left: 202px !important;
+            z-index: 102;
+            background-color: white;
+            border-top: 1px solid #DDDDDD !important;
+            border-left: 1px solid #DDDDDD !important;
+            border-bottom: 1px solid #DDDDDD !important;
+            border-right: 3px solid #DDDDDD !important;
+        }
+
+        @media screen and (min-width: 1200px) and (max-width: 1350px) {
+            .second_colum {
+                left: 80px !important;
+            }
+
+            .third_colum {
+                left: 185px !important;
+            }
+
+        }
+
+        .highlighted-cell {
+            background-color: #f1b87c !important;
+            font-weight: bold !important;
+            border: 2px solid #f1b87c !important;
+        }
+
+        #popup {
+            position: absolute;
+            background: white;
+            border: 1px solid #ccc;
+            /* padding: 10px; */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            max-height: 480px !important;
+        }
+
+        #popup-month {
+            position: absolute;
+            background: white;
+            border: 1px solid #ccc;
+            padding: 1px 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            max-height: 480px !important;
+        }
+
+        #popup-month-account {
+            position: absolute;
+            background: white;
+            border: 1px solid #ccc;
+            padding: 1px 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            max-height: 480px !important;
+        }
+
+        #popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        #popup-overlay-month {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        #popup-overlay-month-account {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        /* .table-cell {
+  cursor: pointer;
+} */
+        .table_data_difference {
+            display: flex;
+            gap: 2px;
+            justify-content: end;
+        }
+
+        .popup_header {
+            background-color: #f2f2f2;
+            border: 1px solid #DDDDDD !important;
+            font-size: 11px !important;
+            text-transform: uppercase;
+            font-weight: 600 !important;
+            color: #818199 !important;
+        }
+
+        #popupTableBody {
+            color: #818199;
+            font-size: 10px !important;
+            font-weight: 400;
+            padding: 5px 5px !important;
+            border: 1px solid #DDDDDD !important;
+        }
+
+        .popup_header-month {
+            background-color: #f2f2f2;
+            border: 1px solid #DDDDDD !important;
+            font-size: 11px !important;
+            text-transform: uppercase;
+            font-weight: 600 !important;
+            color: #818199 !important;
+        }
+
+        #popupTableBodyMonth {
+            color: #818199;
+            font-size: 10px !important;
+            font-weight: 400;
+            padding: 5px 5px !important;
+            border: 1px solid #DDDDDD !important;
+        }
+
+        .popup_header-month-account {
+            background-color: #f2f2f2;
+            border: 1px solid #DDDDDD !important;
+            font-size: 11px !important;
+            text-transform: uppercase;
+            font-weight: 600 !important;
+            color: #818199 !important;
+        }
+
+        #popupTableBodyMonthAccount {
+            color: #818199;
+            font-size: 10px !important;
+            font-weight: 400;
+            padding: 5px 5px !important;
+            border: 1px solid #DDDDDD !important;
+        }
+
+        .table_sow_name {
+            color: #006eff !important;
+            text-decoration: underline;
+        }
+
+        .postive_val {
+            color: green !important;
+        }
+
+        .negative_val {
+            color: red !important;
+        }
+
+        /* Ensure borders are collapsed between cells */
+        /* Ensure borders are collapsed between cells */
+        table {
+            border-collapse: collapse !important;
+            width: 100%;
+        }
+
+        /* Apply borders to all td and th elements */
+        td,
+        th {
+            border: 0px solid #ddd;
+            /* Apply a default border */
+            padding: 8px;
+            /* optional for better spacing */
+        }
+
+        /* Specifically target the last row and remove its borders */
+        tr:last-child {
+            border-collapse: collapse !important;
+        }
+
+        /* Optionally, if you want to remove the bottom border for the last row, you can use this */
+        tr:last-child td {
+            border-bottom: none !important;
+        }
+
+        .popup-total-row {
+            text-align: right;
+            color: #818199;
+            font-size: 15px !important;
+            font-weight: 600;
+            font-family: barlow;
+            line-height: 19px;
+            margin-right: 5px;
+        }
+
+        .popup-total-row-account {
+            text-align: right;
+            color: #818199;
+            font-size: 15px !important;
+            font-weight: 600;
+            font-family: barlow;
+            line-height: 19px;
+            margin-right: 5px;
+        }
+
+        #report_last_diff {
+            position: sticky;
+            top: 22px;
+            z-index: 105;
+        }
+
+        .popup-table-month thead {
+            position: sticky;
+            top: 0;
+            background-color: #f8f9fa;
+            /* Light gray background for header */
+            z-index: 10;
+        }
+
+        .popup-table-month-account thead {
+            position: sticky;
+            top: 0;
+            background-color: #f8f9fa;
+            /* Light gray background for header */
+            z-index: 10;
+        }
+
+        #qf_diff_popup_table tr th {
+            position: sticky;
+            top: 0;
+            background-color: #f8f9fa;
+        }
+
+        .popup_data {
+            background-color: #fff;
+            padding: 10px;
+        }
+
+        td .postive_val {
+            text-decoration: none !important;
+        }
+
+        td .postive_val {
+            text-decoration: underline;
+        }
+
+        td:has(.postive_val),
+        td:has(.negative_val) {
+            text-decoration: none !important;
+            cursor: default !important;
+        }
+
+        #popup-content-month {
+            position: relative;
+            /* Needed for absolute close button */
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Scrollable Table Container */
+        #popup-table-container {
+            max-height: 250px;
+            /* Adjust height */
+            overflow-y: auto;
+            /* Enable scrolling */
+            border: 1px solid #ddd;
+            /* Optional: Border for clarity */
+            margin-top: 25px !important;
+        }
+
+        #popup-content {
+            max-height: 300px;
+            /* Adjust height */
+            overflow-y: auto;
+            /* Enable scrolling */
+            border: 1px solid #ddd;
+            /* Optional: Border for clarity */
+            margin-top: 25px !important;
+        }
+
+        #popup-content-month-account {
+            max-height: 400px;
+            /* Adjust height */
+            overflow-y: auto;
+            /* Enable scrolling */
+            border: 1px solid #ddd;
+            /* Optional: Border for clarity */
+            margin-top: 25px !important;
+        }
+
+        /* Fixed Close Button */
+        #closePopupButton {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            color: black;
+            font-weight: bold;
+        }
+
+        .table {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 0px;
+        }
+
+        #popup-content {
+            margin-top: 15px;
+        }
+
+        .ms-options-wrap>.ms-options {
+            max-height: 250px !important;
+        }
+
+        #bu_head_block {
+            position: absolute;
+            top: 65px;
+            right: 135px;
+        }
+
+        .acc_sow_select_data_tab {
+            display: flex;
+            width: max-content;
+            padding: 5px;
+            gap: 10px;
+            color: #ddd;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .acc_sow_select_data_tab {
+            display: flex;
+            justify-content: center;
+            /* Center the tabs horizontally */
+            /* margin-top: 20px; */
+            /* Adjust spacing as needed */
+            /* margin-bottom: 20px; */
+        }
+
+        .acc_sow_select_data_tab>div {
+            display: flex;
+            justify-content: center;
+            /* padding: 10px 20px; */
+            cursor: pointer;
+            /* border: 1px solid #ddd; */
+            /* border-radius: 5px; */
+            margin: 0 5px;
+            /* Space between tabs */
+            /* background-color: #f8f8f8; */
+            color: #8b8988;
+            font-weight: bold;
+            width: 180px;
+        }
+
+        .acc_sow_select_data_tab>div.selected-tab {
+            /* background-color: #007bff; */
+            /* Highlight color for selected tab */
+            color: #313265;
+            border-bottom: 2px solid #313265;
+            display: flex;
+            justify-content: center;
+            /* border-color: #007bff; */
+        }
+
+        .acc_sow_select_data_tab>div:hover {
+            color: #313265;
+            /* background-color: rgb(193, 217, 240); */
+            /* Hover effect */
+        }
+
+        #infoPopupTableBody>tr>td,
+        #chartTooltipTableBody>tr>td {
+            border-top: 1.5px solid #ddd;
+            color: #313265;
+            font-size: 10px;
+        }
+
+        .employee_detail_inside {
+            margin-top: 5px;
+        }
+
+        .fixTableHead {
+            height: calc(100vh - 165px);
+        }
+
+        .wordBreak {
+            word-break: break-word;
+            /* Ensures long words break to the next line */
+            white-space: normal;
+            /* Allows text to wrap normally */
+        }
+
+        .table_title {
+            /* position: absolute; */
+            /* right: 0; */
+            top: 475px;
+            width: auto;
+            z-index: 103;
+        }
+
+        #header {
+            position: sticky;
+            top: 0px;
+            z-index: 110;
+        }
+
+        .sowTableHeader {
+            height: calc(100vh - 220px);
+            margin-top: -1px;
+        }
+
+        .sow_data_name_all {
+            cursor: pointer;
+            text-underline-offset: 4px;
+            /* text-decoration: underline; */
+            /* text-decoration-color: blue; */
+            /* background-color: #2375b0 !important; */
+            border-radius: 3px !important;
+            padding: 2px !important;
+            color: #006eff !important;
+            font-weight: 600;
+        }
+
+        .sow_data_name_all:hover {
+            /* font-size: 10.5px; */
+            /* text-decoration: underline; */
+            /* text-decoration-color: blue; */
+            /* text-decoration-style: dotted; */
+            color: #006eff;
+            font-weight: 600;
+            /* box-shadow: 0px 0px 10px #d4d5d5; */
+        }
+
+        #infoPopup {
+            max-height: 300px !important;
+            overflow-y: auto;
+            width: 410px !important
+        }
+
+        .popup-table {
+            width: 270px !important;
+        }
+
+        .popup-table>thead>tr>th {
+            position: sticky;
+            top: 12px;
+            background-color: white;
+            border-bottom: 1.4px solid grey;
+            border-top: 1.2px solid grey;
+            z-index: 10;
+        }
+
+        .wordBreak {
+            word-break: break-word;
+            /* Ensures long words break to the next line */
+            white-space: normal;
+            /* Allows text to wrap normally */
+        }
+
+        #infoPopupTitle,
+        #chartTooltipTitle {
+            position: sticky;
+            top: -7px;
+            background-color: white;
+            padding: 3px 0px;
+            font-size: 10px;
+        }
+
+        #chartTooltip {
+            max-height: 180px;
+            overflow-y: auto;
+            width: 300px !important;
+            z-index: 110;
+        }
+
+        .tab_title {
+            font-size: 18px;
+            font-weight: 600;
+            padding: 5px 0px;
+            color: #555555;
+            margin: 0px 15px;
+            border-bottom: 1.5px solid grey;
+        }
+
+        .detail_top_bar .table_title {
+            margin-top: -12px;
+            margin-bottom: 0px;
+        }
+
+        .employee_form .form-control {
+            border: solid 1px #313265;
+        }
+        .exexSummaryTable {
+            border-collapse: separate; /* This is crucial for border-radius to work */
+            border-spacing: 0;
+            width: 100%; /* Optional: for better layout */
+            border-radius: 12px;
+            /* border: 1px solid #7d7b7b; */
+        }
+
+        .exexSummaryTable>thead>tr>th,
+        .exexSummaryTable>tbody>tr>td {
+            /* border-top: 1.5px solid #ddd; */
+            color: #313265;
+            font-size: 11px;
+            padding: 6px;
+        }
+
+        .exexSummary {
+            margin-top: 12px;
+            padding: 0px 1px 1px 1px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .chart-block {
+            width: 50%;
+        }
+
+        .exceute_table {
+            /* background-color: #f2f2f2; */
+            color: grey;
+        }
+
+        .execute_year {
+            text-align: unset;
+            background-color: #f9ecc7;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .execute_side_header {
+            /* background-color: #f2f2f2; */
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+
+        .detail_top_bar .table_title {
+            font-family: "Poppins", sans-serif;
+        }
+
+        .chart-header-container-wrapper {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .chart-legend-container {
+            display: flex;
+            gap: 10px;
+            font-size: 9px;
+            font-weight: 600;
+            padding: 0px 10px;
+            margin-top: -10px;
+        }
+
+        .chart-legend {
+            display: flex;
+            justify-content: space-between;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .chart-legend-bg-0 {
+            width: 10px;
+            height: 10px;
+            background-color: #2985C1;
+            border-radius: 2px;
+        }
+
+        .chart-legend-text {
+            color: #313265;
+        }
+
+        .chart-legend-bg-1 {
+            width: 10px;
+            height: 10px;
+            background-color: #F46F22;
+            border-radius: 2px;
+        }
+
+        .chart-legend-bg-2 {
+            width: 10px;
+            height: 10px;
+            background-color: #007A45FF;
+            border-radius: 2px;
+        }
+        #chartTooltipSummary {
+            position: sticky;
+            bottom: -8px;
+            background-color: white;
+        }
+        #chartTooltipTitle{
+            display: flex;
+            gap: 2px;
+        }
+        .td_style_sow {
+            background-color: #fff !important;
+        }
+        .exceute_sum_body {
+            font-weight: 500;
+        }
+        .exceute_sum_body>div {
+            background-color: #f2f2f2;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .actual_op1 {
+            text-align: right;
+        }
+        #ytd_header, #fy_header {
+            width: 37%;
+            text-align: center;
+        }
+
+        /* Buying Center Level Hierarchy Styles */
+        .buying-center-row {
+            background-color: #D6EAF8 !important;
+            color: #313265 !important;
+            font-weight: 600;
+        }
+
+        .key-stakeholder-row {
+            background-color: #D5F4E6 !important;
+            color: #313265 !important;
+            font-weight: 500;
+        }
+
+        .stakeholder-row {
+            background-color: #F2F3F4 !important;
+            color: #313265 !important;
+            font-weight: 500;
+        }
+
+        .sow-detail-row {
+            background-color: #FFFFFF !important;
+            color: #313265 !important;
+        }
+
+        .hierarchy-level-1 {
+            padding-left: 20px !important;
+        }
+
+        .hierarchy-level-2 {
+            padding-left: 40px !important;
+        }
+
+        .hierarchy-level-3 {
+            padding-left: 60px !important;
+        }
+
+        .hierarchy-level-4 {
+            padding-left: 80px !important;
+        }
+
+        .buying-center-toggle-icon {
+            cursor: pointer;
+            margin-right: 8px;
+            color: #313265;
+            font-size: 12px;
+        }
+
+        .buying-center-hidden {
+            display: none !important;
+        }
+
+        .buying-center-table {
+            display: none;
+        }
+
+        .buying-center-table.active {
+            display: table;
+        }
+        .account-cell-data {
+            background-color: #f2f2f2 !important;
+        }
+        .amount_by_sow_filter {
+            width: 250px !important;
+            margin: 0px;
+            position: absolute;
+            right: 27px;
+        }
+        .signed_buying_center_bg {
+            background-color: #e96f3038 !important;
+        }
+        .renewal_buying_center_bg {
+            background-color: #62d98021 !important;
+            color: #026900ad !important;
+        }
+        .buying_center_signed_bg {
+            background-color: #e96f3038 !important;
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+        }
+        .buying_center_signed_text {
+            color: #e96f30 !important;
+        }
+        .buying_center_renewal_bg {
+            background-color: #62d98021 !important;
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+            color: #026900ad !important;
+        }
+        .buying_center_renewal_text {
+            color: #026900ad !important;
+        }
+        .buying_sub_div {
+            display: flex;
+            font-size: 10px;
+            gap: 5px;
+            justify-content: center;
+            align-items: center;
+        }
+        .buying_center_legend {
+            display: flex;
+            gap: 5px;
+        }
+
+        /* Figma refresh: overall summary header and monthly revenue controls */
+        .overall-summary-toolbar {
+            min-height: 40px;
+            padding: 5px 15px;
+            background: #1F3864;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            color: #ffffff;
+            font-family: "Poppins", "Celias", sans-serif;
+            border-top: 0.5px solid #6d6d6d;
+        }
+
+        .overall-summary-toolbar .overall-summary-title {
+            margin: 0;
+            color: #ffffff;
+            font-size: 14px;
+            line-height: 1.3;
+            font-weight: 500;
+        }
+
+        .overall-summary-filters {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-left: auto;
+        }
+
+        .overall-summary-filters #bu_head_block,
+        .overall-summary-filters #year_select_div {
+            position: static;
+            float: none !important;
+            display: block;
+            margin: 0;
+        }
+
+        .overall-summary-filters .year_text {
+            display: none;
+        }
+
+        .overall-summary-filters #bu_header_select,
+        .overall-summary-filters #year_select_data {
+            height: 30px;
+            margin: 0;
+            padding: 0 38px 0 7px !important;
+            color: #ffffff !important;
+            background-color: transparent;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='m1 1 6 6 6-6' fill='none' stroke='%23fff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            border: 1px solid rgba(255, 255, 255, .85) !important;
+            border-radius: 10px !important;
+            box-shadow: none;
+            font-family: "Poppins", "Celias", sans-serif;
+            font-size: 12px;
+            line-height: 30px;
+            font-weight: 400 !important;
+            cursor: pointer;
+        }
+
+        .overall-summary-filters #bu_header_select {
+            width: 166px;
+        }
+
+        .overall-summary-filters #year_select_data {
+            width: 81px;
+        }
+
+        .overall-summary-filters select option {
+            color: #1F3864;
+            background: #ffffff;
+        }
+
+        .overall-summary-container > .wrapper_outer > .container-fluid {
+            padding: 0 7px;
+            box-shadow: none;
+        }
+
+        .overall-summary-container .employee_form {
+            box-shadow: none;
+        }
+
+        .overall-summary-container .detail_top_bar {
+            margin: 0;
+            padding: 0px 0 0px;
+            border: 0;
+        }
+
+        .overall-summary-container .detail_top_bar .table_title {
+            position: relative;
+            top: auto;
+            width: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            font-family: "Poppins", "Celias", sans-serif;
+        }
+
+        .overall-summary-container .title-sub-content {
+            /* margin-bottom: 10px; */
+            color: #4b4b4b;
+            font-size: 12px;
+            line-height: 1.4;
+            font-weight: 600;
+        }
+
+        .summary-toggle-row {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .overall-summary-container .emp_radio_filter {
+            width: auto;
+            min-height: 30px;
+            margin: 0 !important;
+            padding: 5px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 0.35rem;
+            background: #16243e;
+            border: 0;
+            border-radius: 999px;
+            box-shadow: none;
+            z-index: 10;
+        }
+
+        .overall-summary-container .emp_radio_filter > label {
+            width: auto;
+            min-height: 20px;
+            margin: 0;
+            padding: 0.85rem 1.4rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 auto;
+            cursor: pointer;
+            border: 0;
+            border-radius: 999px;
+            color: #ffffff;
+            background: transparent;
+            font-family: "Poppins", "Celias", sans-serif;
+            font-size: 12px;
+            line-height: 1;
+            font-weight: 400;
+            white-space: nowrap;
+            position: relative;
+            transform: none;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .overall-summary-container .emp_radio_filter > input[type="radio"]:checked + label {
+            color: #ffffff;
+            background: #ff7d20;
+            font-weight: 500;
+        }
+
+        .overall-summary-container .data_switch {
+            width: auto;
+        }
+
+        .overall-summary-container .amount_by_sow_filter {
+            position: static;
+            right: auto;
+            width: 288px !important;
+            margin-left: auto !important;
+            z-index: 10;
+        }
+
+        .overall-summary-container .amount_by_sow_filter > label:first-of-type {
+            width: 154px;
+            padding: 0;
+        }
+
+        .overall-summary-container .amount_by_sow_filter > label:last-of-type {
+            width: 120px;
+            padding: 0;
+        }
+
+        .overall-summary-container .buying_center_legend {
+            align-self: flex-end;
+            margin-top: 8px;
+        }
+
+        @media (max-width: 900px) {
+            .overall-summary-toolbar {
+                min-height: auto;
+                padding: 14px 16px;
+                flex-wrap: wrap;
+            }
+
+            .overall-summary-filters {
+                width: 100%;
+                margin-left: 0;
+            }
+
+            .summary-toggle-row {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .overall-summary-container .amount_by_sow_filter {
+                margin-left: 0 !important;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .overall-summary-container .emp_radio_filter {
+                width: 100%;
+                height: auto;
+                padding: 5px;
+            }
+
+            .overall-summary-container .data_switch > label {
+                min-width: 0;
+                padding: 0 10px;
+                flex: 1 1 auto;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body class="unselectable">
+    <div class="loader">
+        <div class="loader-wheel"></div>
+        <div class="loader-text"></div>
+    </div>
+    <div>
+        <div>
+            <div id="header"></div>
+            <div class="show_page overall-summary-data-block" style="display: none">
+                <div class="overall-summary-toolbar">
+                    <h1 class="overall-summary-title title-content"><span></span></h1>
+                    <div class="overall-summary-filters">
+                        <div id="bu_head_block">
+                            <select class="form-control" id="bu_header_select" aria-label="Select leader"
+                                onchange="changeBUHead()">
+                            </select>
+                        </div>
+                        <div id="year_select_div">
+                            <div class="year_text">Year : </div>
+                            <div>
+                                <select class="form-control" name="year_select_data[]" id="year_select_data"
+                                    aria-label="Year" onchange="getSelectedYear()">
+                                </select>
+                            </div>
+                        </div>
+                        <button class="btn btn-info" id="reportsBackBtnCustm">Back</button>
+                    </div>
+                </div>
+                <div class="container-fluid executive-summary-container">
+                    <div class="detail_box">
+                        <!-- <button class="btn btn-info pull-right" id="reportsBackBtnCustm">Back</button> -->
+                        <div class="main-container">
+                            <div class="dashboard-layout">
+                                <!-- <div class="dashboard-column">
+                                    <h2 class="section-heading">EXECUTIVE SUMMARY</h2>
+                                    <div class="exec-summary-grid">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">TOTAL REVENUE (YTD)</h3>
+                                            </div>
+                                            <p id="totalRevenueYTD" class="card-value-revenue-ytd">$0M</p>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">PROJECTED REVENUE (NEXT 6 MONTHS)</h3>
+                                            </div>
+                                            <p id="projectedRevenueNext6Months" class="card-value-revenue-projected">
+                                                $0M
+                                            </p>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">OPI REVENUE 2025 VS YTD REVENUE 2025</h3>
+                                                <div class="info-icon-container">
+                                                    <svg id="infoIconOPI" class="info-icon" fill="none"
+                                                        stroke="currentColor" viewBox="0 0 24 24"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                                        </path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <p id="opiVsYtdRevenue" class="card-value-opi">$0M</p>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">
+                                                    ACTUAL/PROJECTED 2025 VS YTD REVENUE 2025
+                                                </h3>
+                                                <div class="info-icon-container">
+                                                    <svg id="infoIconActualProjected" class="info-icon" fill="none"
+                                                        stroke="currentColor" viewBox="0 0 24 24"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                                        </path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <p id="actualProjectedVsYtd" class="card-value-actual-projected">
+                                                $0M
+                                            </p>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">TOTAL ACTIVE SOWS</h3>
+                                            </div>
+                                            <p id="totalActiveSows" class="card-value-sows">0</p>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">BILLING BREAKDOWN</h3>
+                                            </div>
+                                            <p id="billingFixed" class="card-value-billing">0% Fixed</p>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">BILLING BREAKDOWN</h3>
+                                            </div>
+                                            <p id="billingTM" class="card-value-billing">0% T&M</p>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">TYPE SPLIT</h3>
+                                            </div>
+                                            <p id="typeSplit" class="card-value-typesplit">
+                                                0% Ongoing, 0% Extension, 0% Net New
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="dashboard-column chart-block">
+                                    <div class="chart-header-container-wrapper">
+                                        <div class="chart-header-container">
+                                            <h2 class="section-heading">REVENUE TREND CHART</h2>
+                                        </div>
+                                        <div class="chart-legend-container">
+                                            <div class="chart-legend">
+                                                <div class="chart-legend-bg-0"></div>
+                                                <div class="chart-legend-text" id="chartLegend0"></div>
+                                            </div>
+                                            <div class="chart-legend">
+                                                <div class="chart-legend-bg-1"></div>
+                                                <div class="chart-legend-text" id="chartLegend1"></div>
+                                            </div>
+                                            <div class="chart-legend">
+                                                <div class="chart-legend-bg-2"></div>
+                                                <div class="chart-legend-text" id="chartLegend2"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="chart-container-wrapper"> -->
+                                    <div id="revenueChartContainer">
+                                        <canvas id="revenueChart"></canvas>
+                                    </div>
+                                    <div id="chartTooltip" class="chart-tooltip">
+                                        <div id="chartTooltipTitle" class="popup-title"></div>
+                                        <table class="popup-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>ACCOUNT</th>
+                                                    <!-- <th class="wordBreak">SOW</th> -->
+                                                    <th class="popup-table-amount-cell">AMOUNT</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="chartTooltipTableBody"></tbody>
+                                        </table>
+                                        <div id="chartTooltipSummary" class="popup-summary"></div>
+                                    </div>
+                                    <!-- </div> -->
+                                </div>
+                                <div class="dashboard-column">
+                                    <h2 class="section-heading">EXECUTIVE SUMMARY</h2>
+                                    <div class="exexSummary">
+                                        <table class="exexSummaryTable">
+                                            <thead>
+                                                <tr>
+                                                    <th class="exceute_table"></th>
+                                                    <th class="exceute_table" id="ytd_header">YTD</th>
+                                                    <th class="exceute_table" id="fy_header">FY-PROJECTION</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="execSummaryTableBody">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <div id="infoPopup" class="info-popup">
+                            <div id="infoPopupTitle" class="popup-title"></div>
+                            <table class="popup-table">
+                                <thead>
+                                    <tr>
+                                        <th>ACCOUNT</th>
+                                        <th class="wordBreak">SOW</th>
+                                        <th class="popup-table-amount-cell">AMOUNT</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="infoPopupTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="overall-summary-container">
+                    <div class="wrapper_outer">
+                        <div id="loader" class="lds-dual-ring hidden overlay"></div>
+                        <div class="container-fluid">
+                            <div class="detail_box">
+                                <div class="employee_form sow_detail">
+                                    <div class="loader">
+                                        <div class="loader-wheel"></div>
+                                        <div class="loader-text"></div>
+                                    </div>
+                                    <div class="detail_top_bar">
+                                        <div class="table_title">
+                                            <div class="title-sub-content">
+                                                <span style="display: none;">View Monthly Breakup of Financial Revenue : </span>
+                                                <!-- <span class="title-sub">(all values are in Millions)</span> -->
+                                            </div>
+                                            <div class="summary-toggle-row">
+                                                <div class="emp_radio_filter data_switch">
+                                                    <input type="radio" name="data_tab_switch" id="overall_summary_data"
+                                                        class="emp_select" value="accountLevelTab"
+                                                        onclick="handleTabClick('accountLevelTab')" checked>
+                                                    <label for="overall_summary_data">Account Level</label>
+                                                    <input type="radio" name="data_tab_switch" id="account_by_sow_data"
+                                                        class="emp_select" value="sowLevelTab"
+                                                        onclick="handleTabClick('sowLevelTab')">
+                                                    <label for="account_by_sow_data">SoW Level</label>
+                                                    <input type="radio" name="data_tab_switch" id="buying_center_data"
+                                                        class="emp_select" value="buyingCenterTab"
+                                                        onclick="handleTabClick('buyingCenterTab')">
+                                                    <label for="buying_center_data">Buying Center Level</label>
+                                                </div>
+                                                <div class="emp_radio_filter amount_by_sow_filter" style="display: none;">
+                                                    <input type="radio" name="sow_amount_by_acc" id="planned"
+                                                        class="emp_select" value="Planned" onclick="sowGetByAccount()"
+                                                        checked>
+                                                    <label for="planned">Actual/Projected</label>
+                                                    <input type="radio" name="sow_amount_by_acc" id="actual"
+                                                        class="emp_select" value="Actual" onclick="sowGetByAccount()">
+                                                    <label for="actual">SoW Amount</label>
+                                                </div>
+                                            </div>
+                                            <div class="buying_center_legend">
+                                                <div class="buying_sub_div">
+                                                    <div class="buying_center_signed_bg"></div><div class="buying_center_signed_text">Signed</div></div>
+                                                <div class="buying_sub_div">
+                                                    <div class="buying_center_renewal_bg"></div><div class="buying_center_renewal_text">Renewal</div></div>
+                                            </div>
+                                        </div>
+                                        <!-- <button class="btn btn-info pull-right" id="excelDownload" onclick="downloadExcel()"
+                                    title="Excel Download"><i class="fa fa-download" aria-hidden="true"></i></button> -->
+                                    </div>
+                                    <div
+                                        class="employee_detail_inside employee_sow_details table-responsive fixTableHead">
+                                        <table
+                                            class="table table-bordered border-primary sow_emp_details_class overall_summary_tab_data"
+                                            id="res_by_account_green_signed">
+                                            <thead class="thead-light">
+                                                <tr id="report_overall_summary" class="report_sow_account_header">
+
+                                                </tr>
+
+                                                <tr id="report_last_diff" class="report_sow_account_header">
+
+                                                </tr>
+                                            </thead>
+                                            <tbody id="report_overall_summary_body">
+
+                                            </tbody>
+                                        </table>
+                                        <table
+                                            class="table table-bordered border-primary sow_emp_details_class amount_by_sow_tab_data"
+                                            id="sow_by_level_data">
+                                            <thead class="thead-light">
+                                                <tr id="report_sow_acc_signed" class="report_sow_account_header">
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                        <table
+                                            class="table table-bordered border-primary sow_emp_details_class buying-center-table"
+                                            id="buying_center_level_data">
+                                            <thead class="thead-light">
+                                                <tr id="report_buying_center_header" class="report_sow_account_header">
+
+                                                </tr>
+                                            </thead>
+                                            <tbody id="report_buying_center_body">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="legend-wrapper" style="display: none;">
+                                        <legend>
+                                            <span class="color-box"></span> Monthly
+                                            <span class="color-box"></span> Quarterly
+                                            <span class="color-box"></span> Yearly
+                                        </legend>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <!-- Popup Structure -->
+                    <div id="popup-overlay" style="display: none;" onclick="closePopup()"></div>
+                    <div id="popup" style="display: none;">
+                        <div class="popup_data">
+                            <div id="closePopupButton" onclick="closePopup()" style="cursor: pointer; text-align: right; font-size: 20px; 
+                     color: #000; padding: 0px; font-weight: 400;
+                     position: absolute; top: 0px; right: 8px;">
+                                ×
+                            </div>
+                            <div id="popup-content">
+
+                                <table class="popup-table table table-bordered border-primary" id="qf_diff_popup_table">
+                                    <thead class="popup_header">
+                                        <tr>
+                                            <th class="nowarp_header" id="accountHeader" data-sort="asc"
+                                                style="cursor: pointer;">ACCOUNT ▲</th>
+                                            <th class="nowarp_header">SOW</th>
+                                            <th class="nowarp_header">TYPE</th>
+                                            <th class="nowarp_header" id="startDateHeader" data-sort="asc"
+                                                style="cursor: pointer;">START DATE ▲</th>
+                                            <th class="nowarp_header" id="amountHeader" data-sort="asc"
+                                                style="cursor: pointer;">Amount ▲</th>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody id="popupTableBody">
+                                        <!-- Content dynamically populated -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="popup-total-row">
+                                Total = <span id="totalAmount-quarter"></span>
+                            </div>
+                        </div>
+                        <!-- <button onclick="closePopup()">Close</button> -->
+                    </div>
+
+                </div>
+                <div id="popup-overlay-month" style="display: none;" onclick="closePopupMonth()"></div>
+                <div id="popup-month" style="display: none;">
+                    <div id="popup-content-month">
+                        <!-- Fixed Close Button -->
+                        <div id="closePopupButton" onclick="closePopupMonth()" style="cursor: pointer; text-align: right; font-size: 20px; 
+                   color: #000; padding: 0px; font-weight: 400;
+                   position: absolute; top: 0px; right: 2px;">
+                            ×
+                        </div>
+
+                        <!-- Scrollable Table Container -->
+                        <div id="popup-table-container">
+                            <table class="popup-table-month table table-bordered border-primary">
+                                <thead class="popup_header-month">
+                                    <tr>
+
+                                        <th class="nowarp_header" id="accountHeadermonth" style="cursor: pointer;">
+                                            ACCOUNT
+                                        </th>
+                                        <th class="nowarp_header">SOW</th>
+                                        <th class="nowarp_header">TYPE</th>
+                                        <th class="nowarp_header" id="startDateHeadermonth" style="cursor: pointer;">
+                                            START
+                                            DATE
+                                        </th>
+                                        <th class="nowarp_header" id="amountHeadermonth" style="cursor: pointer;">Amount
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="popupTableBodyMonth">
+                                    <!-- Content dynamically populated -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Total Amount Row (Fixed Below Table) -->
+                        <div class="popup-total-row">
+                            Total = <span id="totalAmount"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="popup-overlay-month-account" style="display: none;" onclick="closePopupMonthAccount()"></div>
+                <div id="popup-month-account" style="display: none;">
+                    <div id="closePopupButton" onclick="closePopupMonthAccount()" style="cursor: pointer; text-align: right; font-size: 20px; 
+                     color: #000; padding: 0px; font-weight: 400;
+                     position: absolute; top: 0px; right: 8px;">
+                        ×
+                    </div>
+                    <div id="popup-content-month-account">
+                        <table class="popup-table-month-account table table-bordered border-primary">
+                            <thead class="popup_header-month-account">
+                                <tr>
+                                    <th class="nowarp_header" id="accountHeaderAcc" style="cursor: pointer;">ACCOUNT
+                                    </th>
+                                    <th class="nowarp_header">SOW</th>
+                                    <th class="nowarp_header">FUNNEL</th>
+                                    <th class="nowarp_header">TYPE</th>
+                                    <th class="nowarp_header" id="startDateHeaderAcc" style="cursor: pointer;">START
+                                        DATE
+                                    </th>
+                                    <th class="nowarp_header" id="amountHeaderAcc" style="cursor: pointer;">Amount</th>
+                                </tr>
+
+                            </thead>
+                            <tbody id="popupTableBodyMonthAccount">
+                                <!-- Content dynamically populated -->
+                            </tbody>
+                        </table>
+                        <div class="popup-total-row-account">
+                            Total = <span id="totalAmount-account"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+
+</html>

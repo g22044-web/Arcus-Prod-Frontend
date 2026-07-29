@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Factspan - ARCUS - Account Allocation Report</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv='cache-control' content='no-cache'>
+  <meta http-equiv='expires' content='0'>
+  <meta http-equiv='pragma' content='no-cache'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+  <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+  <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+  <script src="https://kit.fontawesome.com/01f906aa6d.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/custom.css" />
+  <script src="js/jquery.tabledit.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/reportAccountAllocation.js"></script>
+
+  <link rel="icon" href="images\factspan.png" type="image/png" sizes="16x16">
+
+  <script src="lib/jQuery-MultiSelect.js"></script>
+  <link rel="stylesheet" href="css/jquery.multiselect.css">
+  <script src="js/bootbox.min.js"></script>
+  <script src="js/bootbox.locales.min.js"></script>
+  <script src="js/jquery.table2excel.js"></script>
+  <link rel="stylesheet" href="css/busyLoading.css">
+  <link href="https://cdn.jsdelivr.net/npm/select2@3.5.1/select2.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@3.5.1/select2.js"></script>
+
+  <script>
+    $(function () {
+      $('#header').load('header.html');
+
+    })
+  </script>
+</head>
+<style>
+  .employee_sow_details .table th {
+
+    border: solid 0px #f8f9fa;
+    border-radius: 0px;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+  }
+
+
+  .employee_detail_inside .table th {
+    font-size: 10px;
+    font-weight: 500;
+    color: #8b8988;
+  }
+
+  .inactive-account{
+    background-color: #e3e2e263;
+    padding: 4px;
+    /* border-radius: 5px; */
+    /* cursor: pointer; */
+    border-radius: 15px;
+    text-align: center;
+    font-weight: 500;
+    color: #a19b9b;
+  }
+
+
+/* 
+  .employee_detail_inside .table th {
+    width: 4.14% !important;
+  } */
+
+  .employee_detail_inside .table th {
+    font-size: 10px;
+    font-weight: 500;
+    color: #8b8988;
+  }
+
+  .signed_bg {
+
+    background-color: #ffffff;
+
+    color: #252424ad !important;
+    border: #edf6fe !important;
+  }
+
+  .signed_header_bg {
+    background-color: #4CA5FFFF;
+    color: #fff !important;
+    border: #4CA5FFFF !important;
+  }
+
+  .proposal_header_bg {
+    background-color: #17A948FF;
+    color: #fff !important;
+    border: #17A948FF !important;
+  }
+
+  .proposal_bg {
+
+    background-color: #ffffff;
+    color: #252424ad !important;
+
+    border: #e9fef0 !important;
+  }
+
+  .all_month_bg {
+    background-color: #007A45FF;
+    color: #fff !important;
+  }
+
+
+
+  #signed_sow_table>tbody>tr,
+  #proposal_sow_table>tbody>tr {
+    border-bottom: 1px solid #e4e4e4;
+  }
+
+  .emp_filter {
+    margin-top: -19px !important;
+    margin-right: 2px;
+  }
+
+  .emp_radio_filter>label {
+    width: 68px;
+  }
+
+  #report_sow_account {
+    background-color: #f2f2f2;
+  }
+
+  .account_bg,
+  .account_bg>td {
+    background-color: #f2f2f2 !important;
+    color: black !important;
+  }
+
+  .employee_detail_inside table tr:nth-child(even) {
+    background: #f2f2f2;
+    border-top: solid 1px #f2f2f2;
+  }
+
+  hr {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border: 0;
+    border-top: 1px solid #eee;
+  }
+
+  .employee_detail_inside table tr:nth-child(even) {
+    background: #ffffff;
+    border-top: solid 1px #ffffff;
+  }
+
+  .top_space {
+    border-top: 5px solid white !important;
+  }
+
+  .top_broder_bg {
+    border-top: 1.5px solid #eff3ef !important;
+  }
+
+  #report_overall_summary>th {
+    background-color: #f2f2f2;
+  }
+
+  .account_level {
+    background-color: #f2f2f2 !important;
+  }
+
+  .account_level>td {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+  }
+
+  #excelDownload {
+    padding: 5px 25px;
+    margin-right: 5px;
+  }
+
+  .table_title {
+    margin-bottom: -26px;
+  }
+
+  .thead-light {
+    background-color: #f3f3f3;
+  }
+
+  #account_head>th {
+    background-color: #f3f3f3;
+  }
+
+  .employee_form .btn-info-account {
+    background-color: #fff;
+    font-size: 12px;
+
+    padding: 10px;
+    font-weight: 500;
+    transition: all 0.3s;
+    border-radius: 5px;
+    padding: 0px 3px;
+  }
+
+  .employee_form .btn-info-account:hover {
+    color: #fc8c15;
+  }
+
+  .account_edit_field {
+    display: none;
+
+  }
+
+  .form-control {
+    padding: 3px 4px !important;
+  }
+
+  .table_z_index {
+    z-index: 100;
+  }
+
+  .select2-container .select2-choice>.select2-chosen {
+    margin-right: 0px;
+  }
+
+  .show_delete_app {
+    background-color: #ecb09257 !important;
+  }
+  .fa-toggle-on::before{
+    color: orange;
+  }
+
+  .fixed_width_action {
+    width: 2% !important;
+  }
+
+  .res_name_width {
+    width: 12% !important;
+  }
+
+  .res_name_cust_width {
+    width: 14% !important;
+  }
+  .account_allocation_table {
+    margin-top: 10px !important;
+  }
+</style>
+
+<body class="unselectable">
+  <div class="loader">
+    <div class="loader-wheel"></div>
+    <div class="loader-text"></div>
+  </div>
+  <div class="show_page" style="display: none;">
+    <div id="header"></div>
+
+    <div class="wrapper_outer">
+      <div id="loader" class="lds-dual-ring hidden overlay"></div>
+      <div class="container-fluid">
+        <div class="detail_box">
+          <div class="employee_form sow_detail">
+            <div class="detail_top_bar">
+              <div class="table_title">Account Allocation</div>
+              <button class="btn btn-info pull-right" id="reportBackBtnCustm">Back</button>
+              <div class="employee_detail_inside employee_sow_details table-responsive fixTableHead account_allocation_table">
+
+                <table class="table table-bordered border-primary sow_emp_details_class" id="account_report" style="width: 100%;">
+                  <thead class="thead-light">
+                    <tr id="account_head" class="report_sow_account_header">
+                      <th class="table_z_index">Account Name</th>
+                      <th class="table_z_index res_name_width">Growth AVP/VP</th>
+                      <th class="table_z_index res_name_width">Growth Dir/Sr Dir</th>
+                      <th class="table_z_index res_name_cust_width">Growth Eng/Account Mgr</th>
+                      <th class="table_z_index res_name_width">Delivery AVP/VP</th>
+                      <th class="table_z_index res_name_width">Delivery Dir/Sr Dir</th>
+                      <th class="table_z_index res_name_width">Delivery SM</th>
+                      <th class="table_z_index res_name_width">Delivery Manager</th>
+                      <th class="table_z_index fixed_width_action">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="account_body">
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  </div>
+  <script>
+    $(document).ready(function () {
+      assignMetaValue();
+      $("meta[name='google-signin-client_id']").attr("content", metaValue);
+
+      getLocalSessionData();
+      if (sessionName == null) {
+        window.location.href = 'index.html';
+        return false;
+      } else {
+        let accessStatus = checkDashboardPageAccessData()
+        if (accessStatus) {
+          let accessLevel = checkEachPageAccess("Reports")
+          if (accessLevel.length > 0) {
+            let environment = accessLevel[0]
+            if (environment == apiValue.environment) {
+              let pageLevelAccess = accessLevel[1]
+              let userRole = localStorage.getItem("user-role")
+              let userEmail = localStorage.getItem("email")
+              // let eachLevel = pageLevelAccess.split(',')
+              $('.input-group-addon').hide();
+              if(userEmail == "akhilesh@factspan.com" || userRole == "admin"){
+                getAccountDetailsJson(pageLevelAccess);
+                $(".loader").css("display", "none");
+                $(".show_page").css("display", "block");
+              }else{
+                window.location.href = "reportsDashboard.html";
+              }
+              // $.each(eachLevel, function (l, level) {
+              //   switch (level) {
+              //     case "delete":
+              //       $(".delete_button").show()
+              //       break;
+              //     case "edit":
+              //       $(".delete_button").hide()
+              //       $('#account_report tr').find('th:last, td:last').show();
+              //       break;
+              //     case "view":
+              //       $('#account_report tr').find('th:last, td:last').hide();
+              //       break;
+              //   }
+              // })
+            } else {
+              window.location.href = "home.html"
+            }
+          }
+        } else {
+          window.location.href = "home.html"
+        }
+
+
+
+      }
+      $(".new-sub-menu").hover(function () {
+        $('.sub-menu').css('display', '')
+
+      });
+    });
+    $('#dashboard').click(function () {
+      window.location.href = 'home.html';
+      return false;
+    });
+    $('#sow_Res_page').click(function () {
+      localStorage.setItem("addRequest", true);
+      localStorage.setItem("editRequest", false);
+      window.location.href = 'sowCreate.html';
+      return false;
+    });
+    $('#userManual').click(function () {
+
+      window.location.href = 'RRESOWUserManual.html';
+      return false;
+    });
+    $('#reportBackBtnCustm').click(function () {
+
+      window.location.href = 'reportsDashboard.html';
+      return false;
+    });
+    $('#logout').click(function () {
+      localStorage.clear();
+      window.location.href = 'index.html';
+      return false;
+    });
+
+  </script>
+  
+</body>
+
+</html>

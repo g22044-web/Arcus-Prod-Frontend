@@ -1,0 +1,1191 @@
+
+/* Engagement Table specific styles */
+.engagement-table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+/* Links for counts */
+.eng-count-link {
+    display: inline-block;
+    background-color: #f0f7ff;
+    color: #007bff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    border: 1px solid #d0e4ff;
+}
+
+.eng-count-link:hover {
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,123,255,0.2);
+}
+
+/* Radio buttons styling */
+#engagementTypeFilters {
+    background: #f8f9fa;
+    padding: 5px 5px;
+    border-radius: 20px;
+    border: 1px solid #eee;
+}
+
+#engagementTypeFilters label {
+    font-weight: 500;
+    color: #666;
+    margin-bottom: 0;
+    cursor: pointer;
+    font-size: 8px;
+    white-space: nowrap;
+    display: flex;
+    align-items: end;
+}
+.nps-filter-group {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+#engagementTypeFilters input[type="radio"] {
+    margin-right: 5px;
+}
+
+/* Year pill filter */
+#engYearFilter {
+    background: #f8f9fa;
+    padding: 4px 8px;
+    border-radius: 20px;
+    border: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    /* flex-direction: column; */
+    /* margin-top: -25px; */
+}
+
+.nps-actions-bar {
+    margin-bottom: 5px;
+}
+
+.eng-year-pill {
+    padding: 2px 10px;
+    border-radius: 12px;
+    border: 1px solid #d0d8e4;
+    background: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.eng-year-pill:hover {
+    border-color: #313265;
+    color: #313265;
+    background: #eef0fb;
+}
+
+.eng-year-pill.active {
+    background: #313265;
+    color: #fff;
+    border-color: #313265;
+}
+
+
+/* Note Log Table */
+#noteLogTable {
+    width: 100%;
+}
+
+#noteLogTable th {
+    background-color: #f8f9fa;
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid #eee;
+}
+
+#noteLogTable td {
+    padding: 12px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.note-detail-text {
+    max-width: 400px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: 12px;
+    color: #313265;
+}
+
+/* Scrollable container for engagement table */
+#engagementDetailedCard {
+    max-height: calc(100vh - 165px);
+    overflow: auto;
+}
+
+/* Sticky columns for engagement */
+.engagement-table .sticky-col {
+    background-color: #fff;
+    z-index: 5;
+}
+
+.engagement-table td.sticky-col {
+    vertical-align: top !important;
+    padding-top: 10px !important;
+}
+
+.engagement-table tr.single-detail-row td,
+.engagement-table tr.single-detail-row td.sticky-col,
+.engagement-table tr.single-detail-row .entity-cell {
+    vertical-align: middle !important;
+}
+
+.engagement-table tr.single-detail-row td.sticky-col {
+    padding-top: 0 !important;
+}
+
+.engagement-table thead tr:first-child th.sticky-col {
+    z-index: 10;
+}
+
+/* Hierarchy Cell Styles */
+.entity-cell {
+    padding: 2px 2px 2px 10px !important;
+    vertical-align: top !important;
+    text-align: left !important;
+}
+
+.entity-name {
+    font-weight: 600;
+    font-size: 10px;
+    color: #313265;
+    display: block;
+    margin-bottom: 2px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.entity-name:hover {
+    text-decoration: underline;
+    color: #007bff;
+}
+
+.entity-name-disabled {
+    font-weight: 600;
+    font-size: 10px;
+    color: #313265;
+    display: block;
+    margin-bottom: 2px;
+    text-decoration: none;
+    cursor: default;
+}
+
+.entity-cell.centered-cell {
+    padding: 2px !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+.entity-metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.ms-options-wrap {
+    width: 115px !important;
+    background: white;
+}
+
+.metric-row {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 9px;
+    justify-content: flex-start;
+}
+
+.metric-label {
+    color: #313265;
+    min-width: 45px;
+}
+
+.metric-badges {
+    display: flex;
+    gap: 3px;
+}
+.detail-header-row th {
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    color: #313265 !important;
+    background-color: #fff !important;
+    padding: 2px 4px !important;
+}
+
+.mini-badge {
+    background: #f4f6f8;
+    border: 1px solid #e1e4e8;
+    border-radius: 3px;
+    padding: 1px 3px;
+    font-size: 9px;
+    color: #1059d9;
+    white-space: nowrap;
+    text-decoration: none;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+.mini-badge:hover {
+    background: #eef1f4;
+    text-decoration: none;
+    color: #007bff;
+}
+
+.mini-badge-disabled {
+    background: #f4f6f8;
+    border: 1px solid #e1e4e8;
+    border-radius: 3px;
+    padding: 1px 4px;
+    font-size: 10px;
+    color: #bbb;
+    white-space: nowrap;
+    cursor: default;
+    pointer-events: none;
+    opacity: 0.55;
+}
+
+.badge-val {
+    font-weight: 700;
+    color: #f7941d;
+}
+
+.mini-badge-disabled .badge-val {
+    color: #bbb;
+}
+
+/* Progress bar for Buying Center */
+.bc-progress-container {
+    margin-top: 8px;
+    width: 100%;
+}
+
+.bc-progress-bar {
+    height: 4px;
+    background: #eee;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.bc-progress-fill {
+    height: 100%;
+    background: #28a745;
+}
+
+.bc-progress-text {
+    font-size: 11px;
+    color: #666;
+    margin-top: 2px;
+    text-align: right;
+}
+
+/* Stylish additions for multi-level expand/collapse */
+.sub-row,
+.sub-row td,
+.sub-row td.sticky-col {
+    background-color: #ffffff !important;
+}
+
+.sub-row:hover,
+.sub-row:hover td,
+.sub-row:hover td.sticky-col {
+    background-color: #f3f6fa !important;
+}
+
+.entity-names-toggle-container {
+    font-family: inherit;
+}
+
+.entity-plus-link, .entity-minus-link {
+    display: inline-block;
+    padding: 2px 4px;
+    background: #eaf2ff;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    border: 1px solid #cce0ff;
+}
+
+.entity-plus-link:hover {
+    background: #007bff;
+    color: white !important;
+    text-decoration: none;
+}
+
+.entity-minus-link:hover {
+    background: #dc3545;
+    color: white !important;
+    text-decoration: none;
+}
+
+.nps-expand-icon {
+    font-size: 12px;
+    padding: 4px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.nps-expand-icon:hover {
+    background-color: #eee;
+}
+
+/* Timeline modal styling */
+.timeline-container {
+    position: relative;
+    padding-left: 30px;
+    margin: 20px 0;
+}
+.timeline-container::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 5px;
+    bottom: 5px;
+    width: 2px;
+    background: #e9ecef;
+}
+.timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.timeline-item:hover {
+    background: #f1f7ff;
+    border-color: #007bff;
+    transform: translateX(3px);
+}
+.timeline-badge-circle {
+    position: absolute;
+    left: -24px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #f7941d;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.timeline-badge-circle i {
+    font-size: 8px;
+    color: #f7941d;
+}
+.timeline-content-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.timeline-interaction-badge {
+    background: #e9ecef;
+    color: #495057;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: inline-block;
+}
+.timeline-date {
+    font-size: 12px;
+    color: #666;
+    font-weight: 500;
+}
+.timeline-stakeholder-badge {
+    background: #fff3e0;
+    color: #e65100;
+    border: 1px solid #ffe0b2;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Activity Details Modal Styling */
+.activity-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+    margin-bottom: 10px;
+    background: #f8f8f8;
+    padding: 8px 10px;
+    border-radius: 16px;
+    border: 1px solid #eaeaea;
+    align-items: center;
+}
+.activity-meta-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 6px;
+}
+.activity-meta-label {
+    font-size: 12px;
+    color: #555;
+    font-weight: 500;
+}
+.activity-meta-value {
+    background-color: #e8e8e8;
+    color: #333;
+    font-weight: 500;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    display: inline-block;
+    text-align: center;
+}
+.activity-section {
+    margin-bottom: 24px;
+}
+.activity-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 16px;
+}
+.activity-next-steps-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+.activity-next-steps-list {
+    flex: 1;
+    margin: 0;
+}
+.activity-eta-badge {
+    background: #f4f4f4;
+    color: #333;
+    border: 1px solid #e0e0e0;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 500;
+    font-size: 12px;
+    display: inl0ne-block;
+}
+
+/* Restore bullet and decimal numbers for list items in detail notes & next steps */
+.note-detail-text ul,
+#activityDetailedNotes ul,
+#activityNextStepsList ul,
+.note-log-section-content ul {
+    list-style-type: revert !important;
+    padding-left: 20px !important;
+    margin-top: 8px !important;
+    margin-bottom: 8px !important;
+}
+
+.note-detail-text ol,
+#activityDetailedNotes ol,
+#activityNextStepsList ol,
+.note-log-section-content ol {
+    list-style-type: revert !important;
+    padding-left: 20px !important;
+    margin-top: 8px !important;
+    margin-bottom: 8px !important;
+}
+
+.note-detail-text li,
+#activityDetailedNotes li,
+#activityNextStepsList li,
+.note-log-section-content li {
+    display: list-item !important;
+    margin-bottom: 4px !important;
+    list-style: inherit !important;
+}
+
+#activityDetailsModal {
+    z-index: 10050 !important;
+}
+
+/* Premium Card/Grid styles for Note Log Popup */
+#noteLogModal .nps-modal-body {
+    padding-top: 0 !important;
+}
+
+.notelog-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    width: 100%;
+    margin-top: 12px;
+    color: #fff;
+    padding: 4px 0px;
+}
+
+.notelog-toolbar-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.notelog-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 50%;
+    margin: 0;
+}
+
+.notelog-search i {
+    position: absolute;
+    left: 14px;
+    color: #fff;
+    font-size: 13px;
+    pointer-events: none;
+}
+
+.notelog-search input {
+    width: 100%;
+    height: 30px;
+    padding: 6px 12px 6px 38px;
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-radius: 10px;
+    background: transparent;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    outline: none;
+}
+
+.notelog-search input::placeholder {
+    color: #fff;
+    opacity: 1;
+}
+
+.notelog-sort-header {
+    display: grid;
+    grid-template-columns: 35% repeat(3, minmax(0, 1fr));
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px 6px;
+    margin: 0 -10px 8px;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: #fff;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.notelog-sort-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 2px 0;
+    border: 0;
+    background: transparent;
+    color: #687386;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.notelog-sort-button:first-child {
+    justify-content: flex-start;
+}
+
+.notelog-sort-author {
+    justify-content: flex-end;
+}
+
+.notelog-sort-button.active,
+.notelog-sort-button:hover,
+.notelog-sort-button:focus {
+    color: #243f6f;
+    outline: none;
+}
+
+.note-log-cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* ── Figma-style note log card ── */
+.notelog-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #fff;
+    border: 1px solid #ebebeb;
+    border-radius: 12px;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: box-shadow 0.18s ease, border-color 0.18s ease;
+}
+.notelog-card:hover {
+    border-color: #f7941d44;
+    box-shadow: 0 3px 10px rgba(247, 148, 29, 0.1);
+}
+
+/* Orange circular avatar */
+.notelog-avatar {
+    flex-shrink: 0;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #fff4e6;
+    border: 1.5px solid #f7d4a0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Content row: pill + date + name — equally spaced */
+.notelog-card-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    gap: 8px;
+}
+
+/* Interaction type — grey pill (Figma) */
+.notelog-itype-pill {
+    background: #e9ecef;
+    color: #495057;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+/* Date — plain text */
+.notelog-date {
+    font-size: 10px;
+    color: #555;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* Shared name pill base */
+.notelog-name-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+/* Orange variant — stakeholder */
+.notelog-name-pill--orange {
+    background: #fff0e0;
+    color: #e07b00;
+    border: 1px solid #f7c88a;
+}
+/* Grey variant — author (hidden by default, kept for future use) */
+.notelog-name-pill--grey {
+    background: #f1f3f5;
+    color: #495057;
+    border: 1px solid #dee2e6;
+}
+.note-log-card {
+    background: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    padding: 16px 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    transition: all 0.2s ease;
+}
+.note-log-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    border-color: #d0d7de;
+}
+.note-log-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* border-bottom: 1px solid #f0f0f0; */ /* Hidden by default since card body is hidden */
+    /* padding-bottom: 10px; */
+    /* margin-bottom: 12px; */
+}
+.note-log-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.note-log-date {
+    font-size: 13px;
+    color: #666;
+    font-weight: 500;
+}
+.note-log-type {
+    background: #eaf2ff;
+    color: #007bff;
+    border: 1px solid #cce0ff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.note-log-type:hover {
+    background: #007bff;
+    color: #fff;
+    text-decoration: none;
+}
+.note-log-header-right {
+    font-size: 12px;
+    color: #555;
+    font-weight: 500;
+}
+.note-log-author i {
+    color: #aaa;
+    margin-right: 4px;
+}
+.note-log-card-body {
+    display: none; /* Hidden by default; can be enabled whenever we want to show inline details */
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.group-header-row th {
+    z-index: 21 !important;
+}
+@media (max-width: 768px) {
+    .note-log-card-body {
+        grid-template-columns: 1fr;
+    }
+}
+.note-log-section-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #888;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+}
+.note-log-section-content {
+    font-size: 13px;
+    color: #333;
+    line-height: 1.5;
+}
+
+/* Premium Card/Grid styles for SOW Revenue Details Popup */
+#sowRevenueModal .nps-modal-body {
+    padding-top: 0 !important;
+}
+
+.sow-revenue-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 2px 10px;
+    background: #1f3864;
+    margin: 0 -10px;
+    position: sticky;
+    top: 0;
+    z-index: 30;
+}
+
+.sow-revenue-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 0 0 50%;
+    width: 50%;
+    min-width: 0;
+    margin: 0 0 0 auto;
+    order: 1;
+}
+
+.sow-revenue-search i {
+    position: absolute;
+    left: 14px;
+    color: #fff;
+    font-size: 13px;
+    pointer-events: none;
+}
+
+.sow-revenue-search input {
+    height: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-radius: 10px;
+    background: transparent;
+    color: #fff;
+    font-size: 12px;
+    outline: none;
+}
+
+.sow-revenue-search input {
+    width: 100%;
+    padding: 6px 12px 6px 38px;
+}
+
+.sow-revenue-search input::placeholder {
+    color: #fff;
+    opacity: 1;
+}
+
+.sow-status-filter-container {
+    display: flex;
+    align-items: center;
+    flex: 0 0 125px;
+    order: 2;
+}
+
+.sow-status-filter-container .ms-options-wrap {
+    width: 125px !important;
+    background: transparent;
+}
+
+.sow-status-filter-container .ms-options-wrap > button {
+    height: 30px !important;
+    border: 1px solid rgba(255, 255, 255, 0.85) !important;
+    border-radius: 10px !important;
+    background: transparent !important;
+    color: #fff !important;
+    font-size: 12px !important;
+}
+
+.sow-status-filter-container .ms-options-wrap > button:after {
+    border-top-color: #fff !important;
+}
+
+.sow-revenue-sort-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 92px 82px;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px 6px;
+    margin: 0 -10px;
+    position: sticky;
+    top: 34px;
+    z-index: 20;
+    background: #fff;
+    border-bottom: 1px solid #edf0f4;
+}
+
+.sow-revenue-sort-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 2px 0;
+    border: 0;
+    background: transparent;
+    color: #687386;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.sow-revenue-sort-button:first-child {
+    justify-content: flex-start;
+}
+
+.sow-revenue-sort-button.active,
+.sow-revenue-sort-button:hover,
+.sow-revenue-sort-button:focus {
+    color: #243f6f;
+    outline: none;
+}
+
+.sow-revenue-sort-value {
+    justify-content: flex-end;
+}
+
+.sow-revenue-cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.sow-revenue-card {
+    background: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+/* Single-row variant: name + status + revenue on one line */
+.sow-revenue-card.sow-revenue-card-single-row {
+    padding: 10px 16px;
+    gap: 0;
+}
+
+.sow-revenue-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 92px 82px;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+.nps-table th {
+    min-width: 45px;
+}
+
+.sow-revenue-row .sow-revenue-name {
+    font-size: 10px;
+    font-weight: 600;
+    color: #313265;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.sow-revenue-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    border-color: #d0d7de;
+}
+.sow-revenue-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.sow-revenue-id {
+    font-size: 12px;
+    color: #888;
+    font-weight: 500;
+    font-family: monospace;
+}
+.sow-revenue-stage-badge {
+    font-size: 8px;
+    padding: 2px 5px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    width: 92px;
+    text-align: center;
+    display: inline-block;
+    flex-shrink: 0;
+}
+.sow-revenue-card-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+}
+.nps-modal-header .header-title{
+    font-size: 12px !important;
+    color: #fff;
+}
+.sow-revenue-name {
+    font-size: 10px;
+    font-weight: 600;
+    color: #313265;
+    flex: 1;
+}
+.sow-revenue-value {
+    font-size: 10px;
+    font-weight: 700;
+    color: #f7941d;
+    white-space: nowrap;
+    width: 82px;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+@media (max-width: 620px) {
+    .sow-revenue-toolbar {
+        flex-wrap: wrap;
+    }
+
+    .sow-revenue-search {
+        flex-basis: 50%;
+    }
+
+    .sow-status-filter-container {
+        flex: 1 1 125px;
+    }
+
+    .sow-status-filter-container .ms-options-wrap {
+        width: 100% !important;
+    }
+}
+.sow-revenue-total-bar {
+    background: #f8f9fa;
+    border: 1px dashed #ccc;
+    padding: 10px 10px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+.nps-table th:first-child {
+    text-align: left;
+    min-width: 45px;
+}
+.group-header-row th {
+    background-color: #f8f9fa !important;
+    text-align: center !important;
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    color: #313265 !important;
+    border-bottom: 2px solid #dee2e6 !important;
+    padding: 2px 4px !important;
+}
+.sow-revenue-total-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #313265;;
+}
+.sow-revenue-total-value {
+    font-size: 12px;
+    font-weight: 700;
+    color: #1a73e8;
+}
+
+
+/* Management View Styling */
+.management-split-container {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 120px);
+    background-color: #fff;
+    border: 1px solid #d0d8e4;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.account-list-sidebar {
+    width: 175px;
+    background-color: #f8f9fa;
+    border-right: 1px solid #d0d8e4;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 140px);
+}
+
+.account-list-sidebar .sidebar-header {
+    padding: 5px;
+    border-bottom: 1px solid #d0d8e4;
+    background-color: #f1f4f8;
+}
+
+.account-list-sidebar .sidebar-header h4 {
+    margin: 0 0 10px 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #313265;
+}
+
+.account-search-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.account-list-sidebar .sidebar-header input {
+    width: 100%;
+    padding: 4px 5px 4px 24px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 10px;
+    box-sizing: border-box;
+}
+
+.account-search-icon {
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    font-size: 10px;
+    pointer-events: none;
+}
+
+.account-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.account-item {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 13px;
+    font-weight: 500;
+    color: #333;
+}
+
+.account-item:hover {
+    background-color: #eaf2ff;
+}
+
+.account-item.active {
+    background-color: #ffeee2;
+    color: #fff;
+    border-right: 3px solid #e05e00;
+}
+
+.account-item.active .account-name {
+    color: #e05e00 !important;
+    font-weight: 600 !important;
+}
+
+.buying-center-main-panel {
+    flex: 1;
+    overflow-y: auto;
+    background-color: #fff;
+    position: relative;
+}
+
+/* #bcManagementContent {
+    width: 100%;
+    height: 100%;
+} */
+
+.deleted-member-chip {
+    background-color: #fee2e2 !important;
+    color: #991b1b !important;
+    padding: 2px 6px !important;
+    border-radius: 4px !important;
+    display: inline-block !important;
+    margin: 2px !important;
+    text-decoration: none !important;
+}
+.deleted-member-chip:hover {
+    color: #991b1b !important;
+    text-decoration: none !important;
+}
+

@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Factspan - ARCUS - US Bench List</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv='cache-control' content='no-cache'>
+  <meta http-equiv='expires' content='0'>
+  <meta http-equiv='pragma' content='no-cache'>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+  </style>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+  <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+  <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+  <script src="https://kit.fontawesome.com/01f906aa6d.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/custom.css" />
+  <script src="js/jquery.tabledit.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/reportsUSBenchList.js"></script>
+  <link rel="icon" href="images\factspan.png" type="image/png" sizes="16x16">
+  <!-- JS & CSS library of MultiSelect plugin -->
+  <script src="lib/jQuery-MultiSelect.js"></script>
+  <link rel="stylesheet" href="css/jquery.multiselect.css">
+  <script src="js/bootbox.min.js"></script>
+  <script src="js/bootbox.locales.min.js"></script>
+  <script src="js/jquery.table2excel.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+  <link rel="stylesheet" href="css/busyLoading.css">
+
+  <script>
+    $(function () {
+      $('#header').load('header.html');
+
+    })
+  </script>
+</head>
+<style>
+  .employee_sow_details .table th {
+
+    border: solid 0px #f8f9fa;
+    border-radius: 0px;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    padding: 2px 2px !important;
+  }
+
+
+  .employee_detail_inside .table th {
+    font-size: 10px;
+    font-weight: 500;
+    color: #8b8988;
+  }
+
+
+
+  .employee_detail_inside .table th {
+    width: 4.14% !important;
+  }
+
+  .employee_detail_inside .table th {
+    font-size: 10px;
+    font-weight: 500;
+    color: #8b8988;
+  }
+
+  .signed_bg {
+
+    background-color: #ffffff;
+
+    color: #252424ad !important;
+    border: #edf6fe !important;
+  }
+
+  .signed_header_bg {
+    background-color: #4CA5FFFF;
+    color: #fff !important;
+    border: #4CA5FFFF !important;
+  }
+
+  .proposal_header_bg {
+    background-color: #17A948FF;
+    color: #fff !important;
+    border: #17A948FF !important;
+  }
+
+  .proposal_bg {
+
+    background-color: #ffffff;
+    color: #252424ad !important;
+
+    border: #e9fef0 !important;
+  }
+
+  .all_month_bg {
+    background-color: #007A45FF;
+    color: #fff !important;
+  }
+
+
+
+  #signed_sow_table>tbody>tr,
+  #proposal_sow_table>tbody>tr {
+    border-bottom: 1px solid #e4e4e4;
+  }
+
+  .emp_filter {
+    margin-top: -19px !important;
+  }
+
+  .emp_radio_filter>label {
+    width: 50px;
+  }
+
+  #report_sow_account {
+    background-color: #f2f2f2;
+  }
+
+  .account_bg,
+  .account_bg>td {
+    background-color: #f2f2f2 !important;
+    color: black !important;
+  }
+
+  .employee_detail_inside table tr:nth-child(even) {
+    background: #f2f2f2;
+    border-top: solid 1px #f2f2f2;
+  }
+
+  hr {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border: 0;
+    border-top: 1px solid #eee;
+  }
+
+  .employee_detail_inside table tr:nth-child(even) {
+    background: #ffffff;
+    border-top: solid 1px #ffffff;
+  }
+
+  .overall_total_bg,
+  .overall_total_bg>td {
+    background-color: #4CA5FFFF;
+    color: #fff !important;
+    border: #4CA5FFFF !important;
+  }
+
+  .overall_total_allSow,
+  .overall_total_allSow>td {
+    background-color: #5ef68f;
+    color: #090909 !important;
+    border: #befcd2 !important;
+
+  }
+
+
+  .renewal_bg,
+  .renewal_bg>td {
+    background-color: #befcd2;
+    color: #006120 !important;
+    border: #befcd2 !important;
+
+  }
+
+  .proposal_bg,
+  .proposal_bg>td {
+    background-color: #08bb44;
+    color: #fff !important;
+    border: #08bb44 !important;
+  }
+
+  .overall_total,
+  .overall_total>td {
+    background-color: #007A45FF;
+    color: #fff !important;
+
+    border: #007A45FF !important;
+
+  }
+
+  .employee_detail_inside .table td {
+    font-size: 10px;
+    font-weight: 500;
+    color: #4e4e4e !important;
+    padding: 5px 5px !important;
+  }
+
+  .top_space {
+    border-top: 5px solid white !important;
+  }
+
+  .top_broder_bg {
+    border-top: 1.5px solid #eff3ef !important;
+  }
+
+  #report_overall_summary>th {
+    background-color: #f2f2f2;
+  }
+
+  .account_level {
+    background-color: #f2f2f2 !important;
+  }
+
+  .account_level>td {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+  }
+
+  .RED {
+    background-color: rgb(238 46 46 / 24%);
+    color: black !important;
+  }
+
+  .GREEN {
+    background-color: #77cb7742;
+    color: black !important;
+  }
+
+  #excelDownload {
+    padding: 5px 25px;
+    margin-right: 5px;
+  }
+
+  .table_title {
+    margin-bottom: -26px;
+  }
+
+  .thead-light {
+    background-color: #f3f3f3;
+  }
+
+  #audit_head>th {
+    background-color: #f3f3f3;
+    /* text-align: center; */
+    z-index: 100;
+  }
+
+  .more {
+    display: inline-block;
+    width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .more:hover {
+    white-space: initial;
+    cursor: pointer;
+    width: 95%;
+  }
+
+  .row {
+    margin-right: 0px;
+    margin-left: 0px;
+  }
+
+  .employee_detail_inside .table>tbody>tr>td,
+  .employee_detail_inside .table>tbody>tr>th,
+  .employee_detail_inside .table>tfoot>tr>td,
+  .employee_detail_inside .table>tfoot>tr>th,
+  .employee_detail_inside .table>thead>tr>td,
+  .employee_detail_inside .table>thead>tr>th {
+    word-break: break-word;
+  }
+
+  .skill_data {
+    background: #ffffff;
+    color: #515151;
+    border: solid 1px #ffffff;
+    white-space: initial;
+    border-radius: 0px;
+    padding: 0px 0px;
+    margin: 0px 0px;
+  }
+
+  .remove_padding {
+    padding: 0px;
+  }
+
+  .sow_emp_details_class {
+    margin-top: 10px;
+  }
+
+  .more {
+    display: inline-block;
+    width: 215px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .more:hover {
+    white-space: initial;
+    cursor: pointer;
+    width: 95%;
+  }
+
+  .skill_data {
+    background: #e7ffea;
+    padding: 2px 3px;
+    border-radius: 10px;
+    font-size: 10px;
+    color: #1c8a13;
+    border: solid 1px #c2f5c8;
+    margin: 2px 5px;
+  }
+
+  .bold-headers th {
+    font-weight: bold;
+  }
+
+  .bench_all_report_details {
+    height: calc(100vh - 150px);
+    overflow-y: auto;
+  }
+
+  #reportsBackBtnCustm {
+    font-size: 10px;
+    font-weight: 500;
+    color: #4e4e4e !important;
+  }
+
+  .us-bench-toolbar {
+    min-height: 45px;
+    margin: 0 -15px 10px;
+    padding: 5px 15px;
+    background: #1F3864;
+    border-top: 0.5px solid #6d6d6d;
+    border-bottom: 6px solid #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .us-bench-toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .us-bench-toolbar-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-left: auto;
+    flex-wrap: wrap;
+  }
+
+  .us-bench-toolbar .legend-bg-code {
+    position: static;
+    left: auto;
+    top: auto;
+    gap: 8px;
+    color: #ffffff;
+    font-family: "Poppins", "Celias", sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+  }
+
+  .us-bench-toolbar .legend-bg-code .legend-bg-code {
+    gap: 6px;
+  }
+
+  .us-bench-toolbar .investment-bg,
+  .us-bench-toolbar .bench-bg,
+  .us-bench-toolbar .up-coming-bench-bg {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+  }
+
+  .us-bench-toolbar-controls .dataTables_filter {
+    margin: 0;
+    float: none !important;
+  }
+
+  .us-bench-toolbar-controls .dataTables_filter label {
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .us-bench-toolbar-controls .dataTables_filter label > span {
+    display: none;
+  }
+
+  .us-bench-toolbar-controls .dataTables_filter input {
+    width: 200px;
+    height: 30px;
+    margin: 0 !important;
+    padding: 0 16px 0 44px !important;
+    color: #ffffff !important;
+    background-color: transparent !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 21 21'%3E%3Cg fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='9' cy='9' r='7'/%3E%3Cpath d='m14 14 5 5'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 14px center;
+    border: 1px solid rgba(255, 255, 255, 0.85) !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+    font-family: "Poppins", "Celias", sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+  }
+
+  .us-bench-toolbar-controls .dataTables_filter input::placeholder {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .us-bench-toolbar #reportsBackBtnCustm {
+    min-width: 60px;
+    height: 30px;
+    margin: 0 !important;
+    padding: 0 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.85) !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+    font-family: "Poppins", "Celias", sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+  }
+
+  .us-bench-toolbar #reportsBackBtnCustm:hover,
+  .us-bench-toolbar #reportsBackBtnCustm:focus,
+  .us-bench-toolbar #reportsBackBtnCustm:active {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
+    outline: none;
+  }
+
+  .report_investment_table {
+    min-height: 100px !important;
+    max-height: 65vh !important;
+  }
+
+  .bench_all_report_details>.fixTableHead {
+    height: auto !important;
+  }
+
+  #investmentJobRoleCount_body,
+  #investment_body {
+    font-size: 10px;
+    font-weight: 500;
+    color: #4e4e4e !important;
+    padding: 5px 5px !important;
+  }
+
+  .noData {
+    padding: 10px;
+  }
+
+  .bench_invest {
+    margin: 10px 0px;
+  }
+
+  .report_headers {
+    padding: 6px;
+    background-color: antiquewhite;
+    font-size: 16px;
+    font-weight: 600;
+    color: #565656;
+  }
+
+  #UsEmployeeTable {
+    background-color: #f2f2f2;
+    z-index: 100;
+    text-align: center;
+    /* border-top: 1px solid black; */
+    /* Adjust thickness & color as needed */
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: auto;
+  }
+
+  /* Optional: Ensure all table cells have borders */
+  #UsEmployeeTable th{
+    /* border: 1px solid black; */
+    padding: 10px;
+    text-align: center;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    color: #8b8988 !important;
+    /* border: 1px solid #ddd; */
+    word-break: keep-all !important; /* Ensures text wraps */
+    white-space: normal !important; /* Allows text to wrap */
+    min-width: 70px; /* Ensures columns don't shrink too much */
+    max-width: 250px; /* Prevents excessive stretching */
+  }
+
+  #UsEmployeeTable td{
+    font-size: 10px;
+    font-weight: 500;
+    color: #313265  !important;
+    /* border: 1px solid #DDDDDD !important; */
+    border-top: 0px solid #ddd;
+  }
+
+  /* Style for the YTD header */
+  #UsEmployeeTable th[colspan="3"] {
+    background-color: antiquewhite !important;
+    /* Light blue background */
+    text-align: center;
+  }
+  .us_bench_list_div .table th {
+    /* border: solid 0px #f8f9fa; */
+    border-radius: 0px;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    padding: 3px 2px !important;
+    color:#8b8988 !important;
+    /* overflow-y: auto; */
+    /* height: calc(100vh - 145px); */
+}
+   #UsEmployeeTable.dataTable thead th,#UsEmployeeTable.dataTable.no-footer{
+    border: none !important;
+  }
+  .team_data_left {
+    background-color: #e3e2e263;
+    padding: 4px;
+    color: black;
+    border-radius: 5px;
+    /* cursor: pointer; */
+    border-radius: 15px;
+    text-align: left;
+    font-weight: 500;
+}
+/* Align header text and sorting button properly */
+#UsEmployeeTable thead th {
+    vertical-align: middle; /* Center text and sorting icon */
+    text-align: center; /* Align text center */
+    white-space: nowrap; /* Prevent text wrapping */
+    border: 1px solid #DDDDDD !important;
+}
+
+/* Adjust sorting icon alignment */
+.highlight-bench {
+    background-color: #f8c7c9 !important;
+}
+
+.highlight-investment {
+    background-color: #ffff7f !important;
+}
+
+.nowarp {
+    white-space: nowrap !important;
+}
+
+
+/* Ensure sorting icons do not shift headers */
+#UsEmployeeTable thead th::after {
+    margin-left: 5px; /* Adjust space between text and sorting icon */
+}
+
+.legend-bg-code {
+  position: relative;
+    display: flex;
+    font-size: 10px;
+    align-items: center;
+    gap: 5px;
+    left: 9%;
+    top: 4px;
+    font-weight: 400;
+}
+
+.investment-bg {
+    background-color: #ffff7f;
+    width: 13px;
+    height: 11px;
+    border-radius: 2px;
+}
+
+.bench-bg {
+    background-color: #ea979b;
+    width: 13px;
+    height: 11px;
+    border-radius: 2px;
+}
+.up-coming-bench-bg {
+    background-color: #ffffff;
+    width: 13px;
+    height: 11px;
+    border-radius: 2px;
+    border: 1px solid;
+}
+
+.us_bench_list_div{
+  position: relative !important;
+  top: 0 !important;
+  overflow-y: auto;
+  height: calc(100vh - 190px);
+}
+table.dataTable tbody td {
+    padding: 5px 5px;
+}
+.us_bench_form{
+  overflow: hidden !important;
+  padding-top: 0;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.us_bench_top{
+  top: 0 !important;
+  position: relative !important;
+  border-bottom: 0;
+  margin-bottom: 12px;
+  padding-bottom: 0;
+}
+
+.narrow-col {
+  max-width: 80px;
+  min-width: 60px;
+  width: 50px;
+  text-align: center; /* optional: center-align number/text */
+  white-space: nowrap; /* optional: prevent wrapping */
+}
+.narrow-col-sow{
+  max-width: 150px;
+  min-width: 100px;
+  width: 100px;
+  text-align: center; /* optional: center-align number/text */
+  word-break: break-all;
+}
+table.dataTable, table.dataTable th, table.dataTable td {
+  box-sizing: border-box;
+}
+.us_bench_header {
+  position: sticky;
+  top: 0px;
+  background-color: #f2f2f2;
+}
+.table_row_bg {
+  background-color: #e3e2e263;
+  padding: 4px 8px;
+  /* color: black; */
+  border-radius: 15px;
+  
+  /* text-align: center; */
+  font-weight: 500;
+}
+
+  @media screen and (max-width: 991px) {
+    .us-bench-toolbar {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .us-bench-toolbar-right {
+      width: 100%;
+      justify-content: flex-start;
+    }
+  }
+
+  @media screen and (max-width: 575px) {
+    .us-bench-toolbar {
+      padding: 16px;
+    }
+
+    .us-bench-toolbar-right,
+    .us-bench-toolbar-controls,
+    .us-bench-toolbar-controls .dataTables_filter,
+    .us-bench-toolbar-controls .dataTables_filter label,
+    .us-bench-toolbar-controls .dataTables_filter input,
+    .us-bench-toolbar #reportsBackBtnCustm {
+      width: 100%;
+    }
+  }
+  .us-bench-toolbar-title {
+    font-size: 14px;
+    color: #fff;
+    font-weight: 500;
+  }
+
+</style>
+
+<body class="unselectable">
+  <div class="loader">
+    <div class="loader-wheel"></div>
+    <div class="loader-text"></div>
+  </div>
+  <div class="show_page" style="display: none;">
+    <div id="header"></div>
+    <div class="wrapper_outer">
+      <div id="loader" class="lds-dual-ring hidden overlay"></div>
+      <div class="container-fluid">
+        <div class="detail_box">
+          <div class="employee_form sow_detail us_bench_form">
+            <div class="detail_top_bar us_bench_top">
+              <div class="us-bench-toolbar">
+                <div class="us-bench-toolbar-title">
+                  US Bench List Report
+                </div>
+                <div class="us-bench-toolbar-left">
+                  <div class="legend-bg-code">
+                    <div class="legend-bg-code">
+                      <div class="investment-bg"></div>
+                      <div>Inv (Signed/Renewal)</div>
+                    </div>
+                    <div class="legend-bg-code">
+                      <div class="bench-bg"></div>
+                      <div>Bench</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="us-bench-toolbar-right">
+                  <div id="usBenchToolbarControls" class="us-bench-toolbar-controls"></div>
+                  <button class="btn btn-info" id="reportsBackBtnCustm">Back</button>
+                </div>
+              </div>
+              <div class="us_bench_list_div">
+                <table class="table  no-footer dataTabley" id="UsEmployeeTable"
+                  style="width:100%">
+                  <thead class="us_bench_header">
+                    <tr>
+                      <th rowspan="2">Name</th>
+                      <th rowspan="2" style="width: 8%;">Designation</th>
+                      <th rowspan="2">Current Account</th>
+                      <th rowspan="2">SOW Name</th>
+                      <th rowspan="2">Current Status</th>
+                      <!-- <th rowspan="2">Days Since</th> -->
+                      <th rowspan="2">SOW End Date</th>
+                      <!-- <th rowspan="2" style="width: 8%;">Bench Date</th> -->
+                      <th colspan="3" id="ytd_header_yr" style="background-color:#faebd7"></th>
+                      <th rowspan="2">Manager Name</th>
+                      <th rowspan="2">Delivery Head</th>
+                      <th rowspan="2">Previous Account</th>
+                      <th rowspan="2">Previous SOW</th>
+                    </tr>
+                    <tr>
+                      <th>Investment Days</th>
+                      <th>Bench Days</th>
+                      <th>Unbilled Days</th>
+                    </tr>
+                  </thead>
+                </table>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  </div>
+
+</body>
+
+</html>

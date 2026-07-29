@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factspan - ARCUS - Admin Revenue Dashboard</title>
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css" />
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> -->
+    <link rel="stylesheet" href="css/custom.css" />
+    <link rel="icon" href="images\factspan.png" type="image/png" sizes="16x16" />
+    <link rel="stylesheet" href="css/busyLoading.css" />
+    <script src="js/common.js"></script>
+    <script src="js/adminDashboard.js"></script>
+    <script>
+        $(function () {
+            $("#header").load("header.html");
+        });
+    </script>
+
+    <style>
+        :root {
+            --font-family: 'Poppins', sans-serif;
+            --bg-color: #f8f9fa;
+            --card-bg-color: #ffffff;
+            --primary-orange: #f77a21;
+            --text-primary: #212529;
+            --text-secondary: #313265;
+            --border-color: #dee2e6;
+            --revenue-card-bg: #ffecdf;
+            --positive-color: #28a745;
+            --negative-color: #dc3545;
+            --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            --text-shade: #818199;
+            --box-grey: #D9D9D9;
+            --grey-color: #555555;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        .admin-dashboard {
+            margin-top: -10px;
+            border-top: 1px solid #c1bcbc14;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+        }
+
+        .container {
+            /* max-width: 1600px; */
+            margin: auto;
+            padding: 0px;
+        }
+
+        .tabs-shell {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 10px;
+            padding: 5px 18px;
+            background: #1F3864;
+            border-top: 1px solid grey;
+            border-bottom: 4px solid #f3eef7;
+            width: 100%;
+        }
+
+        .tabs {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.5rem;
+            border: 0;
+            border-radius: 999px;
+            background: #16243e;
+            margin-bottom: 0;
+        }
+
+        .tab-item {
+            padding: 2px 10px;
+            cursor: pointer;
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 400;
+            position: relative;
+            border: 0;
+            border-radius: 999px;
+            transform: none;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .tab-item.active {
+            color: #ffffff;
+            background: #ff7d20;
+            /* font-weight: 500; */
+            /* box-shadow: 0 10px 24px rgba(255, 125, 32, 0.28); */
+        }
+
+        #admin_dashboard {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 0.65rem;
+            min-height: 30px;
+            padding: 2px 10px;
+            border: 1.5px solid rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            background: transparent;
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 400;
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        #admin_dashboard:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-1px);
+        }
+
+        #admin_image {
+            width: 18px;
+            height: 18px;
+            object-fit: contain;
+            padding: 0;
+            border-radius: 0;
+            position: static;
+            right: auto;
+            background-color: transparent;
+        }
+
+        .main-content {
+            display: flex;
+            gap: 2rem;
+            padding: 10px;
+        }
+
+        .left-column {
+            flex: 0 0 320px;
+        }
+
+        .right-column {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .card {
+            background-color: var(--card-bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 5px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .revenue-card {
+            background-color: var(--revenue-card-bg);
+            border-color: #fe7d20;
+        }
+
+        .revenue-card .title {
+            font-size: 10px;
+            color: var(--text-shade);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .revenue-card .amount {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--grey-color);
+        }
+
+        .revenue-card .comparison {
+            font-size: 10px;
+            margin-top: 0.25rem;
+        }
+
+        .quarterly-card .q-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.5rem;
+            border-bottom: 1.5px solid var(--border-color);
+        }
+
+        .quarterly-card .q-header .quarter-info-icon {
+            cursor: pointer;
+        }
+
+        .quarterly-card .q-body {
+            font-size: 10px;
+        }
+
+        .q-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .q-col {
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+            padding: 5px 10px 5px 0px;
+            width: 100%;
+        }
+
+        .q-col:nth-child(2) {
+            border-left: 1px solid var(--border-color);
+            padding-left: 1rem;
+        }
+
+        .q-label {
+            color: var(--text-secondary);
+        }
+
+        .q-value {
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .q-value .change-val {
+            font-weight: 400;
+            font-size: 0.8rem;
+        }
+
+        .positive {
+            color: var(--positive-color);
+            text-align: right;
+        }
+
+        .negative {
+            color: var(--negative-color);
+            text-align: right;
+        }
+
+        .icon {
+            margin-right: 0.25rem;
+        }
+
+        .details-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .details-header h2 span {
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+
+        .filter-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .pill {
+            padding: 0.5rem 1rem;
+            font-size: 10px;
+            font-weight: 500;
+            border-radius: 5px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .pill.active {
+            background-color: var(--primary-orange);
+            color: white;
+        }
+
+        .details-table-wrapper {
+            background-color: var(--card-bg-color);
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            height: calc(100vh - 235px);
+        }
+
+        .details-table-container {
+            max-height: calc(100vh - 280px);
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #bdbdbd #f0f0f0;
+        }
+
+        .details-table-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .details-table-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .details-table-container::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+
+        .details-table-container::-webkit-scrollbar-thumb:hover {
+            background: #aaa;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 1rem;
+            text-align: left;
+            font-size: 10px;
+            vertical-align: middle;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        thead th {
+            background-color: #f8f9fa;
+            color: var(--text-secondary);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            cursor: pointer;
+            border-bottom: 1px solid;
+            border-color:var(--primary-orange)
+        }
+
+        thead th .fa-sort {
+            color: #ccc;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        tfoot tr {
+            border-top: 2px solid var(--border-color);
+        }
+
+        tfoot td {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        #quarterly-cards-container {
+            background-color: var(--card-bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .comparison {
+            text-align: justify !important;
+        }
+
+        #details-popup {
+            position: absolute;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            z-index: 999;
+            display: none;
+            width: auto;
+            max-width: 800px;
+        }
+
+        .popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .popup-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .popup-close {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            line-height: 1;
+            margin-left: 2rem;
+        }
+
+        .popup-body {
+            display: flex;
+            padding: 1.5rem;
+            gap: 1rem;
+            font-size: 10px;
+        }
+
+        .popup-column {
+            flex: 1;
+            border-right: 1px solid var(--border-color);
+            padding: 0 1rem;
+        }
+
+        .popup-column:last-child {
+            border-right: none;
+            padding-right: 0;
+        }
+
+        .popup-column:first-child {
+            padding-left: 0;
+        }
+
+        .popup-col-header {
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 10px;
+            margin-bottom: 0.75rem;
+        }
+
+        .popup-col-list-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            padding: 0.3rem 0;
+            white-space: nowrap;
+        }
+
+        .popup-col-list-item span:first-child {
+            color: var(--text-primary);
+            font-weight: 500;
+            margin-right: 1rem;
+        }
+
+        .filter-pills {
+            background-color: #e2f0fa;
+            padding: 5px;
+        }
+
+        .quarterly-card-disabled {
+            background-color: var(--box-grey);
+        }
+
+        /* --- NEW STYLES FOR COMMENT POPUP --- */
+        .comment-cell {
+            cursor: pointer;
+            white-space: normal;     
+            word-wrap: break-word;   
+        }
+
+        .comment-cell:hover {
+            font-weight: 600;
+        }
+
+        #comment-popup {
+            position: fixed;
+            width: 650px;
+            max-width: 90%;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+            z-index: 1050;
+            font-family: var(--font-family);
+            height: 450px;
+            top: 65%;
+            left: 74%;
+            transform: translate(100vw, -50%);
+            opacity: 0;
+            visibility: hidden;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease-in-out, visibility 0.5s;
+        }
+
+        #comment-popup.active {
+            transform: translate(-50%, -50%);
+            opacity: 1;
+            visibility: visible;
+        }
+
+
+        .comment-popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        #comment-popup-title-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        #comment-popup-account {
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .comment-popup-divider {
+            color: var(--text-shade);
+            font-weight: 400;
+        }
+
+        #comment-popup-comment {
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-height: 100px !important;
+            overflow-y: auto;
+        }
+
+        #comment-popup-change .positive {
+            color: var(--positive-color);
+        }
+
+        #comment-popup-change .negative {
+            color: var(--negative-color);
+        }
+
+        .comment-popup-close {
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: var(--grey-color);
+            cursor: pointer;
+            line-height: 1;
+            border: 1px solid var(--box-grey);
+            padding: 2px 4px;
+        }
+
+        .comment-popup-body {
+            padding: 0.5rem 1.5rem 1.5rem 1.5rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .comment-note-entry {
+            display: flex;
+            gap: 1rem;
+            margin-top: 7px;
+            padding-bottom: 7px;
+            border-bottom: 1px solid var(--box-grey);
+        }
+
+        .comment-stakeholder {
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .stakeholder-avatar {
+            border-radius: 12px;
+            background-color: var(--primary-orange);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 12px;
+            padding: 2px 10px;
+        }
+
+        .comment-note-details {
+            font-size: 11px;
+            color: var(--grey-color);
+            line-height: 1.5;
+        }
+
+        .comment-note-text {
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-note-text>p {
+            font-size: 11px !important;
+        }
+
+        .comment-note-timestamp {
+            font-size: 10px;
+            color: var(--text-shade);
+        }
+
+        .notes_icon_text {
+            font-size: 12px !important;
+        }
+
+        .comment-popup-body::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .comment-popup-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .comment-popup-body::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+
+        .comment-cell {
+            /* white-space: nowrap; */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 300px;
+            /* Adjust as needed for approx 50 chars */
+            display: block;
+        }
+
+        #filter-pills-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 0.75rem;
+            background-color: var(--revenue-card-bg);
+            padding: 5px;
+            /* Remove flex-wrap to keep everything on one line */
+            flex-wrap: nowrap;
+        }
+
+        .all-accounts-pill {
+            flex: 0 0 auto;
+            margin-right: 10px;
+        }
+
+        .account-pills-scroll {
+            display: flex;
+            flex-direction: row;
+            gap: 12px;
+            overflow-x: auto;
+            white-space: nowrap;
+            flex: 1 1 auto;
+            min-width: 0;
+            /* Optional: for a visible scrollbar on all platforms */
+            scrollbar-width: thin;
+            scrollbar-color: #bdbdbd #f0f0f0;
+            
+        }
+
+        .account-pills-scroll .pill {
+            flex: 0 0 auto;
+            white-space: nowrap;
+        }
+
+        /* Optional: for Webkit browsers */
+        .account-pills-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .account-pills-scroll::-webkit-scrollbar-thumb {
+            background: #bdbdbd;
+            border-radius: 3px;
+        }
+
+        .account-pills-scroll::-webkit-scrollbar-track {
+            background: #f0f0f0;
+        }
+
+        .no-wrap {
+            white-space: nowrap;
+        }
+        .sow_name {
+            cursor: pointer;
+        }
+        .sow_name:hover {
+            font-weight: 600;
+        }
+        #chatbot-container {
+            position: fixed;
+            bottom: 2px;
+            right: 15px;
+            z-index: 9999;
+        }
+        .footer-icon:hover {
+            color: #e67617;
+        }
+        .footer-icon {
+            border: 0px;
+        }
+
+        @media (max-width: 900px) {
+            .tabs-shell {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 14px 16px;
+            }
+
+            .tabs {
+                width: 100%;
+                overflow-x: auto;
+            }
+
+            #admin_dashboard {
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header"></div>
+    <div class="loader">
+        <div class="loader-wheel"></div>
+        <div class="loader-text"></div>
+    </div>
+        <div class="admin-dashboard">
+        <div class="container">
+            <div class="tabs-shell">
+                <nav class="tabs">
+                    <div class="tab-item active" data-period="Daily">Daily Updates</div>
+                    <div class="tab-item" data-period="Weekly">Weekly Updates</div>
+                    <div class="tab-item" data-period="Monthly">Monthly Updates</div>
+                </nav>
+                <div id="admin_dashboard" style="display: none;">
+                    <img id='admin_image' src='images/teams_icon.svg' alt='Grant Access'>
+                    <span>Arcus Access</span>
+                </div>
+            </div>
+
+            <main class="main-content">
+                <aside class="left-column">
+                    <div id="overall-revenue-card" class="card revenue-card"></div>
+                    <div id="quarterly-cards-container"></div>
+                </aside>
+
+                <section class="right-column">
+                    <div class="details-header" id="details-header"></div>
+                    <div class="filter-pills" id="filter-pills-container"></div>
+                    <div class="details-table-wrapper">
+                        <div class="details-table-container">
+                            <table id="details-table">
+                                <thead>
+                                    <tr>
+                                        <th class="no-wrap" data-sort="RECENCY">RECENCY <i class="fa-solid fa-sort"></i></th>
+                                        <th class="no-wrap" data-sort="ACCOUNT_NAME">ACCOUNT <i class="fa-solid fa-sort"></i></th>
+                                        <th class="no-wrap" data-sort="SOW_NAME">SOW NAME <i class="fa-solid fa-sort"></i></th>
+                                        <th class="no-wrap" data-sort="STATUS">STATUS <i class="fa-solid fa-sort"></i></th>
+                                        <th class="no-wrap" data-sort="FUNNEL">FUNNEL <i class="fa-solid fa-sort"></i></th>
+                                        <th class="no-wrap" data-sort="COMMENT">COMMENT <i class="fa-solid fa-sort"></i></th>
+                                        <th data-sort="REVENUE_CHANGE">REVENUE CHANGE IN $ mn <i
+                                                class="fa-solid fa-sort"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <table class="total-table">
+                            <tfoot>
+                                <tr>
+                                    <td colspan="5" style="text-align: right;"></td>
+                                    <td id="total-revenue-change"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </section>
+            </main>
+            <!-- NEW: Comment History Popup Modal -->
+            <div id="comment-popup">
+                <div class="comment-popup-header">
+                    <div id="comment-popup-title-info">
+                        <span id="comment-popup-account"></span> <span class="comment-popup-divider">| </span>
+                        <span id="comment-popup-comment"></span>
+                        <span id="comment-popup-change"></span>
+                    </div>
+                    <span class="comment-popup-close">&times;</span>
+                </div>
+                <div class="comment-popup-body" id="comment-popup-body-content">
+                    <!-- Dynamic content will be injected here -->
+                </div>
+            </div>
+            <!-- <div id="chatbot-container">
+                <button class="footer-icon pull-top" title="Release note" onclick="openFile('userManuals/ARCUS_Release_Note_V1.pdf')"><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+                <button class="footer-icon pull-top" title="ARCUS User Guide" onclick="openFile('userManuals/ARCUS_User_manual _V1.pdf')"><i class="fa fa-question-circle" aria-hidden="true"></i></button>
+            </div> -->
+        </div>
+
+        <!-- Quarterly Details Popup Modal -->
+        <div id="details-popup">
+            <div class="popup-header">
+                <h3 id="popup-title"></h3>
+                <span class="popup-close">&times;</span>
+            </div>
+            <div class="popup-body" id="popup-body-content">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

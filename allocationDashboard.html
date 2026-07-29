@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Factspan - ARCUS - Allocation DashBoard</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-signin-client_id"
+    content="776418814053-hccb99mo0ks8o9l3o3e5plhsn43p96rk.apps.googleusercontent.com">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+  <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+  <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/fontawesome.min.css"
+    type="text/css" />
+  <script src="https://kit.fontawesome.com/01f906aa6d.js" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="css/custom.css" />
+  <script src="js/jquery.tabledit.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/allocationDashboard.js"></script>
+  <link rel="icon" href="images\factspan.png" type="image/png" sizes="16x16">
+
+  <script src="lib/jQuery-MultiSelect.js"></script>
+  <link rel="stylesheet" href="css/jquery.multiselect.css">
+  <script src="js/bootbox.min.js"></script>
+  <script src="js/bootbox.locales.min.js"></script>
+  <script src="js/jquery.table2excel.js"></script>
+  <link rel="stylesheet" href="css/busyLoading.css">
+  <script>
+    $(function () {
+      $('#header').load('header.html');
+    })
+  </script>
+</head>
+<style>
+  body {
+    color: #313265;
+  }
+
+  /* New Design Styles */
+  .new-filter-container {
+    background: #1F3864;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    border-top: 1px solid #777675;
+  }
+
+  .ms-options-wrap.ms-has-selections>button {
+    color: #fff !important;
+  }
+
+  .ms-options-wrap>button:focus,
+  .ms-options-wrap>button {
+    font-size: 12px !important;
+    padding: 0 16px 0 8px !important;
+    font-weight: 400;
+  }
+
+  .filter-row-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: nowrap;
+  }
+
+  .filter-row-top-left,
+  .filter-row-top-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+  }
+
+  .filter-row-top-right {
+    flex-shrink: 0;
+  }
+
+  .bar-line {
+    width: 1px;
+    height: 26px;
+    background: rgba(255, 255, 255, 0.28);
+    flex-shrink: 0;
+  }
+
+  .search-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 30px;
+    padding: 0 14px;
+    border: 1px solid rgba(255, 255, 255, 0.78);
+    border-radius: 10px;
+    flex: 0 0 170px;
+  }
+
+  .search-container i {
+    color: #fff;
+    font-size: 12px;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #fff;
+    font-size: 12px;
+    font-family: "Celias", "Poppins", sans-serif !important;
+    font-weight: 400;
+    outline: none;
+    box-shadow: none;
+  }
+
+  .search-input::placeholder {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .ms-options-wrap>.ms-options>ul label {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    padding: 4px 4px 4px 20px;
+    margin: 1px 0;
+    border: 1px dotted transparent;
+    font-weight: 400 !important;
+    font-size: 10px !important;
+  }
+
+  .dropdown-filters {
+    display: flex;
+    gap: 12px;
+    flex: 0 0 auto;
+    width: auto;
+  }
+
+  #accountSelect+.ms-options-wrap,
+  #sowSelect+.ms-options-wrap {
+    width: auto !important;
+    min-width: 100px;
+  }
+
+  #accountSelect+.ms-options-wrap>button,
+  #sowSelect+.ms-options-wrap>button {
+    height: 30px;
+    width: auto !important;
+    min-width: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.78) !important;
+    background-color: transparent !important;
+    color: #fff !important;
+    margin-top: 0;
+  }
+
+  #accountSelect+.ms-options-wrap>button:after,
+  #sowSelect+.ms-options-wrap>button:after {
+    border-top-color: #fff;
+  }
+
+  .status-filter-container {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .status-checkbox-group {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    background: transparent;
+    padding: 0;
+    border: 0;
+  }
+
+  .status-checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 0;
+    font-size: 12px;
+    font-weight: 400;
+    color: #fff;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .status-checkbox-group input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    margin: 0;
+    border: 1.5px solid rgba(255, 255, 255, 0.85);
+    border-radius: 3px;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .status-checkbox-group input[type="checkbox"]:checked {
+    background-color: #ff7d20;
+    border-color: #ff7d20;
+  }
+
+  .status-checkbox-group input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    width: 4px;
+    height: 8px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  .toggle-container {
+    display: flex;
+    gap: 10px;
+  }
+
+  .sowteam_radio_filter {
+    display: flex;
+    align-items: center;
+    background-color: #101a30;
+    width: auto;
+    height: 30px;
+    padding: 3px;
+    border-radius: 9999px;
+    box-shadow: none;
+  }
+
+  .sowteam_radio_filter>input[type="radio"] {
+    appearance: none;
+    display: none;
+  }
+
+  .sowteam_radio_filter>label {
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: inherit;
+    width: auto;
+    height: 100%;
+    text-align: center;
+    border-radius: 9999px;
+    overflow: hidden;
+    transition: linear 0.3s;
+    color: #fff;
+    margin: 0;
+    padding: 0 16px;
+    cursor: pointer;
+    font-weight: 400;
+  }
+
+  .sowteam_radio_filter>input[type="radio"]:checked+label {
+    background-color: #ff7d20;
+    color: #fff;
+    font-weight: 500;
+    transition: 0.3s;
+  }
+
+  /* Time Section Styles */
+  .time-section-container {
+    margin-bottom: 30px;
+  }
+
+  .section-header {
+    background: #e9ecef;
+    padding: 5px 12px !important;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: #313265;
+    border-radius: 6px 6px 0 0;
+    margin-bottom: 0;
+  }
+
+  .section-table-wrapper {
+    background: white;
+    border-radius: 0 0 6px 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .section-table-wrapper table {
+    margin-bottom: 0 !important;
+  }
+
+  /* Table Styles */
+  .sow_resrc_style {
+    background-color: #f2f2f2 !important;
+    font-size: 11px;
+    font-weight: 500;
+    color: #313265;
+    font-family: "Celias", "Poppins", sans-serif;
+    border: 1px solid #dee2e6 !important;
+    padding: 5px 5px !important;
+    text-align: center;
+  }
+
+  .allocation-table {
+    width: 100% !important;
+    border-collapse: collapse;
+  }
+
+  .allocation-table td {
+    font-size: 10px;
+    font-weight: 500;
+    color: #313265;
+    padding: 8px 10px !important;
+    border: 1px solid #dee2e6 !important;
+  }
+
+  .allocation-table tbody tr:hover {
+    background-color: #f8f9fa;
+  }
+
+  .shortageClass {
+    background-color: #ecb092 !important;
+  }
+
+  .equalindus {
+    background-color: #90ee90 !important;
+  }
+
+  .sow_data_name_all {
+    color: #006eff;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .sow_data_name_all:hover {
+    text-decoration: underline;
+  }
+
+  .text-center {
+    text-align: center !important;
+  }
+
+  /* Total Row Styles */
+  .allocation-table tfoot {
+    background-color: #e9f3f9;
+    font-weight: 600;
+  }
+
+  .allocation-table tfoot td {
+    font-weight: 600;
+    color: #2c3e50;
+    border-top: 2px solid #495057 !important;
+  }
+
+  /* Legends */
+  .legends-container {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    padding: 0px;
+    font-size: 10px;
+    font-weight: 400;
+    color: #fff;
+    flex-direction: row;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .ind_color {
+    height: 10px;
+    width: 10px;
+    background-color: #ecb092;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .us_color {
+    height: 10px;
+    width: 10px;
+    background-color: #90ee90;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 1200px) {
+    .filter-row-top {
+      flex-wrap: wrap;
+    }
+
+    .filter-row-top-left,
+    .filter-row-top-right {
+      flex-wrap: wrap;
+    }
+
+    .dropdown-filters {
+      flex: 1 1 20%;
+      justify-content: flex-start;
+    }
+  }
+
+  /* Loading styles */
+  .loader {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    flex-direction: column;
+  }
+
+  .loader-wheel {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #e96f30;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Hide old elements */
+  .team_details_data,
+  #allocate_sow {
+    display: none !important;
+  }
+
+  .ms-options-wrap>button {
+    border-radius: 8px;
+  }
+
+  .ms-options-wrap {
+    font-weight: 500 !important;
+    font-size: 12px !important;
+    width: 150px !important;
+  }
+
+  .ms-options-wrap>.ms-options .ms-selectall {
+    text-transform: capitalize !important;
+  }
+
+  .bar-line {
+    border: 1px solid #e0e0e0;
+    height: 25px;
+  }
+
+  .signed_funnel {
+    background-color: #e3e2e263;
+    border-radius: 25px;
+    text-align: center;
+    color: #252424ad;
+  }
+
+  .others_funnel {
+    background-color: #62d98021;
+    border-radius: 25px;
+    text-align: center;
+    color: #026900ad;
+  }
+
+  /* Expandable Supply Column Styles */
+  .supIndHide-today,
+  .supIndHide-30,
+  .supIndHide-60,
+  .supIndHide-90,
+  .supNAHide-today,
+  .supNAHide-30,
+  .supNAHide-60,
+  .supNAHide-90 {
+    display: none;
+  }
+
+  .supplyIndNA-today,
+  .supplyIndNA-30,
+  .supplyIndNA-60,
+  .supplyIndNA-90 {
+    display: none;
+  }
+
+  .fas {
+    margin-left: 5px;
+    font-size: 10px;
+    color: #e05e00;
+  }
+
+  /* Ensure proper alignment for supply columns */
+  .sow_resrc_style {
+    white-space: nowrap;
+  }
+
+  .sow_name_col {
+    width: 230px !important;
+  }
+
+  .supply_width {
+    width: 20px !important;
+  }
+
+  .billing_width,
+  .account_width {
+    width: 125px !important;
+  }
+
+  .others_width {
+    width: 100px !important;
+  }
+
+  .table-empty-header thead th {
+    font-weight: bold !important;
+  }
+  .input-group-addon {
+    display: none;
+  }
+</style>
+
+<body>
+  <div id="header"></div>
+  <div class="loader">
+    <div class="loader-wheel"></div>
+    <div class="loader-text"></div>
+  </div>
+  <div class="show_page" style="display: none;">
+    <div class="wrapper_outer">
+      <div class="container-fluid">
+        <div class="detail_boxs">
+          <div class="detail_top_bars">
+
+            <!-- New Filter Container -->
+            <div class="new-filter-container">
+              <!-- Top Row: Toggle/Legend/Status on the left, Search/Dropdowns on the right -->
+              <div class="filter-row-top">
+                <div class="filter-row-top-left">
+                  <!-- All/Shortage/Excess Toggle -->
+                  <div class="toggle-container">
+                    <div class="sowteam_radio_filter">
+                      <input type="radio" name="sow_all_data" id="shortgae_data" class="bench_select"
+                        value="onlyShortage" checked>
+                      <label for="shortgae_data">Shortage</label>
+                      <input type="radio" name="sow_all_data" id="sow_data" class="bench_select" value="shortAgeData">
+                      <label for="sow_data">Excess</label>
+                      <input type="radio" name="sow_all_data" id="teams_data" class="bench_select"
+                        value="noShortAgeData">
+                      <label for="teams_data">All</label>
+                    </div>
+                  </div>
+
+                  <div class="bar-line"></div>
+
+                  <!-- Legends -->
+                  <div class="legends-container">
+                    <div class="legend-item">
+                      <span class="ind_color"></span>
+                      <span>Shortage</span>
+                    </div>
+                    <div class="legend-item us_color_div">
+                      <span class="us_color"></span>
+                      <span>Excess</span>
+                    </div>
+                  </div>
+
+                  <div class="bar-line"></div>
+
+                  <!-- Status Checkboxes -->
+                  <div class="status-checkbox-group" id="statusCheckboxes">
+                    <!-- Checkboxes will be dynamically added here -->
+                  </div>
+                </div>
+
+                <div class="filter-row-top-right">
+                  <!-- Search Box -->
+                  <div class="search-container">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                    <input type="text" class="search-input" id="globalSearch" placeholder="Search">
+                  </div>
+
+                  <!-- Account and SOW Dropdowns -->
+                  <div class="dropdown-filters">
+                    <select class="form-control" name="accountSelect[]" multiple id="accountSelect">
+                    </select>
+                    <select class="form-control" name="sowSelect[]" multiple id="sowSelect">
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Time-based Sections Container -->
+            <div id="timeSectionsContainer">
+              <!-- Section 1: Today -->
+              <div class="time-section-container" id="section-today">
+                <div class="section-header" id="header-today">
+                  Today (As of Jan 19, 2026)
+                </div>
+                <div class="section-table-wrapper">
+                  <table class="allocation-table" id="table-today">
+                    <thead>
+                      <tr>
+                        <th rowspan="3" class="sow_resrc_style account_width">Account Name</th>
+                        <th rowspan="3" class="sow_resrc_style sow_name_col">SOW Name</th>
+                        <th rowspan="3" class="sow_resrc_style others_width">Status</th>
+                        <th rowspan="3" class="sow_resrc_style billing_width">Billing Type</th>
+                        <th rowspan="3" class="sow_resrc_style others_width">Actual Start</th>
+                        <th rowspan="3" class="sow_resrc_style others_width">Actual End</th>
+                        <th rowspan="3" class="sow_resrc_style others_width">Shortage Start</th>
+                        <th colspan="2" class="sow_resrc_style others_width">Demand</th>
+                        <th colspan="4" id="supplyMain-today" class="sow_resrc_style others_width">Supply</th>
+                        <th colspan="2" class="sow_resrc_style others_width mode-header">Shortage</th>
+                      </tr>
+                      <tr>
+                        <th rowspan="2" class="sow_resrc_style">IND</th>
+                        <th rowspan="2" class="sow_resrc_style">US</th>
+                        <th colspan="2" id="supplyInd-today" onclick="showSupplyInd('today')"
+                          class="sow_resrc_style supply_width" style="cursor: pointer;">IND
+                          <i class='fas fa-angle-double-left' id="faleftin-today" style="display: none;"></i>
+                          <i class='fas fa-angle-double-right' id="farightin-today"></i>
+                        </th>
+                        <th colspan="2" id="supplyNA-today" onclick="showSupplyNA('today')"
+                          class="sow_resrc_style supply_width" style="cursor: pointer;">US
+                          <i class='fas fa-angle-double-left' id="faleftus-today" style="display: none;"></i>
+                          <i class='fas fa-angle-double-right' id="farightus-today"></i>
+                        </th>
+                        <th rowspan="2" class="sow_resrc_style">IND</th>
+                        <th rowspan="2" class="sow_resrc_style">US</th>
+                      </tr>
+                      <tr class="supplyIndNA-today">
+                        <th class="supIndHide-today sow_resrc_style">Billed</th>
+                        <th class="supIndHide-today sow_resrc_style">Investment</th>
+                        <th class="supIndShow-today sow_resrc_style"></th>
+                        <th class="supNAHide-today sow_resrc_style">Billed</th>
+                        <th class="supNAHide-today sow_resrc_style">Investment</th>
+                        <th class="supNAShow-today sow_resrc_style"></th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbody-today">
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td colspan="7"><strong>Total</strong></td>
+                        <td class="text-center" id="total-today-ind-demand">0</td>
+                        <td class="text-center" id="total-today-us-demand">0</td>
+                        <td class="text-center supIndHide-today" id="total-today-ind-billed">0</td>
+                        <td class="text-center supIndHide-today" id="total-today-ind-investment">0</td>
+                        <td class="text-center supIndShow-today" id="total-today-ind-supply">0</td>
+                        <td class="text-center supNAHide-today" id="total-today-us-billed">0</td>
+                        <td class="text-center supNAHide-today" id="total-today-us-investment">0</td>
+                        <td class="text-center supNAShow-today" id="total-today-us-supply">0</td>
+                        <td class="text-center" id="total-today-ind-shortage">0</td>
+                        <td class="text-center" id="total-today-us-shortage">0</td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Section 2: After 30 Days -->
+              <div class="time-section-container" id="section-30">
+                <div class="section-header" id="header-30">
+                  After 30 Days (As of Feb 18, 2026)
+                </div>
+                <div class="section-table-wrapper">
+                  <table class="allocation-table" id="table-30">
+                    <thead>
+                      <tr>
+                        <th rowspan="3" class="sow_resrc_style account_width">Account Name</th>
+                        <th rowspan="3" class="sow_resrc_style sow_name_col">SOW Name</th>
+                        <th rowspan="3" class="sow_resrc_style others_width">Status</th>
+                        <th rowspan="3" class="sow_resrc_style billing_width">Billing Type</th>
+                        <th rowspan="3" class="sow_resrc_style others_width">Actual Start</th>
+                        <th rowspan="3" class="sow_resrc_style others_width">Actual End</th>
+                        <th rowspan="3" class="sow_resrc_style others_width">Shortage Start</th>
+                        <th colspan="2" class="sow_resrc_style others_width">Demand</th>
+                        <th colspan="4" id="supplyMain-30" class="sow_resrc_style others_width">Supply</th>
+                        <th colspan="2" class="sow_resrc_style others_width mode-header">Shortage</th>
+                      </tr>
+                      <tr>
+                        <th rowspan="2" class="sow_resrc_style">IND</th>
+                        <th rowspan="2" class="sow_resrc_style">US</th>
+                        <th colspan="2" id="supplyInd-30" onclick="showSupplyInd('30')"
+                          class="sow_resrc_style supply_width" style="cursor: pointer;">IND
+                          <i class='fas fa-angle-double-left' id="faleftin-30" style="display: none;"></i>
+                          <i class='fas fa-angle-double-right' id="farightin-30"></i>
+                        </th>
+                        <th colspan="2" id="supplyNA-30" onclick="showSupplyNA('30')"
+                          class="sow_resrc_style supply_width" style="cursor: pointer;">US
+                          <i class='fas fa-angle-double-left' id="faleftus-30" style="display: none;"></i>
+                          <i class='fas fa-angle-double-right' id="farightus-30"></i>
+                        </th>
+                        <th rowspan="2" class="sow_resrc_style">IND</th>
+                        <th rowspan="2" class="sow_resrc_style">US</th>
+                      </tr>
+                      <tr class="supplyIndNA-30">
+                        <th class="supIndHide-30 sow_resrc_style">Billed</th>
+                        <th class="supIndHide-30 sow_resrc_style">Investment</th>
+                        <th class="supIndShow-30 sow_resrc_style"></th>
+                        <th class="supNAHide-30 sow_resrc_style">Billed</th>
+                        <th class="supNAHide-30 sow_resrc_style">Investment</th>
+                        <th class="supNAShow-30 sow_resrc_style"></th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbody-30">
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td colspan="7"><strong>Total</strong></td>
+                        <td class="text-center" id="total-30-ind-demand">0</td>
+                        <td class="text-center" id="total-30-us-demand">0</td>
+                        <td class="text-center supIndHide-30" id="total-30-ind-billed">0</td>
+                        <td class="text-center supIndHide-30" id="total-30-ind-investment">0</td>
+                        <td class="text-center supIndShow-30" id="total-30-ind-supply">0</td>
+                        <td class="text-center supNAHide-30" id="total-30-us-billed">0</td>
+                        <td class="text-center supNAHide-30" id="total-30-us-investment">0</td>
+                        <td class="text-center supNAShow-30" id="total-30-us-supply">0</td>
+                        <td class="text-center" id="total-30-ind-shortage">0</td>
+                        <td class="text-center" id="total-30-us-shortage">0</td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Section 3: After 60 Days -->
+              <div class="time-section-container" id="section-60">
+                <div class="section-header" id="header-60">
+                  After 60 Days (As of Mar 18, 2026)
+                </div>
+                <div class="section-table-wrapper">
+                  <table class="allocation-table" id="table-60">
+                    <thead>
+                      <tr>
+                        <th rowspan="3" class="sow_resrc_style account_width">Account Name</th>
+                        <th rowspan="3" class="sow_resrc_style sow_name_col">SOW Name</th>
+                        <th rowspan="3" class="sow_resrc_style others_width">Status</th>
+                        <th rowspan="3" class="sow_resrc_style billing_width">Billing Type</th>
+                        <th rowspan="3" class="sow_resrc_style others_width">Actual Start</th>
+                        <th rowspan="3" class="sow_resrc_style others_width">Actual End</th>
+                        <th rowspan="3" class="sow_resrc_style others_width">Shortage Start</th>
+                        <th colspan="2" class="sow_resrc_style others_width">Demand</th>
+                        <th colspan="4" id="supplyMain-60" class="sow_resrc_style others_width">Supply</th>
+                        <th colspan="2" class="sow_resrc_style others_width mode-header">Shortage</th>
+                      </tr>
+                      <tr>
+                        <th rowspan="2" class="sow_resrc_style">IND</th>
+                        <th rowspan="2" class="sow_resrc_style">US</th>
+                        <th colspan="2" id="supplyInd-60" onclick="showSupplyInd('60')"
+                          class="sow_resrc_style supply_width" style="cursor: pointer;">IND
+                          <i class='fas fa-angle-double-left' id="faleftin-60" style="display: none;"></i>
+                          <i class='fas fa-angle-double-right' id="farightin-60"></i>
+                        </th>
+                        <th colspan="2" id="supplyNA-60" onclick="showSupplyNA('60')"
+                          class="sow_resrc_style supply_width" style="cursor: pointer;">US
+                          <i class='fas fa-angle-double-left' id="faleftus-60" style="display: none;"></i>
+                          <i class='fas fa-angle-double-right' id="farightus-60"></i>
+                        </th>
+                        <th rowspan="2" class="sow_resrc_style">IND</th>
+                        <th rowspan="2" class="sow_resrc_style">US</th>
+                      </tr>
+                      <tr class="supplyIndNA-60">
+                        <th class="supIndHide-60 sow_resrc_style">Billed</th>
+                        <th class="supIndHide-60 sow_resrc_style">Investment</th>
+                        <th class="supIndShow-60 sow_resrc_style"></th>
+                        <th class="supNAHide-60 sow_resrc_style">Billed</th>
+                        <th class="supNAHide-60 sow_resrc_style">Investment</th>
+                        <th class="supNAShow-60 sow_resrc_style"></th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbody-60">
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td colspan="7"><strong>Total</strong></td>
+                        <td class="text-center" id="total-60-ind-demand">0</td>
+                        <td class="text-center" id="total-60-us-demand">0</td>
+                        <td class="text-center supIndHide-60" id="total-60-ind-billed">0</td>
+                        <td class="text-center supIndHide-60" id="total-60-ind-investment">0</td>
+                        <td class="text-center supIndShow-60" id="total-60-ind-supply">0</td>
+                        <td class="text-center supNAHide-60" id="total-60-us-billed">0</td>
+                        <td class="text-center supNAHide-60" id="total-60-us-investment">0</td>
+                        <td class="text-center supNAShow-60" id="total-60-us-supply">0</td>
+                        <td class="text-center" id="total-60-ind-shortage">0</td>
+                        <td class="text-center" id="total-60-us-shortage">0</td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Section 4: After 90 Days -->
+              <div class="time-section-container" id="section-90">
+                <div class="section-header" id="header-90">
+                  After 90 Days (As of Apr 18, 2026)
+                </div>
+                <div class="section-table-wrapper">
+                  <table class="allocation-table" id="table-90">
+                    <thead>
+                      <tr>
+                        <th rowspan="3" class="sow_resrc_style account_width">Account Name</th>
+                        <th rowspan="3" class="sow_resrc_style sow_name_col">SOW Name</th>
+                        <th rowspan="3" class="sow_resrc_style others_width">Status</th>
+                        <th rowspan="3" class="sow_resrc_style billing_width">Billing Type</th>
+                        <th rowspan="3" class="sow_resrc_style others_width">Actual Start</th>
+                        <th rowspan="3" class="sow_resrc_style others_width">Actual End</th>
+                        <th rowspan="3" class="sow_resrc_style others_width">Shortage Start</th>
+                        <th colspan="2" class="sow_resrc_style others_width">Demand</th>
+                        <th colspan="4" id="supplyMain-90" class="sow_resrc_style others_width">Supply</th>
+                        <th colspan="2" class="sow_resrc_style others_width mode-header">Shortage</th>
+                      </tr>
+                      <tr>
+                        <th rowspan="2" class="sow_resrc_style">IND</th>
+                        <th rowspan="2" class="sow_resrc_style">US</th>
+                        <th colspan="2" id="supplyInd-90" onclick="showSupplyInd('90')"
+                          class="sow_resrc_style supply_width" style="cursor: pointer;">IND
+                          <i class='fas fa-angle-double-left' id="faleftin-90" style="display: none;"></i>
+                          <i class='fas fa-angle-double-right' id="farightin-90"></i>
+                        </th>
+                        <th colspan="2" id="supplyNA-90" onclick="showSupplyNA('90')"
+                          class="sow_resrc_style supply_width" style="cursor: pointer;">US
+                          <i class='fas fa-angle-double-left' id="faleftus-90" style="display: none;"></i>
+                          <i class='fas fa-angle-double-right' id="farightus-90"></i>
+                        </th>
+                        <th rowspan="2" class="sow_resrc_style">IND</th>
+                        <th rowspan="2" class="sow_resrc_style">US</th>
+                      </tr>
+                      <tr class="supplyIndNA-90">
+                        <th class="supIndHide-90 sow_resrc_style">Billed</th>
+                        <th class="supIndHide-90 sow_resrc_style">Investment</th>
+                        <th class="supIndShow-90 sow_resrc_style"></th>
+                        <th class="supNAHide-90 sow_resrc_style">Billed</th>
+                        <th class="supNAHide-90 sow_resrc_style">Investment</th>
+                        <th class="supNAShow-90 sow_resrc_style"></th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbody-90">
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td colspan="7"><strong>Total</strong></td>
+                        <td class="text-center" id="total-90-ind-demand">0</td>
+                        <td class="text-center" id="total-90-us-demand">0</td>
+                        <td class="text-center supIndHide-90" id="total-90-ind-billed">0</td>
+                        <td class="text-center supIndHide-90" id="total-90-ind-investment">0</td>
+                        <td class="text-center supIndShow-90" id="total-90-ind-supply">0</td>
+                        <td class="text-center supNAHide-90" id="total-90-us-billed">0</td>
+                        <td class="text-center supNAHide-90" id="total-90-us-investment">0</td>
+                        <td class="text-center supNAShow-90" id="total-90-us-supply">0</td>
+                        <td class="text-center" id="total-90-ind-shortage">0</td>
+                        <td class="text-center" id="total-90-us-shortage">0</td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+</body>
+
+</html>

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Factspan - ARCUS - Allocation Team</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+  <script src="https://kit.fontawesome.com/01f906aa6d.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+ 
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+  <script type="text/javascript" src="js/jquery.ajax-cross-origin.min.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
+  <link rel="stylesheet" href="css/custom.css" />
+  <script src="js/common.js"></script>
+  <script src="js/allocationTeam.js"></script>
+  <!-- <link rel="stylesheet" href="css/overlay.css" /> -->
+  <link rel="stylesheet" href="css/busyLoading.css" />
+  <link rel="icon" href="images\factspan.png" type="image/png" sizes="16x16">
+  <!-- JS & CSS library of MultiSelect plugin -->
+  <link rel="stylesheet" href="css/jquery.multiselect.css">
+  <script src="lib/jQuery-MultiSelect.js"></script>
+  <script>
+    $(function () {
+      $('#header').load('header.html');
+    })
+  </script>
+</head>
+<style>
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  .allocation_radio_filter {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #cecece;
+    width: 200px;
+    height: 30px;
+    border-radius: 9999px;
+    margin-top: 8px;
+    box-shadow: inset 0.5px 0.5px 2px 0 rgb(0 0 0 / 15%);
+  }
+
+  .allocation_radio_filter>input[type="radio"] {
+    appearance: none;
+    display: none;
+  }
+
+  .allocation_radio_filter>label,
+  .sowteam_radio_filter>label {
+    font-family: "Open Sans", sans-serif;
+    font-size: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: inherit;
+    width: 500px;
+    height: 20px;
+    text-align: center;
+    border-radius: 9999px;
+    overflow: hidden;
+    transition: linear 0.3s;
+    color: #6e6e6edd;
+    margin-bottom: 0px;
+    padding-left: 0px;
+    margin: 5px;
+  }
+
+  .allocation_radio_filter>input[type="radio"]:checked+label {
+    background-color: #1e90ff;
+    color: #f1f3f5;
+    font-weight: 900;
+    transition: 0.3s;
+  }
+
+  .sowteam_radio_filter {
+    display: flex;
+    float: right;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #cecece;
+    width: 160px;
+    height: 25px;
+    border-radius: 9999px;
+
+    box-shadow: inset 0.5px 0.5px 2px 0 rgb(0 0 0 / 15%);
+
+  }
+
+  .sowteam_radio_filter>input[type="radio"] {
+    appearance: none;
+    display: none;
+  }
+
+  .sowteam_radio_filter>input[type="radio"]:checked+label {
+    background-color: #1e90ff;
+    color: #f1f3f5;
+    font-weight: 900;
+    transition: 0.3s;
+  }
+
+  /* .sowteam_radio_filter>label {
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: inherit;
+    width: 80px;
+    height: 20px;
+    text-align: center;
+    border-radius: 9999px;
+    overflow: hidden;
+    transition: linear 0.3s;
+    color: #6e6e6edd;
+    margin-bottom: 0px;
+    
+} */
+  .sow_resrc_style {
+    border-radius: 0px 0px 0 0;
+    text-align: center;
+    background-color: #dedada;
+    font-size: 10px;
+    font-weight: 600;
+    color: #8b8988;
+    font-family: "Celias", "Poppins", sans-serif;
+  }
+
+  .more {
+    display: inline-block;
+    width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .more:hover {
+    white-space: initial;
+    cursor: pointer;
+    width: 85%;
+    /* min-height:50px; */
+  }
+
+  .skill_data {
+    background: #e7ffea;
+    padding: 2px 3px;
+    border-radius: 10px;
+    font-size: 10px;
+    color: #1c8a13;
+    border: solid 1px #c2f5c8;
+    margin: 2px 5px;
+  }
+
+  .sow_resrc_style {
+    border-radius: 0px 0px 0 0;
+    text-align: center;
+    background-color: #f2f2f2 !important;
+    font-size: 10px;
+    font-weight: 600;
+    color: #535252;
+    font-family: "Celias", "Poppins", sans-serif;
+    border-left: 1px solid #ffffff;
+    ;
+  }
+
+  .employee_detail_inside table th {
+    padding: 3px 7px !important;
+  }
+
+  .employee_detail_inside {
+    display: block;
+    width: 100%;
+    margin-top: 0px;
+    padding: 0px;
+    box-shadow: 0px 5px 12px -5px #989696;
+    min-height: 90px;
+  }
+
+  .employee_detail_inside {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 0px;
+    box-shadow: 0px 5px 12px -5px #989696;
+    min-height: 90px;
+  }
+
+  #emp_table .bench_table_th1 {
+    background-color: #f2f2f2;
+    text-align: center;
+    color: #8b8988;
+    border-radius: 20px;
+
+  }
+
+  .bench_table_th1 th {
+    padding: 5px;
+    font-size: 14px;
+  }
+
+  .bench_table.table_hd1 .bench_table_th1 {
+    text-align: center;
+
+
+  }
+
+  #bench_table {
+    width: 100% !important;
+    margin-top: 30px;
+  }
+
+  #sow_res_recom_table_data thead>tr>th {
+    background-color: #fae9e9 !important;
+    text-align: center;
+  }
+
+  .report_sow_account_header {
+
+    color: black;
+  }
+
+  .fixTableHead {
+    overflow-y: auto;
+    height: 79vh;
+  }
+
+  .fixTableHead thead {
+    position: sticky;
+    top: 0;
+  }
+
+  td {
+    /* padding: 5px 20px; */
+    font-size: 10px;
+    font-weight: 500;
+  }
+
+  .employee_sow_details .table th {
+    /* background: #f8f9fa !important; */
+    /* padding: 5px 5px !important; */
+    border: solid 0px #f8f9fa;
+    border-radius: 0px;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+  }
+
+  .thead-light {
+    background-color: #f2f2f2 !important;
+  }
+
+  #account_head>th {
+    background-color: #f3f3f3;
+  }
+
+  .table_hd1 .assign_header .header1 {
+    text-align: center;
+
+  }
+
+  table.dataTable thead th,
+  table.dataTable thead td {
+    padding: 4px 10px;
+  }
+
+  #sow_res_recom_table_data thead>tr>th {
+    background-color: #f2f2f2 !important;
+  }
+
+  .header1 {
+    background-color: #fae9e9 !important;
+  }
+
+  .table_hd1 .assign_header2 .header1 {
+    text-align: center;
+
+  }
+
+  .dataTables_length,
+  .dataTables_filter {
+    font-size: 10px;
+  }
+</style>
+
+<body>
+  <div class="loader">
+    <div class="loader-wheel"></div>
+    <div class="loader-text"></div>
+  </div>
+  <div class="show_page" style="display: none;">
+    <div id="header"></div>
+  </div>
+  <div class="wrapper_outer">
+    <div class="container-fluid">
+      <div class="detail_boxs">
+        <div class="detail_top_bars">
+          <div class="sowteam_radio_filter">
+            <input type="radio" name="bench_acc" id="ALLBI" class="bench_select" value="ALLBI">
+            <label for="ALLBI">SOW</label>
+            <input type="radio" name="bench_acc" id="BENCH" class="bench_select" value="BENCH" onclick="getBenCurrFut()"
+              checked>
+            <label for="BENCH">TEAM</label>
+          </div>
+
+          <div class="allocation_radio_filter">
+            <input type="radio" name="res_acc" id="ALL" class="emp_select" value="Current" onclick="getBenCurrFut()"
+              checked>
+            <label for="ALL">Current Bench</label>
+            <input type="radio" name="res_acc" id="IND" class="emp_select" value="Future" onclick="getBenCurrFut()">
+            <label for="IND">Future Bench</label>
+
+          </div>
+          <div class="employee_detail_inside employee_sow_details table-responsive fixTableHead">
+
+            <!-- <div class="bench_h1">Bench & Investment</div> -->
+            <!-- <table class="table table-bordered border-primary sow_emp_details_class" id="bench_table"> -->
+            <table calss="table table-bordered border-primary" id="emp_table" style="width: 100%;">
+
+              <thead class="thead-light table_hd1" id="allocation_sow">
+
+              </thead>
+              <tbody id="report_overall_summary_body1" style="text-align:center;"></tbody>
+
+            </table>
+
+            <table calss="table table-bordered border-primary" id="emp_table_future" style="width: 100%;">
+
+              <thead class="thead-light table_hd1" id="allocation_sow_future">
+
+              </thead>
+              <tbody id="report_overall_summary_body1_future" style="text-align:center;"></tbody>
+
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(document).ready(function () {
+      assignMetaValue();
+      $("meta[name='google-signin-client_id']").attr("content", metaValue);
+
+      getLocalSessionData();
+      if (sessionName == null) {
+        window.location.href = 'index.html';
+        return false;
+      } else {
+        //getBenInvData();
+        getBenCurrFut();
+        $(".loader").css("display", "none");
+        $(".show_page").css("display", "block");
+
+      }
+
+    });
+    $('#ALLBI').click(function () {
+      window.location.href = 'allocationDashboard.html';
+      return false;
+    });
+
+
+    $('#logout').click(function () {
+      localStorage.clear();
+      window.location.href = 'index.html';
+      return false;
+    });
+
+  </script>
+  
+
+
+</body>
+
+</html>

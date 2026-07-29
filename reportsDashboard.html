@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Factspan - ARCUS - Report Dashboard</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv='cache-control' content='no-cache'>
+  <meta http-equiv='expires' content='0'>
+  <meta http-equiv='pragma' content='no-cache'>
+  <script src="js/chatbot.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+  </style>
+
+
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+  <script type="text/javascript" src="js/jquery.ajax-cross-origin.min.js"></script>
+  <link rel="stylesheet" href="css/custom.css" />
+  <script src="js/common.js"></script>
+  <script src="js/reportsDashboard.js"></script>
+  <link rel="stylesheet" href="css/busyLoading.css" />
+  <link rel="icon" href="images\factspan.png" type="image/png" sizes="16x16">
+  <link rel="stylesheet" href="css/jquery.multiselect.css">
+  <script src="lib/jQuery-MultiSelect.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/fontawesome.min.css"
+    type="text/css" />
+  <script src="https://kit.fontawesome.com/01f906aa6d.js" crossorigin="anonymous"></script>
+  <script>
+    $(function () {
+      $('#header').load('header.html');
+      // $('#chatbot-container').load('chatbot.html');
+    })
+   
+ 
+  </script>
+</head>
+<style>
+  #app-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #menu {
+    text-align: center;
+    box-shadow: 0px 0px 10px #c4c0c0;
+    border-radius: 15px;
+
+    align-items: center;
+    justify-content: center;
+    width: 85%;
+
+    background-color: #fff;
+    padding: 40px 60px 60px 60px;
+  }
+
+  #dash-title {
+    text-align: left;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .employee_form {
+    overflow: hidden !important;
+  }
+
+  .center-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    height: 120px;
+    color: #fff;
+    font-size: 20px;
+    box-shadow: 0px 0px 10px #571b1b;
+    font-weight: 600;
+  }
+
+  .menu-header {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+
+
+
+  @media screen and (max-height: 450px) {
+    .sidenav {
+      padding-top: 15px;
+    }
+
+    .sidenav a {
+      font-size: 12px;
+    }
+  }
+
+  #emp_table thead>tr>th {
+    background-color: #fae9e9;
+    text-align: center;
+  }
+
+  #emp_table td,
+  #customers th {
+    border: 0.5px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+
+
+  .navbar-default .navbar-nav>li>a {
+
+    font-weight: 500;
+  }
+
+  #profile {
+    background-color: cadetblue;
+    border-radius: 124px;
+    font-size: 30px;
+    margin-left: 15px;
+  }
+
+  #profile_div a:hover {
+    color: #eff4f8;
+  }
+
+  .navbar-brand {
+    padding: 0px 15px;
+  }
+
+  .employee_form .btn-info {
+    margin: 0 !important;
+    padding: 1px 3px;
+  }
+
+  ul {
+    padding-inline-start: 0px !important;
+  }
+  /* .create_new{
+    margin-left: 600px;
+  }
+  .submenu_styles {
+  background-color: rgb(100, 219, 140);
+  font-size: 12px;
+  font-weight: 900;
+  color: white;
+  margin: 4px;.reports-dashboard-toolbar {
+
+  margin-left: 600px;
+  border-radius: 5px;
+  float: right;
+}
+.reports_menu_styles {
+  box-shadow: 0px 0px 10px #c4c0c0;
+  padding: 10px;
+} */
+
+.submenu_style {
+    background-color: #f3f3f3;
+    font-size: 12px;
+    font-weight: 600;
+    color: #ff7d20;
+    margin: 5px;
+    border-radius: 10px;
+    border: 1px solid #d3cfcf;
+}
+
+.reports_menu_style {
+    box-shadow: 0px 0px 0px #c4c0c0 !important;
+    padding: 15px;
+}
+.reporting-frame-work-btn {
+  float: right;
+  margin-top: -40px;
+  padding: 10px;
+}
+.create-report {
+  padding: 5px !important;
+}
+.reports_dashboard_block {
+  display: flex;
+  flex-direction: row;
+}
+.each_report_div {
+  min-width: 20%;
+}
+
+  .reports-dashboard-toolbar {
+    min-height: 45px;
+    margin: 0 -15px 24px;
+    padding: 0 26px;
+    background: #1F3864;
+    border-top: 0.5px solid #6d6d6d;
+    border-bottom: 6px solid #ffffff;
+    display: flex;
+    align-items: center;
+  }
+
+  .reports-dashboard-title {
+    margin: 0;
+    color: #ffffff;
+    font-family: "Poppins", "Celias", sans-serif;
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 500;
+  }
+
+  @media screen and (max-width: 767px) {
+    .reports-dashboard-toolbar {
+      min-height: 72px;
+      margin-bottom: 20px;
+      padding: 0 18px;
+    }
+
+    .reports-dashboard-title {
+      font-size: 14px;
+    }
+  }
+</style>
+
+<body>
+  <div class="loader">
+    <div class="loader-wheel"></div>
+    <div class="loader-text"></div>
+  </div>
+
+  <div class="show_page" style="display: none;">
+    <div id="header"></div>
+    <div class="wrapper_outer">
+
+      <div class="container-fluid">
+        <div class="detail_box">
+          <div class="employee_form" id="emp_form">
+            <div class="reports-dashboard-toolbar">
+              <h1 class="reports-dashboard-title">Reports Dashboard</h1>
+            </div>
+            <div class="reports_dashboard_block">
+                <div class="each_report_div" id="reportOverallSummary_div">
+                  <a class="report_module" id="reportOverallSummary" href="reportOverallSummary.html">
+                    <div class="sowAmtbyAccount reports_menu_style submenu_style">
+                      <div class="sowAccountBtn " id="reportOverallSummary">
+                        Overall Summary
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div class="each_report_div" id="recognisedRevenue_div">
+                  <a class="report_module" id="recognisedRevenueReport" href="reportHighProbabilityPipeline.html">
+                    <div class="sowAmtbyAccount reports_menu_style submenu_style">
+                      <div class="sowAccountBtn ">
+                        High Probability Pipeline
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <!-- <div class="each_report_div" id="reportAmtbySow_div">
+                  <a class="report_module" id="reportSowBySOW" href="reportAmountBySOW.html">
+                    <div class="sowAmtbySow reports_menu_style submenu_style">
+                      <div class="sowbySowBtn" id="amtbySOW">
+                        Amount by SOW
+                      </div>
+                    </div>
+                  </a>
+                </div> -->
+                <div class="each_report_div" id="bench_inv_report">
+                  <a class="report_module" id="recognisedRevenueReport" href="report_bench_investment.html">
+                    <div class="sowAmtbyAccount reports_menu_style submenu_style">
+                      <div class="sowAccountBtn " id="reportOverallSummary">
+                        Bench & Investment
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div class="each_report_div" id="res_mapping_report">
+                  <a class="report_module" id="resourceMapping" href="resourceMapping.html">
+                    <div class="sowAmtbyAccount reports_menu_style submenu_style">
+                      <div class="sowAccountBtn " id="resourceMapping">
+                        Resource Mapping
+                      </div>
+                    </div>
+                  </a>
+                </div> 
+                <div class="each_report_div" id="resource_utilization_div">
+                  <a class="report_module" id="account_allocation" href="reportResourceUtilization.html" >
+                    <div class="sowAmtbyAccount reports_menu_style submenu_style">
+                      <div class="sowAccountBtn " id="reportResourceUtilization">
+                        Resource Utilization
+                      </div>
+                    </div>
+                  </a>
+                </div> 
+                
+                                
+            </div>
+            <div class="reports_dashboard_block">
+              <div class="each_report_div" id="audit_div">
+                <a id="reportAudit" class="report_module" href="reportAudit.html">
+                  <div class="sowAmtbyAccount reports_menu_style submenu_style">
+                    <div class="sowAccountBtn " id="reportOverallSummary">
+                      Audit Reports
+                    </div>
+                  </div>
+                </a>
+              </div>
+              
+              <div class="each_report_div" id="weekly_usage_div">
+                <a id="reportWeeklyUsage" class="report_module" href="reportWeeklyUsage.html">
+                  <div class="sowAmtbyAccount reports_menu_style submenu_style">
+                    <div class="sowAccountBtn " id="reportOverallSummary">
+                      Weekly Usage
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div class="each_report_div" id="report_us_bench_list_div">
+                <a id="reportWeeklyUsage" class="report_module" href="reportsUSBenchList.html">
+                  <div class="sowAmtbyAccount reports_menu_style submenu_style">
+                    <div class="sowAccountBtn " id="reportOverallSummary">
+                      US Bench List
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div class="each_report_div" id="report_org_chart_list_div">
+                <a id="reportWeeklyUsage" class="report_module" href="orgChart.html">
+                  <div class="sowAmtbyAccount reports_menu_style submenu_style">
+                    <div class="sowAccountBtn " id="reportOrgChart">
+                      Org Chart
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <!-- orgChart.html -->
+            </div>
+            <!-- <div class="sowReportsDash reports_menu_style reporting_main_div">
+              <div class="reporting_framework_div">
+                
+              </div>
+            </div> -->
+
+            
+
+          </div>
+          <div id="chatbot-container"></div>
+        </div>
+       
+      </div>
+    </div>
+  </div>
+
+  <script>
+      
+    $(document).ready(function () {
+      $(".allReportDiv").hide()
+      $(".report_module").hide()
+      assignMetaValue();
+      $("meta[name='google-signin-client_id']").attr("content", metaValue);
+      getLocalSessionData();
+      if (sessionName == null) {
+        window.location.href = 'index.html';
+        return false;
+      } else {
+        let accessStatus = checkDashboardPageAccessData()
+        if (accessStatus) {
+          let accessLevel = checkEachPageAccess("Reports")
+          if (accessLevel.length > 0) {
+            let environment = accessLevel[0]
+            if (environment == apiValue.environment) {
+              let access_page_list = $.parseJSON(localStorage.getItem("access-page-list"))
+              console.log("accessStatus - ",accessStatus)
+              console.log("accessLevel - ",accessLevel)
+              console.log("access_page_list - ",access_page_list)
+              let userRole = localStorage.getItem("user-role")
+              let userEmail = localStorage.getItem("email")
+              let userDept = localStorage.getItem("Department")
+              let userJobRole = localStorage.getItem("Job_Role")
+              
+              $.each(access_page_list, function (h, page) {
+                if (page == "All") {
+                  $(".allReportDiv").show()
+                  $(".report_module").show()
+                } else {
+                  $("#" + page.replace(".html", "")).show()
+                  $("." + page.replace(".html", "") + "_div").show()
+                }
+              })
+              $(".reporting_main_div").hide()
+              framework_report_list()
+              $(".show_page").css("display", "block");
+              $(".loader").css("display", "none");
+              $(".show_page").css("display", "block");
+              $(".new-sub-menu").hover(function () {
+                $('.sub-menu').css('display', '')
+              });
+              if(userEmail == "akhilesh@factspan.com" || userRole == "admin" ||
+                userDept == 'CEO' || userDept == 'Finance' || userDept == 'CEO Office' || userDept == 'Products' || userJobRole == 'Vice President'
+              ){
+                $('#weekly_usage_div').show()
+                $('#report_us_bench_list_div').show()
+                $('#resource_utilization_div').show()
+                $('#audit_div').show() 
+              }else{
+                $('#weekly_usage_div').hide()
+                $('#report_us_bench_list_div').hide()
+                $('#resource_utilization_div').hide()
+                $('#audit_div').hide()
+              }
+              // if(userEmail == "nitin.pandey@factspan.com"){
+              //   $('#report_us_bench_list_div').show()
+              //   $('#resource_utilization_div').show()
+              // }
+              // if(userRole == "admin" || userDept == 'Products'){
+              //   $('#audit_div').show() 
+              // }else{
+              //   $('#audit_div').hide()
+              // }
+            } else {
+              window.location.href = "home.html"
+            }
+          } else {
+            window.location.href = "home.html"
+          }
+        } else {
+          window.location.href = "home.html"
+        }
+        // $('#create-report').click(function(){
+        //   window.location.href = 'reporting-framework.html'
+        //   return false;
+        // })
+      }
+    });
+
+    $('#dashboard').click(function () {
+      window.location.href = 'home.html';
+      return false;
+    });
+    $('#logout').click(function () {
+      localStorage.clear();
+
+      window.location.href = 'index.html';
+      return false;
+    });
+    $("#use_bench_data").click(function () {
+      window.location.href = 'useBench.html';
+      return false;
+    });
+    $('#create_employee').click(function () {
+      window.location.href = 'employee_create.html';
+      return false;
+    });
+
+    function employeeDetails() {
+      window.location.href = 'team-profile.html';
+      return false;
+    }
+    function getFramework(obj){
+      let selectedName = obj
+      console.log("selectedName - ",selectedName)
+      localStorage.setItem('framework-name-selected', selectedName)
+      window.location.href = 'reporting-framework.html'
+      return false;
+    }
+    function exitPocPov(){
+      page_details = true;
+      localStorage.setItem("report",page_details)
+    }
+  </script>
+  
+
+</body>
+
+</html>

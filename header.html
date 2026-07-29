@@ -1,0 +1,314 @@
+<link href="css/headerMenu.css" rel="stylesheet">
+<meta http-equiv="Cache-control" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-store, max-age=0">
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='0'>
+<meta http-equiv='pragma' content='no-cache'>
+<!-- <meta name="google-signin-client_id"
+    content="776418814053-hccb99mo0ks8o9l3o3e5plhsn43p96rk.apps.googleusercontent.com"> -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<div id="navbar">
+    <nav class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" id="logo_page_link" href="adminDashboard.html">
+                <img src="images/arcus_logo_white.svg" alt="ARCUS logo" class="responsive" style="width: 150px;" />
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse header-menu" id="navbar-collapse-1">
+            <ul class="nav navbar-nav header_menu_block">
+                <li class="rre_menu" id="home_page">
+                    <a href="adminDashboard.html" id="home_page_link">
+                        <img class="header-nav-icon" src="images/home_icon.svg" alt="">
+                        <span class="header-nav-label">Home</span>
+                    </a>
+                </li>
+                <li class="rre_menu header_menu_modules revenueDetails_page" id="sow_resource_req">
+                    <a href="revenueDetails.html">
+                        <img class="header-nav-icon" src="images/revenue_icon.svg" alt="">
+                        <span class="header-nav-label">Revenue</span>
+                    </a>
+                </li>
+                <li class="rre_menu header_menu_modules team_page" id="employee_details">
+                    <a href="team.html">
+                        <img class="header-nav-icon" src="images/teams_icon.svg" alt="">
+                        <span class="header-nav-label">Team</span>
+                    </a>
+                </li>
+
+                <li class="rre_menu header_menu_modules allocationDashboard_page" id="resource_alloc_details">
+                    <a href="allocationDashboard.html">
+                        <img class="header-nav-icon" src="images/allocation_icon.svg" alt="">
+                        <span class="header-nav-label">Allocation</span>
+                    </a>
+                </li>
+                <li class="rre_menu header_menu_modules buyingCenterEngagement_page" id="buying_center_details">
+                    <a href="buyingCenterDetails.html">
+                        <img class="header-nav-icon" src="images/buying_center_icon.svg" alt="">
+                        <span class="header-nav-label">Buying Center</span>
+                    </a>
+                </li>
+                <!-- <li class="rre_menu header_menu_modules orgChart_page sowOrgChart_page" id="orgchart_details">
+                    <a href="orgChart.html">
+                        <span>
+                            <center><img src="images/icon04.png" height="25px" /> Org Chart</center>
+                        </span></a>
+                </li> -->
+                <li class="rre_menu header_menu_modules orgChart_page sowOrgChart_page" id="nps_details">
+                    <a href="nps.html">
+                        <img class="header-nav-icon" src="images/cnps_icon.svg" alt="">
+                        <span class="header-nav-label">CNPS</span>
+                    </a>
+                </li>
+                <li class="rre_menu header_menu_modules reportsDashboard_page" id="report_details">
+                    <a href="reportsDashboard.html">
+                        <img class="header-nav-icon" src="images/reports_icon.svg" alt="">
+                        <span class="header-nav-label">Reports</span>
+                    </a>
+                </li>
+                <li class="rre_menu notification-bell-wrapper header_menu_modules notification-tab"
+                    style="display: none;">
+                    <a href="workflowDetails.html" title="Notifications">
+                        <img class="custom-bell" src="images/bell_icon.svg" alt="Notifications">
+                        <div class="notification-count" id="notification-count">0</div>
+                    </a>
+                </li>
+                <li class="rre_menu dropdown" id="team_profile">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="user_image_tag"><img
+                            id="profileImage" src="images/person_icon.svg" alt="User profile"
+                            onerror="this.onerror=null;this.src='images/person_icon.svg';" /></a>
+
+                    <ul class="dropdown-menu">
+                        <li class="dropdown dropdown-submenu" id="menu_user_name">
+
+                        </li>
+
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+    <div>
+        <div class="quick_link_notes" data-tooltip="Add Notes" onclick="window.location.href='notesLogEngagement.html'">
+            <img src="images/quick_link.png" height="35px" style="margin: 5px; cursor: pointer;" />
+        </div>
+    </div>
+</div>
+
+<script>
+
+    empName = localStorage.getItem("EmpUserName");
+    empId = localStorage.getItem("EmpUserID");
+    sessionName = localStorage.getItem("email");
+    accese_level = localStorage.getItem("ACCESS_LEVEL");
+    accessData = localStorage.getItem("Access");
+    edit_access = localStorage.getItem("EDIT_ACCESS");
+    groupName = localStorage.getItem("GROUP_NAME");
+    statusDetails = localStorage.getItem("STATUS");
+    let departmentName = localStorage.getItem("Department");
+    let jobRole = localStorage.getItem('Job_Role');
+    let userRole = localStorage.getItem("user-role");
+    let email = localStorage.getItem("email");
+    if (departmentName === "Products" || departmentName === "CEO" || departmentName === "COE" || jobRole === "Vice President" || userRole == "admin" || email == "nitin.pandey@factspan.com" || email == "nagarajan.v@factspan.com") {
+        $('#home_page_link').attr('href', 'adminDashboard.html');
+        $('#logo_page_link').attr('href', 'adminDashboard.html');
+    } else {
+        $('#home_page_link').attr('href', 'home.html');
+        $('#logo_page_link').attr('href', 'home.html');
+    }
+    $(".header_menu_modules").hide();
+    $("#display_name").html(empName);
+    $("#email_id").html(sessionName);
+    $("#emp_id").html("#" + empId);
+    checkDashboardPageAccessData()
+    let userLoginData = `<div id="userData">
+                                <span><b>${empName}</b></span><br>
+                                <span style='font-weight: 400'>${sessionName}</span><br>
+                                <span style='font-weight: 400; font-size: 12px'>${empId}</span><br>
+                                <button class="btn btn-info float-right" id="logout" style="margin: 10px;" onclick="signOut();"> Sign out</button>
+                            </div>`
+    $("#menu_user_name").html(userLoginData);
+
+    let selectedName = window.location.pathname.replace('/', '');
+    if (selectedName.includes('notesLogEngagement.html') || selectedName.includes('sow.html') || selectedName.includes('sowEdit.html') || selectedName.includes('buying_center.html') || selectedName.includes('buyingCenterDetails.html')) {
+        $('.quick_link_notes').hide();
+    }
+    if (selectedName == 'revenueDetails.html' || selectedName == 'sowResReq.html' || selectedName == 'sow.html' || selectedName == 'sowCreate.html' || selectedName == 'accountCreation.html' || selectedName == 'accountDetails.html' || selectedName == 'sowEdit.html' || selectedName == 'buying_center.html') {
+        $('#sow_resource_req').addClass('active');
+    }
+    if (selectedName == 'RRESOWUserManual.html' || selectedName == 'sow' || selectedName == 'sowCreate' || selectedName == 'accountCreation' || selectedName == 'accountEdit.html') {
+        $('#sow_resource_req').addClass('active');
+    }
+    if (selectedName == 'team.html' || selectedName == 'useBench.html' || selectedName == 'employee_profile.html' || selectedName == 'team-profile.html' || selectedName == 'employeeResume.html' || selectedName == 'UtilizationChart.html') {
+        $('#employee_details').addClass('active');
+    }
+    if (selectedName == 'employeePersonaSkills.html' || selectedName == 'useBench' || selectedName == 'employee_profile' || selectedName == 'employeeExperience.html') {
+        $('#employee_details').addClass('active');
+    }
+    if (selectedName == 'orgChart.html' || selectedName == 'orgChart' || selectedName == 'sowOrgChart.html') {
+        $('#orgchart_details').addClass('active');
+    }
+    if (selectedName == 'nps.html') {
+        $('#nps_details').addClass('active');
+    }
+    if (selectedName == 'buyingCenterDetails.html') {
+        $('#buying_center_details').addClass('active');
+    }
+    if (selectedName == 'workflowDetails.html' || selectedName == 'approvalData.html' || selectedName == 'adminDashboard.html') {
+        $('#home_page').addClass('active');
+    }
+    if (selectedName == 'report_details.html' || selectedName == 'resourceMapping.html' || selectedName == 'reportsDashboard.html' || selectedName == 'sowRsrceAllocSummar.html' || selectedName == 'resourceUtilization.html' || selectedName == 'reportHighProbabilityPipeline.html') {
+        $('#report_details').addClass('active');
+    }
+    if (selectedName == 'reportAudit.html' || selectedName == 'reportRevenueMovement.html' || selectedName.includes("reportAuditDetails.html") || selectedName == 'reportBenchInvestment.html' || selectedName == 'recognisedRevenueReport.html' || selectedName == 'reportRevenueBuckets.html') {
+        $('#report_details').addClass('active');
+    }
+    if (selectedName == 'reportAccountAllocation.html' || selectedName == 'reportResourceUtilization.html' || selectedName == 'reportWeeklyUsage.html' || selectedName == 'reportsUSBenchList.html' || selectedName == 'orgChart.html') {
+        $('#report_details').addClass('active');
+    }
+    if (selectedName == 'allocationDashboard.html' || selectedName == 'allocationSOW.html' || selectedName == 'allocationSOWTeam.html' || selectedName == 'resourceAllocation.html' || selectedName == 'sowTeamAllocation.html') {
+        $('#resource_alloc_details').addClass('active');
+    }
+    if (selectedName == 'employeeProject.html' || selectedName == 'reportsResourceUtilizationAccSow.html' || selectedName == 'reporting-framework.html' || selectedName == 'accountHeadAllocation.html') {
+        $('#report_details').addClass('active');
+
+    }
+    if (selectedName == 'admin.html' || selectedName == "adminRole.html") {
+        $('#admin_details').addClass('active');
+
+    }
+    let notificationCount = 0;
+    $(".notification-tab").hide();
+    let page_details = localStorage.getItem("revenue");
+    let report_page = localStorage.getItem("report");
+    // Makes an asynchronous call to get approval data count.
+    async function getApprovalDataCount() {
+        // Construct user details for the API request.
+        let accessDetails = JSON.stringify({
+            ACCESS_LEVEL: accese_level,
+            Access: accessData,
+            EDIT_ACCESS: edit_access,
+            EMAIL_ID: sessionName,
+            GROUP_NAME: groupName,
+            USERNAME: empName,
+            USER_ID: empId,
+        });
+
+        try {
+            // Await the AJAX request to complete.
+            const data = await $.ajax({
+                url: apiValue.url,
+                type: "POST",
+                dataType: "json",
+                crossDomain: true,
+                data: JSON.stringify({
+                    query_type: "approval_data",
+                    environment: apiValue.environment,
+                    user_details: `[${accessDetails}]`,
+                }),
+            });
+
+            // Calculate the total count from the different workflow types in the response.
+            let totalWorkflowCount = 0;
+            $.each(data, function (i, workflowData) {
+                if (workflowData.DATA && Array.isArray(workflowData.DATA)) {
+                    totalWorkflowCount += workflowData.DATA.length;
+                }
+            });
+            console.log("totalWorkflowCount", totalWorkflowCount);
+            return totalWorkflowCount; // Return the calculated count.
+        } catch (error) {
+            console.error("Error fetching approval data: " + JSON.stringify(error));
+            return 0; // Return 0 or handle the error as needed.
+        }
+    }
+
+    // Makes an asynchronous call to get resource allocation conflict count.
+    async function getAllocationConflictCount() {
+        let apiURL = `${apiValue.url_ip}:5005/resource_conflicts`;
+        let empIDTemp = empId;
+        let accessType = localStorage.getItem("user-role");
+        console.log("accessType", accessType);
+        console.log("empIDTemp", empIDTemp);
+        if (accessType == "admin") {
+            empIDTemp = ""
+        }
+        try {
+            // Await the AJAX request to complete.
+            const data = await $.ajax({
+                url: apiURL,
+                type: "POST",
+                dataType: "json",
+                crossDomain: true,
+                data: JSON.stringify({ user_id: empIDTemp }),
+            });
+
+            let resAllocLen = data.count || 0;
+            let resAllocShortLen = data.shortage_count || 0;
+            console.log("resAllocLen", resAllocLen);
+            return resAllocLen + resAllocShortLen; // Return the count from the response.
+        } catch (error) {
+            console.error("Error fetching allocation conflict data: " + JSON.stringify(error));
+            return 0; // Return 0 or handle the error appropriately.
+        }
+    }
+    async function fetchAllCounts() {
+        try {
+            const [approvalCount, conflictCount] = await Promise.all([
+                getApprovalDataCount(),
+                getAllocationConflictCount(),
+            ]);
+            const totalCount = approvalCount + conflictCount;
+            console.log(`Total combined count: ${totalCount}`);
+
+            $('#notification-count').text(totalCount);
+            if (totalCount > 0) {
+                $('#notification-count').show();
+                $(".notification-tab").show();
+            } else {
+                $('#notification-count').hide();
+                $(".notification-tab").hide();
+            }
+        } catch (error) {
+            console.error("An error occurred while fetching counts:", error);
+            $('#notification-count').hide();
+            $(".notification-tab").hide();
+        }
+    }
+
+    fetchAllCounts();
+
+    // console.log("page_details",page_details);
+    // console.log("report_page",report_page);
+    if (page_details === "true") {
+        $('#report_details').removeClass('active');
+        $('#sow_resource_req').addClass('active');
+        let reveue_page = false
+        localStorage.setItem("revenue", reveue_page);
+
+    } else if (report_page === "true") {
+        $('#report_details').addClass('active');
+        $('#sow_resource_req').removeClass('active');
+        let report_page = false;
+
+        localStorage.setItem("report", report_page);
+
+    }
+
+
+
+
+
+
+
+</script>
+<!-- <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script> -->

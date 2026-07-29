@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+  <meta http-equiv='cache-control' content='no-cache'>
+  <meta http-equiv='expires' content='0'>
+  <meta http-equiv='pragma' content='no-cache'>
+  <title>Factspan - ARCUS - Organizational Chart</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- Bootstarp CDN link -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <!-- jQuery includes -->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="js/prettify.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
+  <script src="js/jquery.jOrgChart.js"></script>
+  <script src="js/common.js"></script>
+  <script type="text/javascript" src="js/custom.js"></script>
+  <link rel="stylesheet" href="css/custom.css" />
+  <link rel="stylesheet" href="css/jquery.jOrgChart.css" />
+  <link rel="stylesheet" href="css/Orgchart.css" />
+  <link href="css/prettify.css" type="text/css" rel="stylesheet" />
+  <link rel="icon" href="images\factspan.png" type="image/png" sizes="16x16">
+  <link rel="stylesheet" href="css/switch_control.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/fontawesome.min.css"
+    type="text/css" />
+  <script src="https://kit.fontawesome.com/01f906aa6d.js" crossorigin="anonymous"></script>
+
+
+  <script>
+    jQuery(document).ready(function () { });
+    $(function () {
+      $('#header').load('header.html');
+    })
+  </script>
+  <style>
+    #app-name {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #menu {
+      text-align: center;
+      box-shadow: 0px 0px 10px #c4c0c0;
+      border-radius: 15px;
+
+      align-items: center;
+      justify-content: center;
+      width: 85%;
+   
+      background-color: #fff;
+      padding: 40px 60px 60px 60px;
+    }
+
+    #dash-title {
+      text-align: left;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .center-menu {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 25px;
+      height: 120px;
+      color: #fff;
+      font-size: 20px;
+      box-shadow: 0px 0px 10px #571b1b;
+      font-weight: 600;
+    }
+
+    .menu-header {
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+
+
+
+    @media screen and (max-height: 450px) {
+      .sidenav {
+        padding-top: 15px;
+      }
+
+      .sidenav a {
+        font-size: 12px;
+      }
+    }
+
+    #emp_table thead>tr>th {
+      background-color: #fae9e9;
+    }
+
+    #emp_table td,
+    #customers th {
+      border: 0.5px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+
+  
+    .navbar-default .navbar-nav>li>a {
+      
+      font-weight: 500;
+    }
+
+   
+    #profile {
+      background-color: cadetblue;
+      border-radius: 124px;
+      font-size: 30px;
+      margin-left: 15px;
+    }
+
+
+
+    #profile_div a:hover {
+      color: #eff4f8;
+    }
+
+    .navbar-brand {
+      padding: 0px 15px;
+    }
+
+    .SerialNumberTooltip {
+      position: absolute;
+      top: 25px;
+      left: 0px;
+      background-color: #b5abb5 !important;
+      border: 1px solid #CCC;
+      display: none;
+      width: auto !important;
+      text-align: left;
+      cursor: pointer;
+      text-shadow: 1px 1px 2px black, 0 0 10px #38387b, 0 0 5px #454559 !important;
+      padding: 2px 4px;
+      font-size: 12px;
+    }
+
+    ol,
+    ul {
+      margin-top: 0;
+      margin-bottom: 10px;
+      padding-inline-start: 0px;
+      margin-block-end: 0px;
+    }
+
+    .toggle_style {
+      margin-top: 50px;
+    }
+
+    .orgchart-toolbar {
+      min-height: 45px;
+      margin: 0 -15px;
+      padding: 0px 35px;
+      background: #1F3864;
+      border-top: 0.5px solid #6d6d6d;
+      border-bottom: 6px solid #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      width: calc(100% + 30px);
+      box-sizing: border-box;
+      clear: both;
+    }
+
+    .orgchart-toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      flex-wrap: wrap;
+    }
+
+    .orgchart-toolbar .toggle_style {
+      margin-top: 0;
+      float: none !important;
+    }
+
+    .orgchart-region-toggle {
+      position: relative;
+      margin: 0;
+      flex: 0 0 auto;
+    }
+
+    .orgchart-region-toggle input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .orgchart-region-toggle label {
+      display: block;
+      margin: 0;
+      cursor: pointer;
+    }
+
+    .orgchart-region-track {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 125px;
+      height: 30px;
+      padding: 4px;
+      background: #16243e;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .orgchart-region-track::before {
+      content: "";
+      position: absolute;
+      top: 5px;
+      left: 4px;
+      width: calc(50% - 4px);
+      height: 20px;
+      background: #ff7d20;
+      border-radius: 999px;
+      transition: transform 0.25s ease;
+      z-index: 1;
+    }
+
+    .orgchart-region-toggle input[type="checkbox"]:checked + label .orgchart-region-track::before {
+      transform: translateX(100%);
+    }
+
+    .orgchart-region-option {
+      position: relative;
+      z-index: 2;
+      flex: 1 1 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      white-space: nowrap;
+      color: #ffffff;
+      font-family: "Poppins", "Celias", sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    .orgchart-legend-separator {
+      width: 1px;
+      height: 32px;
+      background: rgba(255, 255, 255, 0.35);
+      flex: 0 0 auto;
+    }
+
+    .orgchart-legends {
+      display: none !important;
+      align-items: center;
+      gap: 5px;
+      color: #ffffff;
+      font-family: "Poppins", "Celias", sans-serif;
+      font-size: 10px;
+      font-weight: 400;
+      flex-wrap: wrap;
+    }
+
+    .orgchart-legends.is-active {
+      display: flex !important;
+    }
+
+    .orgchart-legends > span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .orgchart-legends .vp_color,
+    .orgchart-legends .sd_color,
+    .orgchart-legends .sm_color,
+    .orgchart-legends .sol_color,
+    .orgchart-legends .sa_color,
+    .orgchart-legends .am_color,
+    .orgchart-legends .a_color,
+    .orgchart-legends .scr_color,
+    .orgchart-legends .c_color,
+    .orgchart-legends .ben_color {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      display: inline-block;
+    }
+
+    .orgchart-toolbar-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+    }
+
+    .orgchart-back-btn {
+      min-width: 60px;
+      height: 30px;
+      padding: 0 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      color: #ffffff !important;
+      border: 1px solid rgba(255, 255, 255, 0.85) !important;
+      border-radius: 10px !important;
+      box-shadow: none !important;
+      font-family: "Poppins", "Celias", sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+    }
+
+    .orgchart-back-btn:hover,
+    .orgchart-back-btn:focus,
+    .orgchart-back-btn:active {
+      color: #ffffff !important;
+      background: rgba(255, 255, 255, 0.08) !important;
+      outline: none;
+    }
+
+    .employee_form {
+      height: calc(100vh - 100px);
+      overflow-y: visible;
+    }
+
+    .orgChart.employee_form {
+      display: block !important;
+      width: 100% !important;
+      min-width: 100% !important;
+      max-width: 100% !important;
+      padding-top: 16px !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      box-shadow: none;
+      border-radius: 0;
+      float: none !important;
+      clear: both;
+    }
+
+    .detail_box {
+      display: block !important;
+      width: 100% !important;
+    }
+
+    #chart {
+      display: block;
+      width: 100%;
+      overflow-x: auto;
+      height: calc(100vh - 170px);
+    }
+    .sowteam_radio_filter{
+  display: flex;
+  
+    justify-content: space-around;
+    align-items: center;
+    background-color: #cecece;
+    width: 200px;
+    height: 25px;
+    border-radius: 9999px;
+    
+    box-shadow: inset 0.5px 0.5px 2px 0 rgb(0 0 0 / 15%);
+   
+}
+.sowteam_radio_filter > input[type="radio"]
+ {
+  appearance: none;
+  display: none;
+}
+.sowteam_radio_filter > input[type="radio"]:checked + label
+{
+  background-color: #1e90ff;
+  color: #f1f3f5;
+  font-weight: 900;
+  transition: 0.3s;
+}
+.sowteam_radio_filter>label {
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: inherit;
+    width: 80px;
+    height: 20px;
+    text-align: center;
+    border-radius: 9999px;
+    overflow: hidden;
+    transition: linear 0.3s;
+    color: #6e6e6edd;
+    margin-bottom: 0px;
+    
+}
+
+    .footer {
+      color: rgb(11, 44, 117);
+      text-align: initial;
+      margin-left: 1%;
+    }
+
+    .orgchart-footer-meta {
+      margin-top: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #31456e;
+    }
+
+    @media screen and (max-width: 1100px) {
+      .orgchart-toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .orgchart-toolbar-right {
+        width: 100%;
+        justify-content: flex-start;
+        margin-left: 0;
+      }
+    }
+
+    @media screen and (max-width: 640px) {
+      .orgchart-toolbar {
+        padding: 16px;
+      }
+
+      .orgchart-toolbar-left {
+        width: 100%;
+      }
+
+      .orgchart-legend-separator {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body onload="prettyPrint();" class="show_page">
+  <div id="header"></div>
+  <div class="sowteam_radio_filter" style="display: none;">
+    <input type="radio" name="bench_acc" id="ALLBI" class="bench_select" value="ALLBI" onclick="getBenInvData()">
+    <label for="ALLBI">SOW</label>
+    <input type="radio" name="bench_acc" id="BENCH" class="bench_select" value="BENCH" onclick="getBenInvData()" checked>
+    <label for="BENCH">TEAM</label>
+</div>
+  
+
+
+  <div class="wrapper_outer">
+    
+    <div class="container-fluid">
+      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#employee_popup"
+        id="employee_button" style="display: none;">Open
+        Modal</button>
+      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#sowchart_popup"
+        id="sowchart_button" style="display: none;">Open
+        Modal</button>
+      <div class="detail_box">     
+        <div id="orgData" style='display:none'></div>
+        <div class="orgchart-toolbar">
+          <div class="orgchart-toolbar-left">
+            <div class="orgchart-region-toggle toggle_style" id="toogle_button">
+              <input id="d" type="checkbox" onchange="getColorValue('new')">
+              <label for="d">
+                <div class="orgchart-region-track">
+                  <span class="orgchart-region-option">IND</span>
+                  <span class="orgchart-region-option">USCA</span>
+                </div>
+              </label>
+            </div>
+            <div class="orgchart-legend-separator"></div>
+            <div class="orgchart-legends is-active" id="ind_legends">
+              <span><span class="vp_color"></span> VP</span>
+              <span><span class="sm_color"></span> SM, M</span>
+              <span><span class="sa_color"></span> SA</span>
+              <span><span class="a_color"></span> A, Ass.</span>
+              <span><span class="c_color"></span> C</span>
+              <span><span class="sd_color"></span> SD, D, AD</span>
+              <span><span class="sol_color"></span> Sol. Arch.</span>
+              <span><span class="am_color"></span> AM</span>
+              <span><span class="scr_color"></span> Snr. M</span>
+              <span><span class="ben_color"></span> BE</span>
+            </div>
+            <div class="orgchart-legends" id="us_legends">
+              <span><span class="sd_color"></span> SDA</span>
+              <span><span class="sm_color"></span> EMA, AccM</span>
+              <span><span class="sol_color"></span> SDS</span>
+              <span><span class="sa_color"></span> SC, SAA</span>
+              <span><span class="am_color"></span> AMA, AM</span>
+              <span><span class="scr_color"></span> DGM</span>
+            </div>
+          </div>
+          <div class="orgchart-toolbar-right">
+            <button type="button" class="btn orgchart-back-btn" onclick="window.location.href='reportsDashboard.html'">Back</button>
+          </div>
+        </div>
+        <div class="orgChart employee_form" style="text-align: -webkit-center;padding-top: 40px;">
+          <select class="pull-left" id="org_chart_type" style="display: none;">
+            <option>Employee Chart</option>
+            <option>SOW Chart</option>
+          </select>
+          <select class="pull-right" id="org_chart_select" name="org_chart_select" style="visibility: hidden;">
+           
+          </select>
+          <div id="chart"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="footer">
+    <div class="orgchart-footer-meta">
+      <span>
+        <b>DR</b> - Direct Reporters, <b>TR</b> - Total Reporters, <b>I</b> - Investment, <b>B</b> - Billed
+      </span>
+    </div>
+    <span id="emp_button"
+      style="position: fixed;left: 0;bottom: 0;width: 100%;color: white;text-align: end;padding: 5px;margin-left: -1%;">
+      <button type="button" class="btn btn-primary btn-sm btn-md" id="create_scen" onClick="createScenario()" style="display:none">Create
+        Scenario</button>
+      <button type="button" class="btn btn-success btn-sm btn-md" id="save" onClick="saveScenario()" disabled style="display:none">Save
+        Scenario</button>
+      <button type="button" class="btn btn-success btn-sm btn-md" id="orgChart_final" onClick="saveOrgChart()" style="display:none">Save Org
+        Chart</button>
+     
+    </span>
+    <span id="sow_button"
+      style="position: fixed;left: 0;bottom: 0;width: 100%;color: white;text-align: end;padding: 5px;margin-left: -1%;">
+      <button type="button" class="btn btn-primary btn-sm btn-md" id="sow_create_scen" style="display: none;"
+        onClick="createSOWScenario()">Create
+        Scenario</button>
+      <button type="button" class="btn btn-success btn-sm btn-md" id="sow_save" onClick="saveSOWScenario()" style="display: none;">Save
+        Scenario</button>
+      <button type="button" class="btn btn-success btn-sm btn-md" id="sow_orgChart_final" style="display: none;"
+        onClick="saveFinalSOWChart()">Save Org
+        Chart</button>
+     
+    </span>
+  </div>
+
+
+ 
+  <div class="modal fade" id="employee_popup" role="dialog">
+    <div class="modal-dialog">
+
+     
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" onclick="popupCloseChanges()">&times;</button>
+          <h4 class="modal-title"><b>Employee Report Form</b></h4>
+        </div>
+        <div class="modal-body">
+         
+          <div class="row">
+
+            <div class="form-group col-sm-6">
+              <label for="report_name">Report Name </label>
+             
+              <select class="form-control col-sm-12" id="report_name">
+
+              </select>
+            </div>
+            <div class="form-group col-sm-6">
+              <label for="report_manager">Report Manager </label>
+              
+              <select class="form-control col-sm-12" id="report_manager">
+
+              </select>
+            </div>
+            <div class="form-group col-sm-6">
+              <label for="assign_project">Assigning Project </label>
+             
+              <select class="form-control account_name col-sm-6" id="assign_project">
+
+              </select>
+            </div>
+            <div class="form-group col-sm-6">
+              <label for="select_date">Select Date </label>
+              <input type="date" class="form-control" id="select_date" placeholder="Select Date " name="select_date">
+            </div>
+            <div class="form-group col-sm-6">
+              <label for="billing_status_option">Billing Status </label>
+              
+              <select class="form-control account_name col-sm-6" id="billing_status_option">
+
+              </select>
+            </div>
+            <div class="form-group col-sm-6">
+              <label for="previous_manager">Previous Manager </label>
+              <input type="text" class="form-control" id="previous_manager" placeholder="Previous Manager "
+                name="previous_manager" disabled>
+            </div>
+            <div class="form-group col-sm-6">
+              <label for="teamMoveName">Should entire team move </label>
+              <br>
+              <input class="form-check-input" type="radio" name="teamMoveName" id="teamMove" value="Yes" checked
+                onclick="getSelectedTeam()" />
+              <label class="form-check-label" for="teamMoveName">Yes</label>
+              <input class="form-check-input" type="radio" name="teamMoveName" id="teamMove" value="No"
+                onclick="getSelectedTeam()" />
+              <label class="form-check-label" for="teamMoveName">No</label>
+            </div>
+            <div class="form-group col-sm-6" id="assign_team" style="display: none;">
+              <label for="assign_entr_team">Assign entire team to </label>
+              
+              <select class="form-control col-sm-12" id="assign_entr_team">
+
+              </select>
+            </div>
+            <input type="text" class="form-control" id="sour_emp_id" style="display: none;">
+            <input type="text" class="form-control" id="perv_emp_repMangId" style="display: none;">
+            <input type="text" class="form-control" id="sour_emp_repMagId" style="display: none;">
+            <input type="text" class="form-control" id="emp_sow_id" style="display: none;">
+            <input type="text" class="form-control" id="emp_sow_name" style="display: none;">
+          </div>
+
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal"
+            onclick="savePopupOrgChartEmp()">Save</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal"
+            onclick="popupCloseChanges()">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+ 
+  <div class="modal fade" id="sowchart_popup" role="dialog">
+    <div class="modal-dialog">
+
+     
+      <div class="modal-content sowchart_style">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><b>SOW Report Form</b></h4>
+        </div>
+        <div class="modal-body">
+         
+          <div class="row">
+
+            <div class="form-group col-sm-6">
+              <label for="report_name">Employee Name </label>
+              <input type="text" class="form-control" id="sow_report_name" placeholder="Report Name" name="report_name"
+                disabled>
+           
+            </div>
+            <div class="form-group col-sm-6">
+              <label for="assign_project">Assigning Project </label>
+              
+              <select class="form-control col-sm-12" id="sow_assign_project">
+
+              </select>
+            </div>
+            <div class="form-group col-sm-6">
+              <label for="prev_project">Previous Project</label>
+              <input type="text" class="form-control" id="sow_prev_project" placeholder="Previous Project"
+                name="assign_project" disabled>
+              
+            </div>
+            <div class="form-group col-sm-6">
+              <label for="billing_status">Billing Status </label>
+              
+              <select class="form-control account_name col-sm-6" id="sow_billing_status">
+
+              </select>
+            </div>
+            <div class="form-group col-sm-6">
+              <label for="prjct_start_date">Project Allocation Start Date </label>
+              <input type="date" class="form-control" id="sow_prjct_start_date" placeholder="Project start date "
+                name="prjct_start_date">
+            </div>
+            <div class="form-group col-sm-6">
+              <label for="prjct_end_date">Project Allocation Start Date </label>
+              <input type="date" class="form-control" id="sow_prjct_end_date" placeholder="Project end date "
+                name="prjct_end_date">
+            </div>
+            <div class="form-group col-sm-6">
+              <label for="report_manager_sow">Report Manager </label>
+              
+              <select class="form-control col-sm-12" id="report_manager_sow">
+
+              </select>
+            </div>
+
+
+            <input type="text" class="form-control" id="sow_sour_emp_id" style="display: none;" value="">
+            <input type="text" class="form-control" id="sow_emp_cus_name" style="display: none;" value="">
+            <input type="text" class="form-control" id="sow_emp_sow_name" style="display: none;" value="">
+            <input type="text" class="form-control" id="sow_emp_sow_id" style="display: none;" value="">
+            <input type="text" class="form-control" id="sow_emp_org_name" style="display: none;" value="">
+            <input type="text" class="form-control" id="sow_emp_sow_code" style="display: none;" value="">
+            <input type="text" class="form-control" id="sow_emp_cus_id" style="display: none;" value="">
+            <input type="text" class="form-control" id="sow_emp_cus_status" style="display: none;" value="">
+            <input type="text" class="form-control" id="target_org_name" style="display: none;" value="">
+            <input type="text" class="form-control" id="target_cus_name" style="display: none;" value="">
+            <input type="text" class="form-control" id="target_name" style="display: none;" value="">
+           
+          </div>
+
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal"
+            onclick="savePopupSowChartEmp()">Save</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </div>
+  
+</body>
+
+</html>

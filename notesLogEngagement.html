@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Factspan - ARCUS - Notes Log Engagement</title>
+
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css" />
+  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <!-- Select2 3.5.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@3.5.1/select2.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@3.5.1/select2.js"></script>
+
+  <!-- Toastr -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+
+  <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> -->
+  <link rel="stylesheet" href="css/custom.css" />
+  <link rel="icon" href="images\factspan.png" type="image/png" sizes="16x16" />
+  <link rel="stylesheet" href="css/busyLoading.css" />
+  <script src="js/common.js"></script>
+  <!-- Date picker -->
+  <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+  <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+  <!-- Include Quill stylesheet -->
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
+  <!-- Include Quill library -->
+  <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+  <script src="js/notesLogEngagement.js?v=1.1"></script>
+
+  <script>
+    $(function () {
+      $("#header").load("header.html");
+    });
+  </script>
+
+  <style>
+    :root {
+      --font-family: 'Poppins', sans-serif;
+      --bg-color: #f8f9fa;
+      --card-bg-color: #ffffff;
+      --primary-blue: #2985C1;
+      --text-primary: #212529;
+      --text-secondary: #313265;
+      --border-color: #dee2e6;
+      --revenue-card-bg: #fef7f0;
+      --positive-color: #28a745;
+      --negative-color: #dc3545;
+      --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      --text-shade: #818199;
+      --box-grey: #D9D9D9;
+      --grey-color: #555555;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      /* font-family: var(--font-family); */
+      font-family: "Celias", "Poppins", sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-primary);
+    }
+
+    .container {
+      max-width: 1600px;
+      margin: auto;
+    }
+
+    /* Reset and Base Styles */
+    .notes-log-engagement {
+      margin: 15px;
+      height: calc(100vh - 75px);
+      overflow-y: auto;
+      padding: 15px 10px 10px 15px;
+      box-shadow: 0px 0px 10px #c4c0c0;
+      border-radius: 0 0 5px 5px;
+      /* width: 100%; */
+      background: #fff;
+    }
+
+    /* Page Header Refinement */
+    .page-header {
+      background-color: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      /* padding: 0px 15px 10px; */
+      margin: 0px !important;
+    }
+
+    .header-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      justify-content: space-between;
+    }
+
+    .back-btn {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #374151;
+      transition: all 0.2s;
+    }
+
+    .back-btn:hover {
+      background: #f3f4f6;
+    }
+
+    .page-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #e05e00;
+      /* Matching the orange theme from screenshots */
+      margin: 0;
+    }
+
+    /* Filters Row Refinement */
+    .filters-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-dropdown {
+      flex: 1;
+      min-width: 200px;
+      position: relative;
+    }
+
+    .filter-dropdown select,
+    .filter-input-datalist {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      padding-right: 2.5rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.5rem;
+      background-color: #fff;
+      font-size: 13px;
+      color: #374151;
+      appearance: none;
+      cursor: pointer;
+      font-weight: 500;
+      height: 26px;
+      /* Ensure consistent height */
+    }
+
+    .filter-input-datalist:disabled {
+      background-color: #f3f4f6;
+      /* Grey background when disabled */
+      color: #9ca3af;
+      cursor: not-allowed;
+    }
+
+    /* Redundant with Select2 arrows */
+    /* .filter-dropdown::after {
+      content: '\f107';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6b7280;
+      pointer-events: none;
+    } */
+
+    /* Main Content Refinement */
+    .main-content {
+      padding: 0px 10px;
+      max-width: 100%;
+      margin: 0;
+      display: block;
+      /* Ensure it's not flex! */
+    }
+
+    /* Tabs */
+    .tabs-container {
+      display: flex;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .tab-btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      background: none;
+      font-size: 14px;
+      font-weight: 600;
+      color: #6b7280;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s;
+      border-bottom: 3px solid transparent;
+    }
+
+    .tab-btn.active {
+      color: #e05e00;
+      border-bottom-color: #e05e00;
+    }
+
+    /* Tab Panels */
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    /* Interaction Type Selection */
+    .interaction-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      padding: 2px 0;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .interaction-type-options {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .custom-radio {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      margin-bottom: 0 !important;
+    }
+
+    .custom-radio input {
+      display: none;
+    }
+
+    .radio-content {
+      display: flex;
+      align-items: center;
+      color: #64748b;
+      /* Unselected: Grey-ish */
+      font-size: 12px;
+      font-weight: 500;
+      transition: all 0.2s;
+      gap: 0.5rem;
+    }
+
+    .custom-radio input:disabled+.radio-content {
+      cursor: not-allowed !important;
+      opacity: 0.6;
+      filter: grayscale(1);
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      border-radius: 0.5rem;
+      border: 1px solid #d1d5db;
+      background-color: white;
+      padding: 0.5rem 0.75rem;
+      font-size: 10px;
+      color: #313265 !important;
+      font-weight: 500;
+      min-height: 2.5rem;
+    }
+
+    .form-input:disabled,
+    .form-select:disabled,
+    .form-textarea:disabled {
+      background-color: #f3f4f6 !important;
+      color: #9ca3af !important;
+      cursor: not-allowed !important;
+    }
+
+    .custom-radio input:checked+.radio-content {
+      color: #e05e00;
+      /* Selected: Orange */
+    }
+
+    .custom-radio .radio-content i {
+      font-size: 14px;
+      margin-right: 2px;
+      color: #94a3b8;
+      /* Unselected icon color */
+    }
+
+    .custom-radio input:checked+.radio-content i {
+      color: #e05e00;
+      /* Selected icon color */
+    }
+
+    .custom-radio input:checked+.radio-content::before {
+      content: '';
+      display: block;
+      width: 10px;
+      height: 10px;
+      background-color: #e05e00;
+      border: 2px solid #e05e00;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+
+    .custom-radio .radio-content::before {
+      content: '';
+      display: block;
+      width: 10px;
+      height: 10px;
+      border: 2px solid #cbd5e1;
+      /* Unselected hollow circle */
+      background-color: transparent;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+
+    /* Date Field */
+    .date-field-inline {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .date-field-inline label {
+      font-size: 12px;
+      color: #4b5563;
+      font-weight: 500;
+      margin-bottom: 0 !important;
+    }
+
+    /* Removing explicit wrapper positioning as Gijgo handles it */
+
+    .form-input-inline {
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 0.5rem;
+      font-size: 12px;
+      width: 160px;
+      background: #fff;
+    }
+
+    /* Textarea */
+    .form-textarea {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: 0.75rem;
+      padding: 0.75rem;
+      font-size: 12px;
+      resize: vertical;
+      /* min-height: 120px; */
+    }
+
+    /* .form-textarea:focus {
+      outline: none;
+      border-color: #e05e00;
+    } */
+
+    #meetingDate,
+    #nextStepsEta,
+    #nextInteractionEta {
+      font-size: 10px !important;
+      height: 28px !important;
+    }
+
+    .input-group-addon {
+      font-size: 12px !important;
+    }
+
+    /* Section Label */
+    .section-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    /* Next Steps Section */
+    .next-steps-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .toggle-group {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .toggle-btn {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      border: 1px solid #e05e00;
+      background: #fff;
+      color: #e05e00;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .toggle-btn.active {
+      background: #e05e00;
+      color: #fff;
+    }
+
+    /* Next Interaction Section */
+    .next-interaction-section {
+      margin-top: 1.5rem;
+    }
+
+    .section-toggle-btn {
+      background: #e05e00;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 2px 4px rgba(234, 88, 12, 0.2);
+    }
+
+    .next-interaction-content {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #f3f4f6;
+    }
+
+    /* Footer Actions */
+    .notes-footer-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      margin-top: 1rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .action-btn {
+      padding: 0.625rem 1.5rem;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    /* .btn-primary {
+      background-color: #e05e00;
+      color: #fff;
+      border: 1px solid #e05e00;
+      box-shadow: 0 2px 4px rgba(234, 88, 12, 0.3);
+    }
+
+    .btn-primary:hover {
+      background-color: #c2410c;
+    }
+
+    .btn-secondary {
+      background-color: #fff;
+      color: #e05e00;
+      border: 1px solid #e05e00;
+    }
+
+    .btn-secondary:hover {
+      background-color: #fff7ed;
+    } */
+
+    /* Audit Logs Styles */
+    .audit-filters-row {
+      display: flex;
+      gap: 2rem;
+      padding: 1rem;
+      background: #f9fafb;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #e5e7eb;
+    }
+
+    .custom-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 0 !important;
+    }
+
+    .checkbox-box {
+      width: 18px;
+      height: 18px;
+      border: 2px solid #e05e00;
+      border-radius: 4px;
+      display: inline-block;
+      position: relative;
+    }
+
+    .custom-checkbox input {
+      display: none;
+    }
+
+    .custom-checkbox input:checked+.checkbox-box {
+      background-color: #e05e00;
+    }
+
+    .custom-checkbox input:checked+.checkbox-box::after {
+      content: '\2713';
+      color: white;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 12px;
+    }
+
+    .audit-timeline-container {
+      padding: 1rem;
+      min-height: 300px;
+    }
+
+    .audit-item {
+      padding: 1rem 0;
+      border-bottom: 2px solid #D9D9D9;
+    }
+
+    .audit-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 12px;
+      color: #374151;
+    }
+
+    .audit-bullet {
+      width: 10px;
+      height: 10px;
+      background-color: #f97316;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .no-audit-data {
+      text-align: center;
+      color: #9ca3af;
+      padding: 3rem;
+    }
+
+    .placeicon {
+      font-family: "Font Awesome 5 Free", "Font Awesome 6 Free", "Poppins", sans-serif !important;
+      font-weight: 900 !important;
+    }
+
+    .audit-bullet_div {
+      color: #f97316;
+      font-size: 12px;
+    }
+
+    .audit-header-content {
+      flex: 1;
+    }
+
+    .audit-header-main {
+      font-weight: 500;
+    }
+
+    .audit-header-meta {
+      color: #6b7280;
+      font-size: 12px;
+    }
+
+    .audit-card-peach {
+      background-color: #fff7ed;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 0.75rem;
+    }
+
+    .audit-detail-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .audit-detail-label {
+      font-weight: 700;
+      color: #1f2937;
+      white-space: nowrap;
+      min-width: 120px;
+      font-size: 12px;
+    }
+
+    .select2-container .select2-choice>.select2-chosen {
+      font-size: 12px;
+      font-weight: 500;
+
+    }
+
+    .audit-detail-value {
+      color: #2985C1;
+      font-weight: 500;
+      font-size: 12px;
+    }
+
+    #updateNoteBtn,
+    #cancelNoteBtn,
+    #buyingCenterBackBtnCustm {
+      border-radius: 50px;
+      border: 1px solid #fc8c15;
+      background-color: #fff;
+      padding: 5px 20px;
+      font-size: 10px;
+      font-weight: 500;
+      color: #fc8c15;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    #updateNoteBtn:hover,
+    #cancelNoteBtn:hover,
+    #buyingCenterBackBtnCustm:hover {
+      background-color: #fc8c15;
+      color: white;
+    }
+
+    .tab-btn.active {
+      border-color: #e05e00;
+      color: #111827;
+    }
+
+    .tab-btn:hover {
+      color: #1f2937;
+    }
+
+
+
+    .tab-btn.active svg {
+      color: #f97316;
+    }
+
+    .tab-btn svg {
+      height: 1rem;
+      width: 1rem;
+      stroke: currentColor;
+      color: #9ca3af;
+    }
+
+    .audit-bullet_div {
+      color: #2985C1;
+      font-size: 12px;
+    }
+
+    .audit-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 13px;
+      /* color: #374151; */
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+
+    .option_create_text {
+      text-align: -webkit-right;
+      text-decoration: underline;
+      color: blue !important;
+    }
+
+    /* Quill Editor Styling */
+    #editor, #nextStepsEditor {
+      min-height: 50px;
+      font-family: 'Poppins', sans-serif;
+      color: #313265 !important;
+      font-size: 12px;
+    }
+
+    .ql-toolbar.ql-snow {
+      border-radius: 0.5rem 0.5rem 0 0;
+      border: 1px solid #d1d5db;
+    }
+
+    .ql-container.ql-snow {
+      border-radius: 0 0 0.5rem 0.5rem;
+      border: 1px solid #d1d5db;
+    }
+
+    .ql-editor.ql-blank::before {
+      font-size: 12px;
+      color: #9ca3af;
+      font-style: normal;
+    }
+
+    .ql-editor {
+      min-height: 50px;
+    }
+
+    .ql-editor>* {
+      cursor: text;
+      font-size: 12px !important;
+      font-weight: 500;
+    }
+
+    /* Style for Quill when disabled */
+    .ql-disabled .ql-editor {
+      background-color: #f3f4f6 !important;
+      color: #9ca3af !important;
+      cursor: not-allowed !important;
+    }
+    .input-group-addon {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="header"></div>
+  <div class="loader" style="display: none;">
+    <div class="loader-wheel"></div>
+    <div class="loader-text"></div>
+  </div>
+  <div class="notes-log-engagement">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="header-row">
+        <!-- <button class="back-btn" onclick="goBack()">
+          <i class="fas fa-arrow-left"></i>
+        </button> -->
+        <h1 class="page-title">Log Engagement Notes</h1>
+        <button class="btn btn-info pull-right" id="buyingCenterBackBtnCustm">Back</button>
+      </div>
+
+      <!-- Dropdown Filters -->
+      <div class="filters-row">
+        <div class="filter-dropdown">
+          <select id="searchType" name="searchType">
+            <option value="">Search Type</option>
+            <option value="stakeholder">Stakeholder</option>
+            <option value="lead">SOW</option>
+          </select>
+        </div>
+        <div class="filter-dropdown">
+          <select id="searchAccount" name="searchAccount" disabled>
+            <option value="">Search Account</option>
+          </select>
+        </div>
+        <div class="filter-dropdown">
+          <select id="searchBuyingCenter" name="searchBuyingCenter" disabled>
+            <option value="">Search Buying Center</option>
+          </select>
+        </div>
+        <div class="filter-dropdown">
+          <select id="searchStakeholder" name="searchStakeholder" disabled>
+            <option value="">Search Stakeholder</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Tabs -->
+      <div class="tabs-container">
+        <button type="button" class="tab-btn active" data-tab="notes"><svg viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+          </svg> Notes</button>
+      </div>
+
+      <!-- Notes Panel -->
+      <div id="notes-panel" class="tab-panel active">
+        <div class="notes-form-container">
+          <!-- Interaction Type Selection -->
+          <div class="interaction-header-row">
+            <div class="interaction-type-options">
+              <label class="custom-radio" id="naInteractionWrapper" style="display: none;">
+                <input type="radio" name="interactionType" value="N/A" disabled>
+                <span class="radio-content"><i class="fas fa-ban"></i> N/A</span>
+              </label>
+              <label class="custom-radio">
+                <input type="radio" name="interactionType" value="In Person" checked disabled>
+                <span class="radio-content"><i class="fas fa-users"></i> In Person</span>
+              </label>
+              <label class="custom-radio">
+                <input type="radio" name="interactionType" value="Phone Call" disabled>
+                <span class="radio-content"><i class="fas fa-phone-alt"></i> Phone Call</span>
+              </label>
+              <label class="custom-radio">
+                <input type="radio" name="interactionType" value="Video Call" disabled>
+                <span class="radio-content"><i class="fas fa-video"></i> Video Call</span>
+              </label>
+              <label class="custom-radio">
+                <input type="radio" name="interactionType" value="Slack/Teams" disabled>
+                <span class="radio-content"><i class="fas fa-comment-dots"></i> Slack/Teams</span>
+              </label>
+              <label class="custom-radio">
+                <input type="radio" name="interactionType" value="Phone Text" disabled>
+                <span class="radio-content"><i class="fas fa-mobile-alt"></i> Phone Text</span>
+              </label>
+            </div>
+            <div class="date-field-inline">
+              <label>Meeting Date</label>
+              <div class="date-picker-wrapper">
+                <input type="text" id="meetingDate" class="form-input-inline placeicon" placeholder="&#xf073; MM-DD-YY"
+                  autocomplete="off" disabled>
+              </div>
+            </div>
+          </div>
+
+          <!-- Detailed Notes -->
+          <div class="detailed-notes" style="margin-top: 15px;">
+            <label class="section-label">Detailed Notes</label>
+            <div id="editor"></div>
+          </div>
+
+          <!-- Next Steps Section -->
+          <div class="next-steps-header-row">
+            <div class="toggle-group">
+              <button type="button" class="toggle-btn active" id="nextStepsBtn" data-value="Next Steps" disabled>
+                Next Steps
+              </button>
+              <button type="button" class="toggle-btn" id="noNextStepsBtn" data-value="No Next Steps" disabled>
+                No Next Steps
+              </button>
+            </div>
+            <div class="date-field-inline" id="nextStepsEtaWrapper">
+              <label>Next Steps Estimated Date</label>
+              <div class="date-picker-wrapper">
+                <input type="text" id="nextStepsEta" class="form-input-inline placeicon" placeholder="&#xf073; MM-DD-YY"
+                  autocomplete="off" disabled>
+              </div>
+            </div>
+          </div>
+          <div class="next-steps-content" id="nextStepsContent">
+            <div id="nextStepsEditor"></div>
+          </div>
+
+          <!-- Next Interaction Section -->
+          <div class="next-interaction-section">
+            <!-- <span class="section-label"><i class="fas fa-paper-plane" style="color: #e05e00; margin-right: 8px;"></i>
+              Next Interaction</span> -->
+            <button type="button" id="toggleNextInteraction" class="section-toggle-btn"><i class="fas fa-paper-plane"
+                aria-hidden="true"></i> Next Interaction</button>
+            <div class="next-interaction-content" id="nextInteractionContent">
+              <div class="interaction-header-row">
+                <div class="interaction-type-options">
+                  <!-- <label class="custom-radio" id="naNextInteractionWrapper" style="display: none;">
+                    <input type="radio" name="nextInteractionType" value="N/A" disabled>
+                    <span class="radio-content"><i class="fas fa-ban"></i> N/A</span>
+                  </label> -->
+                  <label class="custom-radio">
+                    <input type="radio" name="nextInteractionType" value="In Person" checked disabled>
+                    <span class="radio-content"><i class="fas fa-users"></i> In Person</span>
+                  </label>
+                  <label class="custom-radio">
+                    <input type="radio" name="nextInteractionType" value="Phone Call" disabled>
+                    <span class="radio-content"><i class="fas fa-phone-alt"></i> Phone Call</span>
+                  </label>
+                  <label class="custom-radio">
+                    <input type="radio" name="nextInteractionType" value="Video Call" disabled>
+                    <span class="radio-content"><i class="fas fa-video"></i> Video Call</span>
+                  </label>
+                  <label class="custom-radio">
+                    <input type="radio" name="nextInteractionType" value="Slack/Teams" disabled>
+                    <span class="radio-content"><i class="fas fa-comment-dots"></i> Slack/Teams</span>
+                  </label>
+                  <label class="custom-radio">
+                    <input type="radio" name="nextInteractionType" value="Phone Text" disabled>
+                    <span class="radio-content"><i class="fas fa-mobile-alt"></i> Phone Text</span>
+                  </label>
+                </div>
+                <div class="date-field-inline">
+                  <label>Next Interaction Estimated Date</label>
+                  <div class="date-picker-wrapper">
+                    <input type="text" id="nextInteractionEta" class="form-input-inline placeicon"
+                      placeholder="&#xf073; MM-DD-YY" autocomplete="off" disabled>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer Actions -->
+          <!-- Footer Actions -->
+          <div class="notes-footer-actions">
+            <button type="button" id="updateNoteBtn" class="action-btn btn-primary">Save</button>
+            <button type="button" id="cancelNoteBtn" class="action-btn btn-secondary"
+              onclick="window.history.back()">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Audit Logs Panel -->
+      <div id="audit-logs-panel" class="tab-panel">
+        <div class="audit-filters-row">
+          <span style="font-size: 12px; font-weight: 600; color: #374151; margin-right: 1rem;">Filter :</span>
+          <label class="custom-radio">
+            <input type="radio" name="auditFilter" value="all" checked>
+            <span class="radio-content">Audit Logs</span>
+          </label>
+          <label class="custom-radio">
+            <input type="radio" name="auditFilter" value="notes">
+            <span class="radio-content">Notes</span>
+          </label>
+        </div>
+        <div class="audit-timeline-container" id="audit-timeline">
+          <div class="no-audit-data">No audit logs found.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+
+</html>

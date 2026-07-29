@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <title>Factspan - ARCUS - Resource Utilization</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="google-signin-client_id" content="776418814053-hccb99mo0ks8o9l3o3e5plhsn43p96rk.apps.googleusercontent.com">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+   </style>
+   <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2021.2.616/styles/kendo.default-v2.min.css" />
+   <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+   <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+   <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+   <script src="https://kendo.cdn.telerik.com/2021.2.616/js/kendo.all.min.js"></script>
+   <script src="https://kit.fontawesome.com/01f906aa6d.js" crossorigin="anonymous"></script>
+   <link rel="stylesheet" href="css/custom.css" />
+   <link rel="stylesheet" href="css/switch_control.css" />
+   <!-- <script src="js/tablerowspan.js"></script> -->
+   <script src="js/allCmpyUsIndSum.js"></script>
+   <script src="js/common.js"></script>
+   <link rel="icon" href="images\factspan.png" type="image/png" sizes="16x16">
+   <script>
+      $(function(){
+         $('#header').load('header.html');
+      })
+   </script>
+</head>
+<style>
+   #app-name {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+   }
+
+   #menu {
+      text-align: center;
+      box-shadow: 0px 0px 10px #c4c0c0;
+      border-radius: 15px;
+      /* display: flex; */
+      align-items: center;
+      justify-content: center;
+      width: 85%;
+      /* height: 100%; */
+      background-color: #fff;
+      padding: 40px 60px 60px 60px;
+   }
+
+
+   @media screen and (max-height: 450px) {
+      .sidenav {
+         padding-top: 15px;
+      }
+
+      .sidenav a {
+         font-size: 12px;
+      }
+   }
+
+
+   @media (min-width: 768px) {
+      .modal-dialog {
+         width: 90%;
+         margin: 30px auto;
+      }
+
+   }
+
+   #sow_res_recom_table_data thead>tr>th {
+      background-color: #fae9e9;
+   }
+
+   #sow_res_recom_table_data td,
+   #customers th {
+      border: 0.5px solid #ddd;
+      padding: 8px;
+      text-align: center;
+   }
+
+   /* Header menu custom style */
+   .navbar-default .navbar-nav>li>a {
+      /* color: #363535 !important; */
+      font-weight: 500;
+   }
+
+   /* .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+      background-color: #f38e22;
+      color: white !important;
+    } */
+
+   /* .border-style {
+      border-right: 1px solid #707072;
+    } */
+   #profile {
+      background-color: cadetblue;
+      border-radius: 124px;
+      font-size: 30px;
+      margin-left: 15px;
+   }
+
+
+
+   #profile_div a:hover {
+      color: #eff4f8;
+   }
+
+   .navbar-brand {
+      padding: 0px 15px;
+   }
+
+   .table th,
+   td {
+      text-align: center;
+   }
+
+   .detail_top_bar {
+      display: block;
+   }
+
+   .employee_detail_inside {
+      height: 90%;
+   }
+
+   /* .employee_form {
+      height: 500px;
+    } */
+   /* #sow_rsrc_all_sum_table > thead > tr > th {
+        width: 25%;
+    } */
+   /* .columnone{
+      position:sticky;
+      left:0px;
+      background-color:rgb(255, 255, 255);
+      z-index: 1000;
+    } */
+   .columntwo {
+      position: sticky;
+      left: 0px;
+      background-color: rgb(255, 255, 255);
+      z-index: 100;
+      cursor: pointer;
+   }
+
+   .columnthree {
+      position: sticky;
+      left: 71px;
+      background-color: rgb(255, 255, 255);
+      z-index: 100;
+      cursor: pointer;
+   }
+
+   .backhide {
+      z-index: 0;
+   }
+
+   thead tr th {
+      position: sticky;
+      top: 0px;
+   }
+
+   .emp_filter {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+    margin-top: -40px;
+  }
+
+  .emp_radio_filter {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #cecece;
+    width: 180px;
+    height: 25px;
+    border-radius: 9999px;
+    margin-top: 15px;
+    box-shadow: inset 0.5px 0.5px 2px 0 rgb(0 0 0 / 15%);
+}
+
+  input[type="radio"] {
+    appearance: none;
+    display: none;
+  }
+
+  .emp_radio_filter>label {
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: inherit;
+    width: 50px;
+    height: 20px;
+    text-align: center;
+    border-radius: 9999px;
+    overflow: hidden;
+    transition: linear 0.3s;
+    color: #6e6e6edd;
+    margin-bottom: 0px;
+  }
+
+  input[type="radio"]:checked+label {
+    background-color: #1e90ff;
+    color: #f1f3f5;
+    font-weight: 900;
+    transition: 0.3s;
+  }
+
+   /* td .spnTooltip {
+    z-index:10;
+    display:none;
+    padding: 2px 3px 0px 1px;
+    margin-top: -30px;
+    margin-left: 10px;
+    width: auto;
+    line-height: 13px;
+    text-align: left !important;
+}
+td:hover .spnTooltip{
+    display:inline; position:absolute; color:#111;
+    border:1px solid #DCA; background:#fffAF0;}
+.callout {z-index:20;position:absolute;top:30px;border:0;left:-12px;} */
+
+   /* 
+    .width-modify {
+      top: 45px !important; 
+    } */
+
+   /* .switch_style {
+   margin: 0px 40% 4px;
+    margin-top: -40px;
+}   */
+</style>
+
+<body style="display: none;" class="show_page">
+   <div id="header"></div>
+
+   <!-- <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container" style="margin-top: 10px;">
+         <div class="inner_header">
+            <div class="navbar-header">
+               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation"
+                  onclick="$('html').toggleClass('fw-noscroll')">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="sr-only">Toggle navigation</span>
+               </button>
+               <a class="" href="home.html">
+                  <img src="images\logo.png" alt="Factspan Logo" class="responsive" height="60px"
+                     style="display: block;">
+               </a>
+            </div>
+
+            <div class="collapse navbar-collapse menusec" id="">
+               <div class="container-fluid">
+                  <ul class="nav navbar-nav navbar-right">
+                     <li><a href="sowDetails.html" id="sow_resource_req" class="border-style "><span
+                              class="hover-underline-animation">
+                              <center><img src="images/icon01.png" height="25px" /><br>SOW Resource Requirement</center>
+                           </span></a></li>
+                     <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#" id="sow_res_recom" class="border-style ">
+                           <span class="hover-underline-animation">
+                              <center><img src="images/icon05.png" height="25px" /><br>Resource Allocation <b class="caret"></b></center>
+                           </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                           <li><a href="sowResRecom.html"><span class="hover-underline-animation">Project Allocation</span></a></li>
+                           <li><a href="employeeProject.html"><span class="hover-underline-animation">Employee Allocation</span></a></li>
+                        </ul>
+                     </li>
+                     <li><a href="team.html" id="employee_details" class="border-style"><span
+                              class="hover-underline-animation">
+                              <center><img src="images/icon03.png" height="25px" /><br>Employee Details</center>
+                           </span></a></li>
+                     <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle selected_menu" href="#" id="Metrics">
+                           <span class="hover-underline-animation ">
+                              <center><img src="images/icon05.png" height="25px" /><br>Metrics <b class="caret"></b>
+                              </center>
+                           </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                           <li><a href="sowRsrceAllocSummar.html"><span class="hover-underline-animation">SOW Resource
+                                    Allocation Summary</span></a></li>
+                           <li><a href="allCmpnyUsIndSummary.html" class="selected_menu"><span
+                                    class="hover-underline-animation active_grp">Resource Utilization</span></a></li>
+                           <li><a href="availResProjAttr.html"><span class="hover-underline-animation">Available
+                                    Resigned & Projected Attrition</span></a></li>
+                           <li class="dropdown-submenu new-sub-menu">
+                              <a tabindex="-1" href="#" class="dropdown-submenu-toggle"><span
+                                    class="hover-underline-animation">Exception <b class="caret"></b></span></a>
+                              <ul class="dropdown-menu sub-menu" style="display: none;">
+                                 <li><a href="exceptionResult.html"><span class="hover-underline-animation">Revenue
+                                          Loss</span></a></li>
+                                 <li><a href="overStaff.html"><span
+                                          class="hover-underline-animation">Overstaff</span></a></li>
+                                 <li><a href="priority_hiring.html"><span class="hover-underline-animation">Prioritize
+                                          Hiring</span></a></li>
+                              </ul>
+                           </li>
+                        </ul>
+                     </li>
+                     <li><a href="orgChart.html" id="employee_details" class="border-style"><span
+                              class="hover-underline-animation">
+                              <center><img src="images/icon04.png" height="25px" /><br>Org Chart</center>
+                           </span></a></li>
+                     
+                  </ul>
+               </div>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navigation">
+               <ul class="nav navbar-nav navbar-right">
+                   <li>
+                     <a href="#" id="profile" class="profile_pic" data-toggle="collapse" data-target="#profile_down"
+                        style="color: #ffffff;"><img src="images/user.jpg" alt="" />
+                        <i class=""><img src="images/down-arrow.png" alt="" /></i>
+                     </a>
+                  </li>
+               </ul>
+               <div id="profile_down" class="collapse out pull-right">
+                  <div id="profile_akhliesh">
+                     <center>
+                        <div id="profile_div"><a id="profile_name_sign" class="profile_pic">
+                              <img src="images/user.jpg" alt="" />
+                           </a></div>
+                           <div style="font-weight: 500;"><span id="display_name"></span></div>
+                           <div><span id="email_id"></span></div>
+                        <button class="btn btn-info float-right" id="logout" style="margin: 10px;" onclick="signOut();"> Sign out</button>
+                     </center>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </nav> -->
+
+
+   <div class="wrapper_outer">
+
+
+      <div class="container-fluid">
+         <div class="detail_box">
+            <!-- <div id="mySidenav" class="sidenav">
+            <a href="sowResReq.html" id="sow_resource_req">SOW Resource Requirement</a>
+            <a href="sowResRecom.html" id="sow_resource_recom" class="active">Resource Allocation</a>
+            <a href="team.html" id="employee_details">Employee Details</a>
+            <a href="orgChart.html" id="org_chart">Org Chart</a> 
+            </div> -->
+
+            <div class="employee_form" id="sow_res_recom_table">
+               <div class="detail_top_bar">
+                  <div class="table_title">Resource Utilization</div>
+
+                  <div class="pull-right filter_opt">
+                     <!-- <div class="can-toggle demo-rebrand-1 toogle_align">
+                        <input id="d" type="checkbox">
+                        <label for="d">
+                           <div class="can-toggle__switch switch_style" data-checked="2021" data-unchecked="2022"
+                              onclick="getColorValue('new')"></div>
+                            <div class="can-toggle__label-text">Year</div> 
+                        </label>
+                     </div> -->
+                     <span>Show/Hide headers </span>
+                     <!-- <input type="checkbox" name="2021" id="2021" class="k-checkbox"/><span> <b>2021</b></span>
+                     <input type="checkbox" name="2022" id="2022" class="k-checkbox"/><span> <b>2022</b></span> -->
+                     <input type="checkbox" name="ind_data" id="ind_data" class="k-checkbox" onclick="checkIndUs('Ind')"
+                        checked /><span>
+                        <b>Ind</b></span>
+                     <input type="checkbox" name="us_data" id="us_data" class="k-checkbox" onclick="checkIndUs('US')"
+                        checked /><span>
+                        <b>US</b></span>
+                     <input type="checkbox" name="utiliz_header" id="utiliz_header" class="k-checkbox"
+                        onclick="inputCheckfilter('utiliz_header')" checked /><span>
+                        <b>Utilization</b></span>
+                     <input type="checkbox" name="avial_header" id="avial_header" class="k-checkbox"
+                        onclick="inputCheckfilter('avial_header')" checked /><span>
+                        <b>Available</b></span>
+                     <input type="checkbox" name="demand_header" id="demand_header" class="k-checkbox"
+                        onclick="inputCheckfilter('demand_header')" checked /><span>
+                        <b>Demand</b></span>
+                     <input type="checkbox" name="supply_header" id="supply_header" class="k-checkbox"
+                        onclick="inputCheckfilter('supply_header')" checked /><span>
+                        <b>Supply</b></span>
+                     <input type="checkbox" name="gap_header" id="gap_header" class="k-checkbox"
+                        onclick="inputCheckfilter('gap_header')" checked /><span>
+                        <b>Gap</b></span>
+                     <input type="checkbox" name="all_header" id="all_header" class="k-checkbox"
+                        onclick="inputCheckfilter('all_header')" checked /><span>
+                        <b>All</b></span>
+                  </div>
+                  <div class="emp_filter">
+                     <div class="emp_radio_filter">
+                       <input type="radio" name="emp_radio" id="21" class="emp_select" value="21" onclick="getYearData('21')"
+                         >
+                       <label for="21">21</label>
+                       <input type="radio" name="emp_radio" id="22" class="emp_select" value="22"
+                         onclick="getYearData('22')" checked>
+                       <label for="22">22</label>
+                       <input type="radio" name="emp_radio" id="23" class="emp_select" value="23" onclick="getYearData('23')">
+                       <label for="23">23</label>
+                       <input type="radio" name="emp_radio" id="12M" class="emp_select" value="12M" onclick="getYearData('12M')">
+                       <label for="12M">12M</label>
+                     </div>
+                   </div>
+                  <!-- <div class="pull-right" style="margin: 6px;margin-top: -22px;">
+                  <span>Show/Hide headers </span>
+                  <input type="checkbox" name="Jan" id="Jan" class="k-checkbox"/><span> <b>Jan</b></span>
+                  <input type="checkbox" name="Feb" id="Feb" class="k-checkbox"/><span> <b>Feb</b></span>
+                  <input type="checkbox" name="Mar" id="Mar" class="k-checkbox"/><span> <b>Mar</b></span>
+                  <input type="checkbox" name="Apr" id="Apr" class="k-checkbox"/><span> <b>Apr</b></span>
+                  <input type="checkbox" name="May" id="May" class="k-checkbox"/><span> <b>May</b></span>
+                  <input type="checkbox" name="Jun" id="Jun" class="k-checkbox"/><span> <b>Jun</b></span>
+                  <input type="checkbox" name="Jul" id="Jul" class="k-checkbox"/><span> <b>Jul</b></span>
+                  <input type="checkbox" name="Aug" id="Aug" class="k-checkbox"/><span> <b>Aug</b></span>
+                  <input type="checkbox" name="Sep" id="Sep" class="k-checkbox"/><span> <b>Sep</b></span>
+                  <input type="checkbox" name="Oct" id="Oct" class="k-checkbox"/><span> <b>Oct</b></span>
+                  <input type="checkbox" name="Nov" id="Nov" class="k-checkbox"/><span> <b>Nov</b></span>
+                  <input type="checkbox" name="Dec" id="Dec" class="k-checkbox"/><span> <b>Dec</b></span>
+                </div> -->
+                  <!-- <button class="btn btn-info pull-right" id="sow_rsrc_all_sum_page" style="margin: 10px;margin-top: -30px;">Resource Allocation Summary</button>
+                <button class="btn btn-info pull-right" id="avail_res_proj_attr" style="margin: 10px;margin-top: -30px;">Available Resigned</button> -->
+               </div>
+               <div class="employee_detail_inside table-responsive">
+                  <table class="table table-bordered border-primary" id="sow_rsrc_all_sum_table">
+                     <thead class="thead-light">
+                        <tr id="month">
+                           <th scope="col" rowspan="2" style="z-index: 10000;" class="columntwo sow_resrc_style">Client
+                           </th>
+                           <th scope="col" rowspan="2" style="z-index: 10000;" class="columnthree sow_resrc_style">Name
+                           </th>
+                        </tr>
+                        <tr id="date">
+
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr id="tot_ind_utiliz" class="utiliz_header ind_main_data">
+                           <td rowspan="8" class="columntwo" id="utiliz_toggle" onclick="toggleBlock('utiliz_toggle')">
+                              Utilization <i class="fas fa-angle-up cutm_icon_fas"></i> </td>
+                           <td rowspan="1" class="columnthree custom_tot_util custom_bg_color1 "
+                              title="% of billed resources from total India headcount (includes Delivery and Support functions)">
+                              <b>Total IND Utilization %</b>
+                           </td>
+                        </tr>
+                        <tr id="utilization" class="utiliz_header ind_main_data">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="% of billed resources from total delivery headcount">Utilization % (Delivery-IND)
+                           </td>
+                        </tr>
+
+                        <tr id="ind_open_req_del" class="utiliz_header ind_utiliz_toggle utiliz_toggle ind_main_option">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="Open roles to be hired for in Delivery function">IND OPEN Reqs - Delivery</td>
+                        </tr>
+                        <tr id="ind_open_req_non_del"
+                           class="utiliz_header ind_utiliz_toggle utiliz_toggle ind_main_option">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="Open roles to be hired for in Support functions">IND OPEN Reqs - Non-Delivery</td>
+                        </tr>
+                        <tr id="tot_us_utiliz" class="utiliz_header us_main_data">
+                           <td rowspan="2" class="columntwo" id="utiliz_toggle_us"
+                              onclick="toggleBlock('utiliz_toggle')" style="display: none;">
+                              Utilization <i class="fas fa-angle-up cutm_icon_fas"></i> </td>
+                           <td rowspan="1" class="columnthree custom_tot_util custom_bg_color1 "
+                              title="% of billed resources from total US headcount (includes Delivery and Support functions)">
+                              <b>Total US Utilization %</b>
+                           </td>
+                        </tr>
+                        <tr id="us_utilization" class="utiliz_header us_main_data">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="% of billed resources from total delivery headcount">Utilization % (Delivery-US)
+                           </td>
+                        </tr>
+
+                        <tr id="us_open_req_del" class="utiliz_header us_utiliz_toggle utiliz_toggle us_main_option">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="Open roles to be hired for in Delivery function">US OPEN Reqs - Delivery</td>
+                        </tr>
+                        <tr id="us_open_req_non_del"
+                           class="utiliz_header us_utiliz_toggle utiliz_toggle us_main_option">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="Open roles to be hired for in Support functions">US OPEN Reqs - Non-Delivery</td>
+                        </tr>
+                        <tr id="empty_1" class="empty_1">
+                           <td rowspan="1" class="columnone empty-broder-color"></td>
+                           <td rowspan="1" class="columntwo empty-broder-color"></td>
+                           <td rowspan="1" class="columnthree empty-broder-color"></td>
+                        </tr>
+
+                        <tr id="avl_tot_avail_res_count" class="avial_header ind_main_data_1">
+                           <td rowspan="8" class="columntwo" id="avial_head_toggle"
+                              onclick="toggleBlock('avial_head_toggle')">Available <i
+                                 class="fas fa-angle-up cutm_icon_fas"></i></td>
+                           <td rowspan="1" class="columnthree custom_tot_avai custom_bg_color2 "><b>Total
+                                 Available
+                                 Resource Count IND</b></td>
+                        </tr>
+                        <tr id="avl_training" class="avial_header avial_head_toggle ind_main_option_1">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="No. of resources on any internal training">Training - IND</td>
+                        </tr>
+                        <!-- <tr id="avl_factspan_product" class="avial_header avial_head_toggle">
+                     <td rowspan="1" class="columnthree custom_ind_bg" title="Number of resources actually working on any internal project">Factspan Product - IND</td>
+                  </tr> -->
+                        <tr id="avl_actual_bench" class="avial_header avial_head_toggle ind_main_option_1">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="Total number of available resources who are not allocated to any project.">Actual Bench - IND
+                           </td>
+                        </tr>
+                        <tr id="avl_usable_bench" class="avial_header avial_head_toggle ind_main_option_1">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="Number of resources who are available for at least 30 days.">
+                              Usable Bench - IND</td>
+                        </tr>
+                        <!-- <tr id="avl_special_leaves" class="avial_header avial_head_toggle">
+                     <td rowspan="1" class="columnthree custom_ind_bg" title="No. of resources who are not available due to special leave">Special Leaves - IND</td>
+                  </tr> -->
+                        <tr id="us_avl_tot_avail_res_count" class="avial_header us_main_data_1">
+                           <td rowspan="2" class="columntwo" id="avial_head_toggle_us"
+                              onclick="toggleBlock('avial_head_toggle')" style="display: none;">Available <i
+                                 class="fas fa-angle-up cutm_icon_fas"></i></td>
+                           <td rowspan="1" class="columnthree custom_tot_avai custom_bg_color2 "><b>Total
+                                 Available
+                                 Resource Count US</b></td>
+                        </tr>
+                        <tr id="us_avl_training" class="avial_header avial_head_toggle us_main_option_1">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="No. of resources on any internal training">Training - US</td>
+                        </tr>
+                        <!-- <tr id="us_avl_factspan_product" class="avial_header avial_head_toggle">
+                     <td rowspan="1" class="columnthree custom_us_bg" title="Number of resources actually working on any internal project">Factspan Product - US</td>
+                  </tr> -->
+                        <tr id="us_avl_actual_bench" class="avial_header avial_head_toggle us_main_option_1">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="Total number of available resources who are not allocated to any project.">Actual Bench - US
+                           </td>
+                        </tr>
+                        <tr id="us_avl_usable_bench" class="avial_header avial_head_toggle us_main_option_1">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="Number of resources who are available for at least 30 days.">
+                              Usable Bench - US</td>
+                        </tr>
+                        <!-- <tr id="us_avl_special_leaves" class="avial_header avial_head_toggle">
+                     <td rowspan="1" class="columnthree custom_us_bg" title="No. of resources who are not available due to special leave">Special Leaves - US</td>
+                  </tr> -->
+
+                        <tr id="empty_2" class="empty_2">
+                           <td rowspan="1" class="columnthree empty-broder-color"></td>
+                           <td rowspan="1" class="columntwo empty-broder-color"></td>
+                           <td rowspan="1" class="columnthree empty-broder-color"></td>
+                        </tr>
+                        <tr id="demand_signed_sow" class="demand_header ind_main_data_2">
+                           <td rowspan="2" class="columntwo" id="demand_head_toggle"
+                              onclick="toggleBlock('demand_head_toggle')">Demand <i
+                                 class="fas fa-angle-up cutm_icon_fas"></i></td>
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="Number of active, signed, on going client based engagements SOW">Signed SOW - IND
+                           </td>
+                        </tr>
+                        <tr id="demand_70_per_probability" class="demand_header demand_head_toggle ind_main_option_2">
+                           <td rowspan="1" class="columnthree custom_ind_bg"
+                              title="Number of planned, client based engagements SOW with 70% probability">70%
+                              Probability</td>
+                        </tr>
+                        <tr id="demand_50_per_probability" class="demand_header demand_head_toggle ind_main_option_2">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="Number of planned, client based engagements SOW with 50% probability">50%
+                              Probability</td>
+                        </tr>
+                        <tr id="us_demand_signed_sow" class="demand_header us_main_data_2">
+                           <td rowspan="2" class="columntwo" id="demand_head_toggle_us"
+                              onclick="toggleBlock('demand_head_toggle')" style="display: none;">Demand <i
+                                 class="fas fa-angle-up cutm_icon_fas"></i></td>
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="Number of active, signed, on going client based engagements SOW">Signed SOW - US
+                           </td>
+                        </tr>
+                        <tr id="us_demand_70_per_probability" class="demand_header demand_head_toggle us_main_option_2">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="Number of planned, client based engagements SOW with 70% probability">70%
+                              Probability</td>
+                        </tr>
+                        <tr id="us_demand_50_per_probability" class="demand_header demand_head_toggle us_main_option_2">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="Number of planned, client based engagements SOW with 50% probability">50%
+                              Probability</td>
+                        </tr>
+                        <tr id="empty_3" class="empty_3">
+                           <td rowspan="1" class="columnthree empty-broder-color"></td>
+                           <td rowspan="1" class="columntwo empty-broder-color"></td>
+                           <td rowspan="1" class="columnthree empty-broder-color"></td>
+                        </tr>
+                        <tr id="sup_actual_del_head_count" class="supply_header ind_main_data_3">
+                           <td rowspan="2" class="columntwo" id="sup_head_toggle"
+                              onclick="toggleBlock('sup_head_toggle')">Supply <i
+                                 class="fas fa-angle-up cutm_icon_fas"></i></td>
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="No. of actual resource in Factspan India system including resources that are on notice period.">
+                              Actual Delivery Head Count - IND</td>
+                        </tr>
+                        <tr id="sup_proj_del_head_count" class="supply_header sup_head_toggle ind_main_option_3">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="No. of resources that will be in Factspan India system including attrition data. (Act.del +New Joinees -Proj.attr)">
+                              Proj. Del. Head Count - IND</td>
+                        </tr>
+                        <tr id="sup_resigned_folks" class="supply_header sup_head_toggle ind_main_option_3">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="Employees who are on notice period and will be out of system in next 90 days">
+                              Resigned Folks - IND</td>
+                        </tr>
+                        <tr id="offered_folks" class="supply_header sup_head_toggle ind_main_option_3">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="Total no. of people who accepted the job offer">Offered Folks - IND</td>
+                        </tr>
+                        <tr id="sup_proj_new_joinees" class="supply_header sup_head_toggle ind_main_option_3">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="Prediction of no. of people who are yet to join us (lateral or campus) ">Proj. New
+                              Joinees (Campus*1 + Lateral*0.3) - IND</td>
+                        </tr>
+                        <tr id="sup_proj_attr" class="supply_header sup_head_toggle ind_main_option_3">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="Prediction of no. of employees who might leave us based on historical data">Proj.
+                              Attr. - IND</td>
+                        </tr>
+                        <tr id="us_sup_actual_del_head_count" class="supply_header us_main_data_3">
+                           <td rowspan="2" class="columntwo" id="sup_head_toggle_us"
+                              onclick="toggleBlock('sup_head_toggle')" style="display: none;">Supply <i
+                                 class="fas fa-angle-up cutm_icon_fas"></i></td>
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="No. of actual resource in Factspan US system including resources that are on notice period.">
+                              Actual Delivery Head Count - US</td>
+                        </tr>
+                        <tr id="us_sup_proj_del_head_count" class="supply_header sup_head_toggle us_main_option_3">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="No. of resources that will be in Factspan US system including attrition data. (Act.del +New Joinees -Proj.attr)">
+                              Proj. Del. Head Count - US</td>
+                        </tr>
+                        <tr id="us_sup_resigned_folks" class="supply_header sup_head_toggle us_main_option_3">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="Employees who are on notice period and will be out of system in next 90 days">
+                              Resigned Folks - US</td>
+                        </tr>
+                        <tr id="us_offered_folks"
+                           class="supply_header sup_head_toggle sup_head_toggle us_main_option_3">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="Total no. of people who accepted the job offer">Offered Folks - US</td>
+                        </tr>
+                        <tr id="us_sup_proj_new_joinees" class="supply_header sup_head_toggle us_main_option_3">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="Prediction of no. of people who are yet to join us (lateral or campus) ">Proj. New
+                              Joinees (Campus*1 + Lateral*0.3) - US</td>
+                        </tr>
+                        <tr id="us_sup_proj_attr" class="supply_header sup_head_toggle us_main_option_3">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="Prediction of no. of employees who might leave us based on historical data">Proj.
+                              Attr. - US</td>
+                        </tr>
+                        <tr id="empty_4" class="empty_4">
+                           <td rowspan="1" class="columnone empty-broder-color"></td>
+                           <td rowspan="1" class="columntwo empty-broder-color"></td>
+                           <td rowspan="1" class="columnthree empty-broder-color"></td>
+                        </tr>
+
+                        <tr id="gap_proj_signed_sow" class="gap_header ind_main_data_4 ">
+                           <td rowspan="2" class="columntwo" id="gap_head_toggle"
+                              onclick="toggleBlock('gap_head_toggle')">GAP <i class="fas fa-angle-up cutm_icon_fas"></i>
+                           </td>
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="Number of resources that we are short of/in addition of against signed SOW billed resources required">
+                              Signed SOW</td>
+                        </tr>
+                        <tr id="gap_proj_Head_signed_sow" class="gap_header gap_head_toggle ind_main_option_4">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="No. of resources that will be in Factspan India system including attrition data.">
+                              Proj. Delivery Head Count - IND</td>
+                        </tr>
+                        <tr id="gap_proj_70_per_prob" class="gap_header gap_head_toggle ind_main_option_4">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="Number of resources that are we are short of/in addition of against green billed resources required (inclusive of projected new joinees count)">
+                              70% Probability</td>
+                        </tr>
+                        <tr id="gap_proj_50_per_prob" class="gap_header gap_head_toggle ind_main_option_4">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="Number of resources that are we are short of/in addition of against yellow billed resources required (inclusive of projected new joinees count)">
+                              50% Probability</td>
+                        </tr>
+                        <tr id="gap_actual_head_signed_sow" class="gap_header gap_head_toggle ind_main_option_4">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="No. of actual resource in Factspan India system including resources that are on notice period.">
+                              Actual Delivery Head Count - IND</td>
+                        </tr>
+                        <tr id="gap_actual_signed_sow" class="gap_header gap_head_toggle ind_main_option_4">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="Number of resources that we are short of/in addition of against signed SOW billed resources required">
+                              Signed SOW</td>
+                        </tr>
+                        <tr id="gap_actual_70_per_prob" class="gap_header gap_head_toggle ind_main_option_4">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="Number of resources that are we are short of/in addition of against green billed resources required">
+                              70% Probability</td>
+                        </tr>
+                        <tr id="gap_actual_50_per_prob" class="gap_header gap_head_toggle ind_main_option_4">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="Number of resources that are we are short of/in addition of against yellow billed resources required">
+                              50% Probability</td>
+                        </tr>
+
+                        <tr id="us_gap_proj_signed_sow" class="gap_header us_main_data_4 ">
+                           <td rowspan="2" class="columntwo" id="gap_head_toggle_us"
+                              onclick="toggleBlock('gap_head_toggle')" style="display: none;">GAP <i
+                                 class="fas fa-angle-up cutm_icon_fas"></i>
+                           </td>
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="Number of resources that we are short of/in addition of against signed SOW billed resources required">
+                              Signed SOW</td>
+                        </tr>
+                        <tr id="us_gap_proj_Head_signed_sow" class="gap_header gap_head_toggle us_main_option_4">
+
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="No. of resources that will be in Factspan US system including attrition data.">
+                              Proj. Delivery Head Count - US</td>
+                        </tr>
+                        <tr id="us_gap_proj_70_per_prob" class="gap_header gap_head_toggle us_main_option_4">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="Number of resources that are we are short of/in addition of against green billed resources required (inclusive of projected new joinees count)">
+                              70% Probability</td>
+                        </tr>
+                        <tr id="us_gap_proj_50_per_prob" class="gap_header gap_head_toggle us_main_option_4">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="Number of resources that are we are short of/in addition of against yellow billed resources required (inclusive of projected new joinees count)">
+                              50% Probability</td>
+                        </tr>
+                        <tr id="us_gap_actual_head_signed_sow" class="gap_header gap_head_toggle us_main_option_4">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="No. of actual resource in Factspan US system including resources that are on notice period.">
+                              Actual Delivery Head Count - US</td>
+                        </tr>
+                        <tr id="us_gap_actual_signed_sow" class="gap_header gap_head_toggle us_main_option_4">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="Number of resources that we are short of/in addition of against signed SOW billed resources required">
+                              Signed SOW</td>
+                        </tr>
+                        <tr id="us_gap_actual_70_per_prob" class="gap_header gap_head_toggle us_main_option_4">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="Number of resources that are we are short of/in addition of against green billed resources required">
+                              70% Probability</td>
+                        </tr>
+                        <tr id="us_gap_actual_50_per_prob" class="gap_header gap_head_toggle us_main_option_4">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="Number of resources that are we are short of/in addition of against yellow billed resources required">
+                              50% Probability</td>
+                        </tr>
+
+                        <tr id="empty_5" class="empty_5">
+                           <td rowspan="1" class="columnone empty-broder-color"></td>
+                           <td rowspan="1" class="columntwo empty-broder-color"></td>
+                           <td rowspan="1" class="columnthree empty-broder-color"></td>
+                        </tr>
+
+                        <tr id="all_no_of_client_sow" class="all_header ind_main_data_5">
+                           <td rowspan="30" class="columntwo" id="all_head_toggle"
+                              onclick="toggleBlock('all_head_toggle')">All <i class="fas fa-angle-up cutm_icon_fas"></i>
+                           </td>
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="No. of active, signed, on going client based engagements SOW">No. of Client SOWs
+                           </td>
+                        </tr>
+                        <tr id="all_no_of_inter_proj_sow" class="all_header ind_main_data_5">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="No. of Internal projects under Factspan ">No. of Internal Project SOWs</td>
+                        </tr>
+                        <tr id="all_sow_res_billed" class="all_header ind_main_data_5">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="No. of resources required as per active signed SOW">SOW Resource Billed</td>
+                        </tr>
+                        <tr id="all_client_res" class="all_header ind_main_data_5">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="Total number of resources allocated to active white signed SOW">Client Resource #
+                           </td>
+                        </tr>
+                        <tr id="all_actual_billed" class="all_header ind_main_data_5">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="No. of resources actually billed for active signed client SOW">Actual Billed</td>
+                        </tr>
+                        <tr id="all_investment" class="all_header all_head_toggle ind_main_option_5">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="No. of resources acting as investment for active signed client SOW, planned green (>70%) SOW and Factspan SOW">
+                              Investment</td>
+                        </tr>
+                        <tr id="all_buffer" class="all_header all_head_toggle ind_main_option_5">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="No. of resources acting as Buffer for active signed client SOW">Buffer</td>
+                        </tr>
+                        <tr id="all_leader_invest" class="all_header all_head_toggle ind_main_option_5">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="No. of resources who are AM and above (mostly managers) and managing multiple engagements">
+                              Leaders Investment</td>
+                        </tr>
+                        <tr id="all_training" class="all_header all_head_toggle ind_main_option_5">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="No. of resources on any internal training">Training</td>
+                        </tr>
+                        <tr id="all_factspan_product" class="all_header all_head_toggle ind_main_option_5">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="Number of resources actually working on any internal project">Factspan Product</td>
+                        </tr>
+                        <tr id="all_actual_bench" class="all_header all_head_toggle ind_main_option_5">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="Total number of available resources who are not allocated to any project.">Actual Bench</td>
+                        </tr>
+                        <tr id="all_usable_bench" class="all_header all_head_toggle ind_main_option_5">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="Number of resources who are available for at least 30 days.">
+                              Usable Bench</td>
+                        </tr>
+                        <tr id="all_spcl_leaves" class="all_header all_head_toggle ind_main_option_5">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="No. of resources who are not available due to special leave">Special Leaves</td>
+                        </tr>
+                        <tr id="gap_sow_actual_billed" class="all_header all_head_toggle ind_main_option_5">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="Number of resources that we are short of/in addition of against signed SOW billed resources required">
+                              Gap b/w SOW and Actual</td>
+                        </tr>
+                        <tr id="all_fs_investment" class="all_header all_head_toggle ind_main_option_5">
+                           <td rowspan="1" class="columnthree custom_ind_bg "
+                              title="Resources in Investment India under Factspan who are not leaders">
+                              FS Investment</td>
+                        </tr>
+                        <tr id="all_tot_avial_res_count" class="all_header ind_main_data_5">
+                           <td rowspan="1" class="columnthree custom_tot_head_all custom_bg_color3  "><b>Total
+                                 Available
+                                 Resource Count - IND</b></td>
+                        </tr>
+                        <!-- Us data -->
+                        <!-- <tr id="us_all_no_of_client_sow" class="all_header us_main_data_5">
+                           <td rowspan="12" class="columntwo" id="all_head_toggle_us"
+                              onclick="toggleBlock('all_head_toggle')" style="display: none;">All <i
+                                 class="fas fa-angle-up cutm_icon_fas"></i>
+                           </td>
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="No. of active, signed, on going client based engagements SOW">No. of Client SOWs
+                           </td>
+                        </tr>
+                        <tr id="us_all_no_of_inter_proj_sow" class="all_header us_main_data_5">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="No. of Internal projects under Factspan ">No. of Internal Project SOWs</td>
+                        </tr> -->
+                        <tr id="us_all_sow_res_billed" class="all_header us_main_data_5">
+                           <td rowspan="11" class="columntwo" id="all_head_toggle_us"
+                              onclick="toggleBlock('all_head_toggle')" style="display: none;">All <i
+                                 class="fas fa-angle-up cutm_icon_fas"></i>
+                           </td>
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="No. of resources required as per active signed SOW">SOW Resource Billed</td>
+                        </tr>
+                        <tr id="us_all_client_res" class="all_header us_main_data_5">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="Total number of resources allocated to active white signed SOW">Client Resource #
+                           </td>
+                        </tr>
+                        <tr id="us_all_actual_billed" class="all_header us_main_data_5">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="No. of resources actually billed for active signed client SOW">Actual Billed</td>
+                        </tr>
+                        <tr id="us_all_investment" class="all_header all_head_toggle us_main_option_5">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="No. of resources acting as investment for active signed client SOW, planned green (>70%) SOW and Factspan SOW">
+                              Investment</td>
+                        </tr>
+                        <tr id="us_all_buffer" class="all_header all_head_toggle us_main_option_5">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="No. of resources acting as Buffer for active signed client SOW">Buffer</td>
+                        </tr>
+                        <tr id="us_all_leader_invest" class="all_header all_head_toggle us_main_option_5">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="No. of resources who are AM and above (mostly managers) and managing multiple engagements">
+                              Leaders Investment</td>
+                        </tr>
+                        <tr id="us_all_training" class="all_header all_head_toggle us_main_option_5">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="No. of resources on any internal training">Training</td>
+                        </tr>
+                        <tr id="us_all_factspan_product" class="all_header all_head_toggle us_main_option_5">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="Number of resources actually working on any internal project">Factspan Product</td>
+                        </tr>
+                        <tr id="us_all_actual_bench" class="all_header all_head_toggle us_main_option_5">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="Total number of available resources who are not allocated to any project.">Actual Bench</td>
+                        </tr>
+                        <tr id="us_all_usable_bench" class="all_header all_head_toggle us_main_option_5">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="Number of resources who are available for at least 30 days.">
+                              Usable Bench</td>
+                        </tr>
+                        <tr id="us_all_spcl_leaves" class="all_header all_head_toggle us_main_option_5">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="No. of resources who are not available due to special leave">Special Leaves</td>
+                        </tr>
+                        <tr id="us_gap_sow_actual_billed" class="all_header all_head_toggle us_main_option_5">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="Number of resources that we are short of/in addition of against signed SOW billed resources required">
+                              Gap b/w SOW and Actual</td>
+                        </tr>
+                        <tr id="us_all_fs_investment" class="all_header all_head_toggle us_main_option_5">
+                           <td rowspan="1" class="columnthree custom_us_bg "
+                              title="Resources in Investment US under Factspan who are not leaders">
+                              FS Investment</td>
+                        </tr>
+                        <tr id="us_all_tot_avial_res_count" class="all_header us_main_data_5">
+                           <td rowspan="1" class="columnthree custom_tot_head_all custom_bg_color3 "><b>Total
+                                 Available
+                                 Resource Count - US</b></td>
+                        </tr>
+
+                        <tr id="actual_total_delivery_headcount" class="actual_header ind_main_data_6">
+                           <td rowspan="4" class="columnone" id="all_actual_total"><b>Actual</b></td>
+                           <td rowspan="1" class="columnthree "><b>Total Delivery Headcount - IND</b></td>
+                        </tr>
+                        <tr id="us_actual_total_delivery_headcount" class="actual_header us_main_data_6">
+                           <td rowspan="2" class="columnone" id="all_actual_total_us" style="display: none;">
+                              <b>Actual</b>
+                           </td>
+                           <td rowspan="1" class="columnthree "><b>Total Delivery Headcount - US</b></td>
+                        </tr>
+                        <tr id="total_non_delivery_head_count_actual" class="actual_header ind_main_data_6">
+                           <td rowspan="1" class="columnthree "><b>Total Non Delivery Headcount - IND</b></td>
+                        </tr>
+                        <tr id="total_non_delivery_head_count_actual_us" class="actual_header us_main_data_6">
+                           <td rowspan="1" class="columnthree "><b>Total Non Delivery Headcount - US</b></td>
+                        </tr>
+                     </tbody>
+
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+
+   <script>
+      $(document).ready(function () {
+         assignMetaValue();
+      $("meta[name='google-signin-client_id']").attr("content", metaValue);
+         // sessionName = localStorage.getItem("email");
+         // // sessionStorage.setItem('name','sravan')
+         // console.log("Session index - " + sessionName);
+         getLocalSessionData();
+         if (sessionName == null) {
+            window.location.href = 'index.html';
+            return false;
+         } else {
+            $('body').css('display', 'block');
+            var ajaxTime = new Date().getTime();
+            console.log("Actual Start Time - " + ajaxTime);
+            getAllCmpyUsIndSum();
+            let colorValue = $(".can-toggle__switch").css("background-color");
+            //  console.log("colorValue - "+colorValue);
+            getColorValue_br();
+            //  $('#sow_rsrc_all_sum_table').dataTable();
+            // $("input:checkbox").attr("checked", true).click(function () {
+            //    var showcolumn = "." + $(this).attr("name");
+            //    $(showcolumn).toggle();
+            // });
+            // inputCheckfilter('utiliz_header');
+            // inputCheckfilter('avial_header');
+            // inputCheckfilter('demand_header');
+            // inputCheckfilter('supply_header');
+            // inputCheckfilter('gap_header');
+            // inputCheckfilter('all_header');
+            toggleBlock('utiliz_toggle');
+            toggleBlock('avial_head_toggle');
+            toggleBlock('demand_head_toggle');
+            toggleBlock('sup_head_toggle');
+            toggleBlock('gap_head_toggle');
+            toggleBlock('all_head_toggle');
+            var totalTime = new Date().getTime() - ajaxTime;
+            console.log("Actual End Time - " + millisToMinutesAndSeconds(totalTime));
+            //   getAllCmpyUsIndSum_2022();
+            $(".new-sub-menu").hover(function () {
+               $('.sub-menu').css('display', '')
+               // }, function () {
+               //    alert("hi out");
+            });
+         }
+         // $('#header').load('header.html');
+         // $("#allCmpnyUsIndSummary").addClass("selected_menu");
+         // setTimeout(function() {
+         //    getAllCmpyUsIndSum_2022();
+         //       // 3000 for 3 seconds
+         //    }, 7000)
+         //    // var totalTime = new Date().getTime()-ajaxTime;   
+         //   console.log("Actual End Time 2022- "+millisToMinutesAndSeconds(totalTime));
+      });
+      $('#dashboard').click(function () {
+         window.location.href = 'home.html';
+         return false;
+      });
+      $('#sow_rsrc_all_sum_page').click(function () {
+         window.location.href = 'sowRsrceAllocSummar.html';
+         return false;
+      });
+      $('#avail_res_proj_attr').click(function () {
+         window.location.href = 'availResProjAttr.html';
+         return false;
+      });
+
+
+
+      $('#logout').click(function () {
+         localStorage.clear();
+         console.log("sessionName - " + sessionName);
+         window.location.href = 'index.html';
+         return false;
+      });
+//     $(".hit").click(function(){
+//     var value=$(this).closest('tr').children('td:first').text();
+//    alert(value);   
+//  });
+      // const myTimeout = setTimeout(setHeaderSelection, 5000);
+      // function setHeaderSelection() {
+      //    $('#allCmpnyUsIndSummary').addClass('selected_menu');
+      // }
+   </script>
+   <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+
+</body>
+
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Factspan - ARCUS - Report Sow By Sow</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv='cache-control' content='no-cache'>
+  <meta http-equiv='expires' content='0'>
+  <meta http-equiv='pragma' content='no-cache'>
+  
+  <link rel="stylesheet" href="css/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="js/jquery/3.5.1/jquery.min.js"></script>
+  <script src="js/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="js/fontawesome/fontawesome.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/custom.css" />
+  <script src="js/common.js"></script>
+  <script src="js/reportSowBySOW.js"></script>
+  <link rel="icon" href="images\factspan.png" type="image/png" sizes="16x16">
+  <script src="js/jquery.table2excel.js"></script>
+  <link rel="stylesheet" href="css/busyLoading.css">
+
+  <script>
+    $(function () {
+      $('#header').load('header.html');
+      
+    })
+  </script>
+</head>
+<style>
+ 
+  .employee_sow_details .table th {
+    
+    border: solid 0px #f8f9fa;
+    border-radius: 0px;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+  }
+
+ 
+  .employee_detail_inside .table th {
+    font-size: 10px;
+    font-weight: 500;
+    color: #8b8988;
+  }
+
+  .employee_detail_inside table tr:nth-child(even) {
+    background: #ffffff;
+    border-top: 0px;
+  }
+
+  .employee_detail_inside .table th {
+    width: 4.14% !important;
+  }
+
+  .employee_detail_inside .table th {
+    font-size: 10px;
+    font-weight: 500;
+    color: #444343;
+  }
+
+  .signed_bg {
+    background-color: #edf6fe;
+    color: #3f51b5 !important;
+    border: #edf6fe !important;
+  }
+
+  .overall_total_bg,
+  .overall_total_bg>td {
+    background-color: #4CA5FFFF;
+    color: #fff !important;
+    border: #4CA5FFFF !important;
+  }
+
+  .overall_total_allSow,
+  .overall_total_allSow>td {
+    background-color: #5ef68f;
+    color: #090909 !important;
+    border: #befcd2 !important;
+   
+  }
+
+
+  .renewal_bg,
+  .renewal_bg>td {
+    background-color: #befcd2;
+    color: #006120 !important;
+    border: #befcd2 !important;
+
+  }
+
+  .proposal_bg,
+  .proposal_bg>td {
+    background-color: #08bb44;
+    color: #fff !important;
+    border: #08bb44 !important;
+  }
+
+  .qualified_bg,
+  .qualified_bg>td {
+    background-color: #059736;
+    color: #fff !important;
+    border: #059736 !important;
+  }
+
+
+  .all_month_bg {
+    background-color: #007A45FF;
+    color: #fff !important;
+  }
+
+  .account_bg,
+  .account_bg>td {
+    background-color: #f2f2f2 !important;
+    color: black !important;
+  }
+
+  .overall_total,
+  .overall_total>td {
+    background-color: #007A45FF;
+    color: #fff !important;
+    
+    border: #007A45FF !important;
+    border-top: 5px solid white !important;
+    font-size: 11px !important;
+    font-weight: 900;
+  }
+
+  .employee_detail_inside table tr:nth-child(even) {
+    background: #ffffff;
+    border-top: solid 1px #ffffff;
+  }
+
+ 
+  hr {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 0;
+    border-top: 1px solid #eee;
+  }
+
+  .emp_filter {
+    margin-top: -35px !important;
+  }
+
+  .emp_radio_filter>label {
+    width: 80px;
+  }
+
+  #report_sow_acc_signed>th {
+    background-color: #f2f2f2;
+  }
+
+  .top_broder_bg {
+    border-top: 1.5px solid #eff3ef !important;
+  }
+
+  #reportsBackBtn {
+    margin-right: 0px;
+    margin-top: -36px
+  }
+
+  .employee_form .btn-info {
+    margin-top: -35px;
+    margin-bottom: 10px;
+    padding: 5px 25px
+  }
+
+  #excelDownload {
+    margin-right: 80px;
+  }
+  .emp_radio_filter {
+    display: flex
+;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #cecece;
+    width: 198px;
+    height: 25px;
+    border-radius: 9999px;
+    margin-top: 15px;
+    box-shadow: inset 0.5px 0.5px 2px 0 rgb(0 0 0 / 15%);
+}
+.emp_radio_filter>input[type="radio"]:checked+label, .year_radio_filter>input[type="radio"]:checked+label {
+    background-color: #1e90ff;
+    color: #f1f3f5;
+    font-weight: 700;
+    transition: 0.3s;
+    margin: 0px 3px 0px 3px;
+    padding: 0px 10px 0px 10px;
+}
+.emp_radio_filter>label {
+    width: 150px;
+}
+</style>
+
+<body class="unselectable">
+  <div class="loader">
+    <div class="loader-wheel"></div>
+    <div class="loader-text"></div>
+  </div>
+  <div class="show_page" style="display: none;">
+    <div id="header"></div>
+
+    <div class="wrapper_outer">
+      <div id="loader" class="lds-dual-ring hidden overlay"></div>
+      <div class="container-fluid">
+        <div class="detail_box">
+          <div class="employee_form sow_detail">
+            <div class="detail_top_bar">
+              <div class="table_title">Amount By Sow</div>
+              <div class="emp_filter">
+               
+                <div class="year_radio_filter" style="margin: 10px;margin-right: 350px;">
+                  <!-- <input type="radio" name="year_filter" id="previousYr" class="emp_select" value="21"
+                    onclick="sowGetByAccount()">
+                  <label for="previousYr" id="previousYr_label"></label>
+                  <input type="radio" name="year_filter" id="currentYr" class="emp_select" value="22"
+                    onclick="sowGetByAccount()" checked>
+                  <label for="currentYr"id="currentYr_label"></label>
+                  <input type="radio" name="year_filter" id="futureYr" class="emp_select" value="23"
+                    onclick="sowGetByAccount()">
+                  <label for="futureYr" id="futureYr_label"></label> -->
+                </div>
+                <div class="emp_radio_filter" style="margin: 10px;margin-right: 150px;margin-top: -35px">
+                  <input type="radio" name="sow_amount_by_acc" id="planned" class="emp_select" value="Planned"
+                    onclick="sowGetByAccount()" checked>
+                    <label for="planned">Actual/Projected</label>
+                  <input type="radio" name="sow_amount_by_acc" id="actual" class="emp_select" value="Actual"
+                    onclick="sowGetByAccount()">
+                    <label for="actual">SOW Amount</label>
+                </div>
+                <button class="btn btn-info pull-right" id="excelDownload" onclick="downloadExcel()"
+                  title="Excel Download"><i class="fa fa-download" aria-hidden="true"></i></button>
+                <button class="btn btn-info pull-right" id="reportsBackBtn">Back</button>
+              </div>
+              <div class="employee_detail_inside employee_sow_details table-responsive fixTableHead">
+                <table class="table table-bordered border-primary sow_emp_details_class" id="sow_by_level_data">
+                  <thead class="thead-light">
+                    <tr id="report_sow_acc_signed" class="report_sow_account_header">
+                     
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+         
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+ 
+
+  </div>
+  
+</body>
+
+</html>

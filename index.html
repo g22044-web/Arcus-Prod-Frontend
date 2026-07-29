@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Factspan - ARCUS</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta
+      name="google-signin-client_id"
+      content="651756031653-6aum78brhvghicj41t831gus94gfmqgg.apps.googleusercontent.com"
+    />
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <link rel="stylesheet" type="text/css" href="css/custom.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    <script src="js/common.js"></script>
+    <link
+      rel="icon"
+      href="images\factspan.png"
+      type="image/png"
+      sizes="16x16"
+    />
+    <meta http-equiv="Cache-Control" content="no-store, max-age=0" />
+  </head>
+
+  <body>
+    <div class="login_outer">
+      <div class="login_img">
+        <img
+          src="images/logo.svg"
+          alt="Factspan Background"
+          style="color: #fff"
+          width="75%"
+        />
+        <img
+          src="images/login_page_main.png"
+          width="400px"
+          alt="Factspan Background"
+          style="color: #fff"
+        />
+      </div>
+
+      <div class="login_form">
+        <div></div>
+        <div class="login_data">
+          <img
+            src="images/factspan-logo.png"
+            alt="Factspan Background"
+            width="230px"
+            style="color: #fff"
+          />
+          <div class="login">
+            <div
+              id="g_id_onload"
+              data-client_id="651756031653-6aum78brhvghicj41t831gus94gfmqgg.apps.googleusercontent.com"
+              data-context="signin"
+              data-ux_mode="popup"
+              data-login_uri=""
+              data-callback="onSignIn"
+              data-itp_support="true"
+            >
+              <!-- Enables auto-login -->
+            </div>
+            <div
+              class="g_id_signin"
+              data-type="standard"
+              data-shape="rectangular"
+              data-theme="outline"
+              data-text="signin"
+              data-size="large"
+              data-logo_alignment="left"
+            ></div>
+            <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let google_email = "";
+      var sessionName = "", departmentName = "";
+      let first_name = "";
+      $(document).ready(function () {
+        assignMetaValue();
+        $("meta[name='google-signin-client_id']").attr("content", metaValue);
+      });
+      window.onload = function () {
+        const storedEmail = localStorage.getItem("email");
+        departmentName = localStorage.getItem("Department");
+        let jobRole = localStorage.getItem('Job_Role');
+        let userRole = localStorage.getItem("user-role");
+        if (storedEmail) {
+          // If user info exists, redirect to home or relevant page
+          if(departmentName == "Products" || departmentName == "CEO" || departmentName == "COE" || jobRole == "Vice President" || userRole == "admin" || storedEmail == "nitin.pandey@factspan.com" || storedEmail == "nagarajan.v@factspan.com"){
+            window.location.href = "adminDashboard.html";
+          }else{
+            window.location.href = "home.html";
+          }
+        } else {
+          // Trigger Google's auto-login prompt
+          google.accounts.id.prompt((notification) => {
+            if (
+              notification.isNotDisplayed() ||
+              notification.isSkippedMoment()
+            ) {
+              console.log(
+                "No Google accounts detected or user skipped sign-in."
+              );
+            }
+          });
+        }
+      };
+    </script>
+    <script
+      src="https://apis.google.com/js/platform.js?onload=renderButton"
+      async
+      defer
+    ></script>
+  </body>
+</html>

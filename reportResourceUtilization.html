@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Factspan - ARCUS - Resource Utilization</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv='cache-control' content='no-cache'>
+  <meta http-equiv='expires' content='0'>
+  <meta http-equiv='pragma' content='no-cache'>
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+  </style>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+  <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+  <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+  <script src="https://kit.fontawesome.com/01f906aa6d.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/custom.css" />
+  <script src="js/jquery.tabledit.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/reportResourceUtilization.js"></script>
+  <link rel="icon" href="images\factspan.png" type="image/png" sizes="16x16">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <script src="lib/jQuery-MultiSelect.js"></script>
+  <link rel="stylesheet" href="css/jquery.multiselect.css">
+  <script src="js/bootbox.min.js"></script>
+  <script src="js/bootbox.locales.min.js"></script>
+  <script src="js/jquery.table2excel.js"></script>
+  <link rel="stylesheet" href="css/busyLoading.css">
+
+  <script>
+    $(function () {
+      $('#header').load('header.html');
+      
+    })
+  </script>
+</head>
+<style>
+.detail_top_bar {
+    display: flex;
+    align-items: center; /* Center align items vertically */
+    justify-content: space-between; /* Space items out */
+    border-bottom: none;
+}
+
+.table_title {
+    display: flex;
+    align-items: center; /* Center align items vertically */
+    flex: 1; /* Allow it to take available space */
+}
+.title-content{
+  margin-top: 0px;
+}
+#year_select_div{
+  display: flex;
+  gap: 10px;
+  margin-left: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-top: -1px;
+}
+.ms-options {
+    min-height: 60px !important;
+}
+/* .ms-options-wrap {
+  width: 135px !important;
+} */
+.ms-options-wrap>button{
+  font-weight: 500 !important;
+  color: #818199 !important;
+  border-radius: 4px !important;
+  border: 1px solid #818199 !important;
+  font-size: 11px !important;
+}
+.year_text {
+  font-weight: 500 !important;
+  color: #818199;
+  font-size: 11px !important;
+}
+/* Style to place Cancel and Apply buttons next to each other */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px; /* Optional: Add padding around the buttons */
+}
+.form-control {
+  background-color: white !important; /* Ensure the form-control uses white background */
+}
+#reportsBackBtnCustm {
+  margin-top: 5px;
+}
+.table_title {
+  margin-bottom: -26px;
+}
+
+.resource-utilization-toolbar {
+  min-height: 45px;
+  margin: 0 -15px 0px;
+  padding: 0px 20px;
+  background: #1F3864;
+  border-top: 0.5px solid #6d6d6d;
+  border-bottom: 6px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 18px;
+}
+
+.resource-utilization-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 0 0 auto;
+}
+
+.resource-utilization-title {
+  margin: 0;
+  color: #ffffff;
+  font-family: "Poppins", "Celias", sans-serif;
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.resource-utilization-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+  flex: 1 1 auto;
+  min-width: 0;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+}
+
+.resource-utilization-filter-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 0 1 auto;
+  flex-wrap: nowrap;
+}
+
+.resource-utilization-toolbar .option_selections {
+  width: auto;
+  min-height: 30px;
+  margin: 0 !important;
+  padding: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.35rem;
+  background: #16243e;
+  border: 0;
+  border-radius: 999px;
+  box-shadow: none;
+}
+
+.resource-utilization-toolbar .option_selections > label {
+  width: auto;
+  min-height: 20px;
+  margin: 0;
+  padding: 0.85rem 1.4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #ffffff;
+  font-family: "Poppins", "Celias", sans-serif;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 400;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.resource-utilization-toolbar .option_selections > input[type="radio"]:checked + label {
+  background: #ff7d20;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.resource-utilization-filter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+}
+
+.resource-utilization-filter .year_text {
+  color: #ffffff;
+  font-family: "Poppins", "Celias", sans-serif;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  white-space: nowrap;
+}
+
+.resource-utilization-toolbar #account_data,
+.resource-utilization-toolbar #manager_data {
+  width: 150px;
+  height: 30px;
+  padding: 0 40px 0 16px !important;
+  color: #ffffff !important;
+  background-color: transparent !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='m1 1 6 6 6-6' fill='none' stroke='%23fff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  border: 1px solid rgba(255, 255, 255, 0.85) !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  font-family: "Poppins", "Celias", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  appearance: none;
+}
+
+.resource-utilization-toolbar #account_data option,
+.resource-utilization-toolbar #manager_data option {
+  color: #1F3864;
+  background: #ffffff;
+}
+
+/* .resource-utilization-toolbar .ms-options-wrap {
+  width: 138px !important;
+} */
+
+.resource-utilization-toolbar .ms-options-wrap > button {
+  width: 100px;
+  height: 30px;
+  padding: 0 40px 0 16px !important;
+  background: transparent !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.85) !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  font-family: "Poppins", "Celias", sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  line-height: 30px !important;
+  text-align: left;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.resource-utilization-toolbar .ms-options-wrap > button:after {
+  border-color: #ffffff transparent transparent transparent;
+  right: 14px;
+  top: 15px;
+}
+
+.resource-utilization-toolbar #reportsBackBtnCustm {
+  min-width: 60px;
+  height: 30px;
+  margin: 0 !important;
+  padding: 0 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.85) !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  font-family: "Poppins", "Celias", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.resource-utilization-toolbar #reportsBackBtnCustm:hover,
+.resource-utilization-toolbar #reportsBackBtnCustm:focus,
+.resource-utilization-toolbar #reportsBackBtnCustm:active {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  outline: none;
+}
+
+.employee_form.sow_detail {
+  padding-top: 0;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.employee_form.sow_detail .detail_top_bar.show_page {
+  border-bottom: 0;
+  margin-bottom: 12px;
+  padding-bottom: 0;
+}
+
+@media screen and (max-width: 1120px) {
+  .resource-utilization-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .resource-utilization-toolbar-left,
+  .resource-utilization-toolbar-right {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .resource-utilization-toolbar-right {
+    flex-wrap: wrap;
+  }
+
+  .resource-utilization-filter-group {
+    flex-wrap: wrap;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .resource-utilization-toolbar {
+    padding: 16px;
+  }
+
+  .resource-utilization-title {
+    font-size: 16px;
+  }
+
+  .resource-utilization-toolbar-left {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .resource-utilization-toolbar-right,
+  .resource-utilization-filter-group,
+  .resource-utilization-filter {
+    width: 100%;
+  }
+
+  .resource-utilization-toolbar #account_data,
+  .resource-utilization-toolbar #manager_data,
+  .resource-utilization-toolbar .ms-options-wrap,
+  .resource-utilization-toolbar .ms-options-wrap > button,
+  .resource-utilization-toolbar #reportsBackBtnCustm {
+    width: 100% !important;
+  }
+
+  .resource-utilization-toolbar .option_selections {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+.nowarp_header {
+  white-space: nowrap;
+  text-align: center;
+}
+.res_utiliz_header_table {
+  z-index: 105;
+  color:#818199;
+}
+.filter_back_div {
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+  align-items: center;
+}
+.report_res_utiliz {
+    background-color: #f2f2f2 !important;
+    border: 1px soild black !important;
+    font-weight: 600 !important;
+    color: #8b8988 !important;
+}
+.main_name {
+  width: 25% !important;
+  text-align: center;
+  font-weight: 500 !important;
+  z-index: 10;
+}
+.mnth_col {
+  width: 5% !important;
+  font-weight: 500 !important;
+}
+.icon_col{
+  color: #F46F22;
+}
+.scenario-header {
+  cursor: pointer;
+}
+.report_res_utiliz>tbody>tr>td {
+  border: 1px solid #DDDDDD !important;
+  background-color: #fff;
+}
+.collapsed_row_border {
+  border-bottom: 2px solid #d8d4d4;
+}
+.header_text_div {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.header_text_color {
+  color: #313265 !important;
+  /* text-align: center; */
+}
+.employee_detail_inside .table td {
+  color: #818199;
+  padding: 10px 5px !important;
+}
+.fixTableHead thead th {
+  position: sticky;
+  top: 0;
+  background-color: #f2f2f2;
+}
+.year_div {
+  display: flex;
+  gap: 10px;
+  background-color: #f2f2f2;
+  padding: 5px;
+  border-radius: 5px;
+  justify-content: center;
+  align-items: center;
+}
+.month-value {
+  text-align: center;
+}
+.no-data-text {
+  display: flex;
+  justify-content: center;
+  background-color: #f8f8f8;
+  padding: 10px;
+  font-size: 12px;
+  font-weight: 500;
+}
+.emp_radio_filter {
+  margin-top: 0px !important;
+}
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  z-index: 9999;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #e05e00;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.overlay-message {
+  margin-top: 20px;
+  color: white;
+  font-size: 18px;
+  text-align: center;
+}
+.account-cursor-pointer {
+  cursor: pointer;
+}
+
+.frozen-section-header {
+  position: sticky;
+  top: 25px; /* Adjust based on header height */
+  background-color: #f2f2f2;
+  z-index: 100;
+  border-bottom: 1px solid #ddd;
+}
+
+.frozen-demand-subsection {
+  position: sticky;
+  top: 65px; /* Below the section header, adjust */
+  background-color: white;
+  z-index: 100;
+  border-bottom: 2px solid #d8d4d4;
+}
+
+/* .frozen-job-level {
+  position: sticky;
+  top: 122px; 
+  background-color: white;
+  z-index: 90;
+} */
+
+</style>
+
+<body class="unselectable">
+  
+  <div>
+    <div id="header"></div>
+    <div class="wrapper_outer">
+      <div id="loader" class="lds-dual-ring hidden overlay"></div>
+      <div class="container-fluid">
+        <div class="detail_box">
+          <div class="employee_form sow_detail">
+            <div class="loader">
+              <div class="loader-wheel"></div>
+              <div class="loader-text"></div>
+            </div>
+            <div class="detail_top_bar show_page" style="display: none;">
+              <div class="resource-utilization-toolbar">
+                <div class="resource-utilization-toolbar-left">
+                  <h1 class="resource-utilization-title">Resource Utilization</h1>
+                  <div class="emp_radio_filter option_selections">
+                    <input
+                      type="radio"
+                      name="emp_radio"
+                      id="ALL"
+                      class="emp_select"
+                      value="All"
+                      onclick="toggleLoacation('All')"
+                    />
+                    <label for="ALL">ALL</label>
+                    <input
+                      type="radio"
+                      name="emp_radio"
+                      id="IND"
+                      class="emp_select"
+                      value="India"
+                      onclick="toggleLoacation('India')"
+                      checked
+                    />
+                    <label for="IND">IND</label>
+                    <input
+                      type="radio"
+                      name="emp_radio"
+                      id="US"
+                      class="emp_select"
+                      value="US"
+                      onclick="toggleLoacation('US')"
+                    />
+                    <label for="US">USCA</label>
+                  </div>
+                </div>
+                <div class="resource-utilization-toolbar-right">
+                  <div class="year_div" style="display: none;">
+                    <div class="year_text">Selected Years : </div>
+                    <div class="year_text" id="selected_year"></div>
+                  </div>
+                  <div class="resource-utilization-filter">
+                    <!-- <div class="year_text">Account :</div> -->
+                    <select class="form-control" name="account_data" id="account_data"  onchange="getAccManagerData()">
+                      
+                    </select>
+                  </div>
+                  <div class="resource-utilization-filter">
+                    <!-- <div class="year_text">Manager :</div> -->
+                    <select class="form-control" name="manager_data" id="manager_data"  onchange="getAccManagerData()">
+                      
+                    </select>
+                  </div>
+                  <div class="resource-utilization-filter">
+                    <!-- <div class="year_text">Year :</div> -->
+                    <select class="form-control" name="year_select_data[]" id="year_select_data" multiple onchange="getSelectedYear()">
+                      
+                    </select>
+                  </div>
+                  <button class="btn btn-info pull-right" id="reportsBackBtnCustm">Back</button>
+                </div>
+              </div>
+              <!-- <button class="btn btn-info pull-right" id="excelDownload" onclick="downloadExcel()"
+                title="Excel Download"><i class="fa fa-download" aria-hidden="true"></i></button> -->
+            </div>
+            <div class="employee_detail_inside employee_sow_details table-responsive fixTableHead">
+              <table class="table table-bordered border-primary report_res_utiliz">
+                <thead class="thead-light">
+                  <tr id="report_resource_utiliz" class="report_res_utilization_header">
+                    
+                  </tr>
+                </thead>
+                <tbody id="report_resource_utiliz_body">
+                  
+                </tbody>
+              </table>
+              <div class="no_data" style="display: none;">
+                <div class="no-data-text">No data available, Please select any year from dropdown</div>
+              </div>
+              <div id="no_demand_message" class="no-data-text" style="display: none;">No Demand details</div>
+              <div id="loadingOverlay" class="loading-overlay">
+                <div class="spinner"></div>
+                <div id="overlayMessage" class="overlay-message">Preparing data...</div>
+              </div>    
+            </div>  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
+</body>
+
+</html>

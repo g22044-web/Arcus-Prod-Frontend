@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Factspan - ARCUS - Report High Probability Pipeline</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv='cache-control' content='no-cache'>
+  <meta http-equiv='expires' content='0'>
+  <meta http-equiv='pragma' content='no-cache'>
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+  <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+  <script src="https://kit.fontawesome.com/01f906aa6d.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/custom.css" />
+  <script src="js/jquery.tabledit.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/reportHighProbabilityPipeline.js"></script>
+  <link rel="icon" href="images\factspan.png" type="image/png" sizes="16x16">
+  <!-- JS & CSS library of MultiSelect plugin -->
+  <link rel="stylesheet" href="css/jquery.multiselect.css">
+  <script src="lib/jQuery-MultiSelect.js"></script>
+  <script src="js/bootbox.min.js"></script>
+  <script src="js/bootbox.locales.min.js"></script>
+  <script src="js/jquery.table2excel.js"></script>
+  <link rel="stylesheet" href="css/busyLoading.css">
+
+  <script>
+    $(function () {
+      $('#header').load('header.html');
+     
+    })
+  </script>
+</head>
+<style>
+  
+  .employee_sow_details .table th {
+   
+    border: solid 0px #f8f9fa;
+    border-radius: 0px;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+  }
+
+ 
+  .employee_detail_inside .table th {
+    font-size: 10px;
+    font-weight: 500;
+    color: #8b8988;
+  }
+
+ 
+
+  /* .employee_detail_inside .table th {
+    width: 4.14% !important;
+  } */
+
+  .employee_detail_inside .table th {
+    font-size: 10px;
+    font-weight: 500;
+    color: #8b8988;
+  }
+
+  .signed_bg {
+    
+    background-color: #ffffff;
+    
+    color: #252424ad !important;
+    border: #edf6fe !important;
+  }
+
+  .signed_header_bg {
+    background-color: #4CA5FFFF;
+    color: #fff !important;
+    border: #4CA5FFFF !important;
+  }
+
+  .proposal_header_bg {
+    background-color: #17A948FF;
+    color: #fff !important;
+    border: #17A948FF !important;
+  }
+
+  .proposal_bg {
+   
+    background-color: #ffffff;
+    color: #252424ad !important;
+    
+    border: #e9fef0 !important;
+  }
+
+  .all_month_bg {
+    background-color: #007A45FF;
+    color: #fff !important;
+  }
+
+  
+
+  #signed_sow_table>tbody>tr,
+  #proposal_sow_table>tbody>tr {
+    border-bottom: 1px solid #e4e4e4;
+  }
+
+  .emp_filter {
+    margin-top: -19px !important;
+  }
+
+  .emp_radio_filter>label {
+    width: 50px;
+  }
+
+  #report_sow_account {
+    background-color: #f2f2f2;
+  }
+
+  .account_bg,
+  .account_bg>td {
+    background-color: #f2f2f2 !important;
+    color: black !important;
+  }
+
+  .employee_detail_inside table tr:nth-child(even) {
+    background: #f2f2f2;
+    border-top: solid 1px #f2f2f2;
+  }
+
+  hr {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border: 0;
+    border-top: 1px solid #eee;
+  }
+
+  .employee_detail_inside table tr:nth-child(even) {
+    background: #ffffff;
+    border-top: solid 1px #ffffff;
+  }
+
+  .overall_total_bg,
+  .overall_total_bg>td {
+    background-color: #4CA5FFFF;
+    color: #fff !important;
+    border: #4CA5FFFF !important;
+  }
+
+  .overall_total_allSow,
+  .overall_total_allSow>td {
+    background-color: #5ef68f;
+    color: #090909 !important;
+    border: #befcd2 !important;
+    
+  }
+
+
+  .renewal_bg,
+  .renewal_bg>td {
+    background-color: #befcd2;
+    color: #006120 !important;
+    border: #befcd2 !important;
+
+  }
+
+  .proposal_bg,
+  .proposal_bg>td {
+    background-color: #08bb44;
+    color: #fff !important;
+    border: #08bb44 !important;
+  }
+
+  .overall_total,
+  .overall_total>td {
+    background-color: #007A45FF;
+    color: #fff !important;
+    
+    border: #007A45FF !important;
+    
+  }
+
+  .top_space {
+    border-top: 5px solid white !important;
+  }
+
+  .top_broder_bg {
+    border-top: 1.5px solid #eff3ef !important;
+  }
+
+  #report_overall_summary>th {
+    background-color: #f2f2f2;
+  }
+
+  .account_level {
+    background-color: #f2f2f2 !important;
+  }
+
+  .account_level>td {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+  }
+
+  .RED {
+    background-color: rgb(238 46 46 / 24%);
+    color: black !important;
+  }
+
+  .GREEN {
+    background-color: #77cb7742;
+    color: black !important;
+  }
+
+  #excelDownload {
+    padding: 5px 25px;
+    margin-right: 5px;
+  }
+
+  .table_title {
+    margin-bottom: -26px;
+  }
+
+  .pipeline-toolbar {
+    min-height: 45px;
+    margin: 0px -10px 0px -15px;
+    padding: 0px 14px 0 20px;
+    background: #1F3864;
+    border-top: 0.5px solid #6d6d6d;
+    border-bottom: 6px solid #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .employee_form {
+    height: calc(100vh - 63px);
+    overflow-y: auto;
+  }
+
+  .pipeline-toolbar-title {
+    margin: 0;
+    color: #ffffff;
+    font-family: "Poppins", "Celias", sans-serif;
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 500;
+  }
+
+  .pipeline-toolbar-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .pipeline-toolbar-date {
+    color: #ffffff;
+    font-family: "Poppins", "Celias", sans-serif;
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .pipeline-toolbar .leader_div,
+  .pipeline-toolbar .hpl_last_date_div {
+    margin: 0;
+    float: none !important;
+  }
+
+  .pipeline-toolbar #leaderSelect {
+    min-width: 170px;
+    height: 30px;
+    padding: 0 32px 0 10px;
+    color: #ffffff !important;
+    background-color: transparent;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='m1 1 6 6 6-6' fill='none' stroke='%23fff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-radius: 10px;
+    box-shadow: none;
+    font-family: "Poppins", "Celias", sans-serif;
+    font-size: 12px;
+    font-weight: 400 !important;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+
+  .pipeline-toolbar #leaderSelect option {
+    color: #1F3864;
+    background: #ffffff;
+  }
+
+  .pipeline-toolbar #reportsBackBtnCustm {
+    min-width: 95px;
+    height:30px;
+    padding: 0 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-radius: 10px;
+    box-shadow: none;
+    font-family: "Poppins", "Celias", sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    margin-bottom: 0px !important;
+  }
+
+  .pipeline-toolbar #reportsBackBtnCustm:hover,
+  .pipeline-toolbar #reportsBackBtnCustm:focus,
+  .pipeline-toolbar #reportsBackBtnCustm:active {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.85);
+    outline: none;
+  }
+
+  .thead-light {
+    background-color: #f3f3f3;
+  }
+
+  #audit_head > th {
+    background-color: #f3f3f3;
+    /* text-align: center; */
+    z-index: 100;
+    border: 1px solid #fff;
+    border-top: 0px;
+  }
+  .more {
+    display: inline-block;
+    width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .more:hover {
+    white-space: initial;
+    cursor: pointer;
+    width: 95%;
+  }
+  .row {
+    margin-right: 0px;
+    margin-left:0px;
+  }
+  .employee_detail_inside .table>tbody>tr>td, 
+  .employee_detail_inside .table>tbody>tr>th, 
+  .employee_detail_inside .table>tfoot>tr>td, 
+  .employee_detail_inside .table>tfoot>tr>th, 
+  .employee_detail_inside .table>thead>tr>td, 
+  .employee_detail_inside .table>thead>tr>th {
+    word-break: break-word;
+  }
+ 
+  .skill_data {
+    background: #ffffff;
+    color: #515151;
+    border: solid 1px #ffffff;
+    white-space: initial;
+    border-radius: 0px;
+    padding: 0px 0px;
+    margin: 0px 0px;
+}
+.remove_padding {
+    padding: 0px;
+}
+
+.table_row_bg {
+  background-color: #e3e2e263;
+  padding: 4px 8px;
+  /* color: black; */
+  border-radius: 15px;
+  
+  /* text-align: center; */
+  font-weight: 500;
+}
+
+.report_high_prob_filter {
+  background-color: #f3f3f3;
+}
+
+.custom_sort_span {
+  float: right;
+}
+.hpl_header {
+  cursor: pointer;
+}
+.ms-options-wrap button {
+  border-radius: 8px !important;
+}
+
+.col_width_loc .ms-options-wrap {
+    max-width: 185px !important;
+  }
+.col_width_loc_2 .ms-options-wrap {
+  width: 150px !important;
+}
+.col_width_loc_3 .ms-options-wrap {
+  width: 85px !important;
+}
+
+.header_col_20 {
+  width: 20%;
+}
+.header_col_15 {
+  width: 15%;
+}
+
+.total_bg {
+  background-color: #b8d3f7;
+  font-size: 12px !important;
+} 
+.each_acc_total_bg {
+  background-color: #d6dde5;
+}
+
+.owner_total_bg {
+  background-color: #fd7e141a;
+}
+.separatorRow {
+  border: 1px solid #c4c4c4;
+}
+.table_second_th {
+  top: 28px !important;
+  border: 1px solid #fff !important;
+}
+.age_select {
+  background-color: #fff !important;
+  font-weight: 500 !important;
+  color: #aaaaaa !important;
+  font-size: 12px !important;
+}
+
+.age_over_60 {
+  color: #D73038;
+}
+
+.age_over_30 {
+  color: #E1AF00;
+}
+
+.text_align_center {
+  text-align: center !important;
+}
+
+.text_align_right {
+  text-align: right !important;
+}
+
+.hpl_last_date_div {
+  padding: 6px;
+  border-radius: 3px;
+  margin: 0px 10px;
+  font-size: 12px;
+  font-weight: 400;
+  color: #ffffff;
+}
+.leader_div {
+  margin-top: -2px;
+}
+#leaderSelect {
+  font-weight: 600 !important;
+}
+.ms-options-wrap button {
+  font-size: 10px !important;
+}
+.ms-options-wrap > .ms-options .ms-selectall {
+    text-transform: capitalize
+}
+.sow_data_name_all {
+  color: #006eff;
+  cursor: pointer;
+}
+.sow_data_name_all:hover {
+  box-shadow: 0px 0px 10px #c4c0c0;
+}
+.employee_detail_inside .table th {
+  padding: 5px 5px !important;
+}
+.col_width_loc_4 .ms-options-wrap {
+    max-width: 140px !important;
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1350px) {
+  .header_col_20 {
+    width: 13%;
+    font-size: 10px !important;
+  }
+  .header_col_15 {
+    width: 18%;
+    font-size: 10px !important;
+  }
+  .col_width_loc .ms-options-wrap {
+    max-width: 140px !important;
+  }
+  .col_width_loc_2 .ms-options-wrap {
+    width: 120px !important;
+  }
+  #audit_head > th {
+    font-size: 10.5px !important;
+  }
+  .sort_img {
+    width: 15px !important;
+  }
+  .ms-options-wrap button {
+    font-size: 9px !important;
+  }
+  .ms-options-wrap > button:focus, .ms-options-wrap > button {
+    padding: 3px 20px 3px 3px;
+  }
+  .table_second_th {
+    top: 25px !important;
+  }
+  }
+  .no-break {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Optional: Adds ellipsis if text overflows */
+  }
+  .header_text_align {
+    display: flex;
+    justify-content: center;
+  }
+  .quater_div {
+    min-width: 50px;
+    text-align: center;
+  }
+  .quater_header{
+    text-align: center;
+  }
+  /* Prevents text from wrapping */
+  .no-wrap {
+      white-space: nowrap;
+  }
+/* Loading overlay for filter operations */
+#filterLoadingOverlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  z-index: 99999 !important;
+  display: none;
+}
+
+#filterLoadingOverlay .loader-div {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 60px !important;
+}
+
+#filterLoadingOverlay .loader-wheel-div {
+  animation: spin 1s infinite linear !important;
+  border: 2px solid rgba(30, 30, 30, 0.5) !important;
+  border-left: 7px solid #f08449 !important;
+  border-radius: 50% !important;
+  height: 50px !important;
+  margin-bottom: 10px !important;
+  width: 50px !important;
+}
+
+#filterLoadingOverlay .loader-text-div {
+  color: #e65c1a !important;
+  font-family: arial, sans-serif !important;
+  font-size: 12px !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+}
+
+/* #filterLoadingOverlay .loader-text-div:after {
+  content: 'Applying filter data...' !important;
+  animation: load 2s linear infinite !important;
+}
+
+@keyframes load {
+  0% {
+    content: 'Applying filter data.';
+  }
+  33% {
+    content: 'Applying filter data..';
+  }
+  67% {
+    content: 'Applying filter data...';
+  }
+  100% {
+    content: 'Applying filter data.';
+  }
+} */
+/* #audit_body>tr>td {
+  border: 1px solid #ddd;
+} */
+#legalEndSelect {
+  background-color: white;
+  height: 22px;
+  padding: 0px 5px;
+  /* color: #aaa !important; */
+  font-weight: 500;
+  font-size: 10px;
+}
+#legalEndSelect option {
+  color: black; /* change text color */
+  background-color: white; /* dropdown background */
+}
+.ms-options-wrap > .ms-options {
+  max-height: 250px !important;
+}
+
+@media screen and (max-width: 991px) {
+  .pipeline-toolbar {
+    min-height: auto;
+    padding: 18px;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .pipeline-toolbar-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .pipeline-toolbar {
+    margin: 0 -15px 20px;
+    padding: 16px;
+  }
+
+  .pipeline-toolbar-title {
+    font-size: 14px;
+  }
+
+  .pipeline-toolbar #leaderSelect,
+  .pipeline-toolbar #reportsBackBtnCustm {
+    min-width: 100%;
+    width: 100%;
+  }
+}
+</style>
+
+<body class="unselectable">
+  <div class="loader">
+    <div class="loader-wheel"></div>
+    <div class="loader-text"></div>
+  </div>
+  <div class="show_page" style="display: none;">
+    <div id="header"></div>
+
+    <div class="wrapper_outer">
+      <div id="loader" class="lds-dual-ring hidden overlay"></div>
+      <div class="container-fluid">
+        <div class="detail_box">
+          <div class="employee_form sow_detail">
+            <div class="detail_top_bar">
+              <div class="pipeline-toolbar">
+                <h1 class="pipeline-toolbar-title">High Probability Pipeline</h1>
+                <div class="pipeline-toolbar-actions">
+                  <div class="hpl_last_date_div pipeline-toolbar-date"><span id="hpl_last_updated"></span></div>
+                  <div class="leader_div">
+                    <select class="form-control" id="leaderSelect" onchange="assignHighProbData()">
+                    </select>
+                  </div>
+                  <button class="btn btn-info" id="reportsBackBtnCustm">Back</button>
+                </div>
+              </div>
+              <!-- <button class="btn btn-info pull-right" id="excelDownload" onclick="downloadExcel()"
+                title="Excel Download"><i class="fa fa-download" aria-hidden="true"></i></button> -->
+             
+              <div class="employee_detail_inside employee_sow_details table-responsive fixTableHead">
+                <table class="table table-bordered border-primary sow_emp_details_class " id="audit_report" style="width: 100%;">
+                  <thead class="thead-light">
+                    <tr id="audit_head" class="report_sow_account_header">
+                    </tr>
+                    <tr class="report_sow_account_header noExl" id="audit_sub_header">
+                    </tr>
+                  </thead>
+                  <tbody id="audit_body">
+                    <!-- Data rows will be populated here -->
+                  </tbody>
+                </table>                
+              </div>
+            </div>
+          </div>
+         
+
+        </div>
+      </div>
+    </div>
+    <!-- Loading overlay using existing loader design -->
+    <div id="filterLoadingOverlay">
+      <div class="loader-div">
+        <div class="loader-wheel-div"></div>
+        <div class="loader-text-div"></div>
+      </div>
+    </div>
+
+  </div>
+  
+
+  </div>
+  
+</body>
+
+</html>

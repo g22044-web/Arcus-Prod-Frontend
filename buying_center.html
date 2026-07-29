@@ -1,0 +1,2288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Factspan - ARCUS - Buying Center</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv='cache-control' content='no-cache'>
+  <meta http-equiv='expires' content='0'>
+  <meta http-equiv='pragma' content='no-cache'>
+  <script src="js/chatbot.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+
+
+
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+  <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+  <script type="text/javascript" src="js/jquery.ajax-cross-origin.min.js"></script>
+  <link rel="stylesheet" href="css/custom.css" />
+  <script src="js/common.js"></script>
+  <script src="js/buying_center.js?v=1.3"></script>
+  <link rel="stylesheet" href="css/busyLoading.css" />
+  <link rel="icon" href="images\factspan.png" type="image/png" sizes="16x16">
+  <link rel="stylesheet" href="css/jquery.multiselect.css">
+  <script src="lib/jQuery-MultiSelect.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@3.5.1/select2.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@3.5.1/select2.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    type="text/css" />
+  <script src="https://kit.fontawesome.com/01f906aa6d.js" crossorigin="anonymous"></script>
+  <!-- Include Quill stylesheet -->
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
+  <!-- Include Quill library -->
+  <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <script>
+    $(function () {
+      const urlParams = new URLSearchParams(window.location.search);
+      const fromParam = urlParams.get('from');
+      if (fromParam !== 'engagement' && fromParam !== 'accountCreation') {
+        $('#header').load('header.html');
+      } else {
+        $('#header').hide();
+        // $('.app-header').hide();
+      }
+    })
+
+    // URL parameter handling moved to buying_center.js
+
+  </script>
+</head>
+<style>
+  
+  #app-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #menu {
+    text-align: center;
+    box-shadow: 0px 0px 10px #c4c0c0;
+    border-radius: 15px;
+
+    align-items: center;
+    justify-content: center;
+    width: 85%;
+
+    background-color: #fff;
+    padding: 40px 60px 60px 60px;
+  }
+
+  #dash-title {
+    text-align: left;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .center-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    height: 120px;
+    color: #fff;
+    font-size: 20px;
+    box-shadow: 0px 0px 10px #571b1b;
+    font-weight: 600;
+  }
+
+  .menu-header {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+
+
+
+  @media screen and (max-height: 450px) {
+    .sidenav {
+      padding-top: 15px;
+    }
+
+    .sidenav a {
+      font-size: 12px;
+    }
+  }
+
+  #emp_table thead>tr>th {
+    background-color: #fae9e9;
+    text-align: center;
+  }
+
+  #emp_table td,
+  #customers th {
+    border: 0.5px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+
+
+  .navbar-default .navbar-nav>li>a {
+
+    font-weight: 500;
+  }
+
+  #profile {
+    background-color: cadetblue;
+    border-radius: 124px;
+    font-size: 30px;
+    margin-left: 15px;
+  }
+
+  #profile_div a:hover {
+    color: #eff4f8;
+  }
+
+  .navbar-brand {
+    padding: 0px 15px;
+  }
+
+  .employee_form .btn-info {
+    margin: 0 !important;
+    padding: 1px 3px;
+  }
+
+  ul:not(.notes_body_div ul),
+  ol:not(.notes_body_div ol) {
+    padding-left: 0px !important;
+  }
+
+  .notes_body_div ul,
+  .notes_body_div ol {
+    padding-left: 30px !important;
+    margin: 10px 0 !important;
+    list-style-position: outside !important;
+    display: block !important;
+  }
+
+  .notes_body_div ul {
+    list-style-type: disc !important;
+  }
+
+  .notes_body_div ol {
+    list-style-type: decimal !important;
+  }
+
+  .notes_body_div li {
+    display: list-item !important;
+    margin-bottom: 5px !important;
+    list-style: inherit !important;
+  }
+
+
+  /* .create_new{
+    margin-left: 600px;
+  }
+  .submenu_styles {
+  background-color: rgb(100, 219, 140);
+  font-size: 12px;
+  font-weight: 900;
+  color: white;
+  margin: 4px;
+  margin-left: 600px;
+  border-radius: 5px;
+  float: right;
+}
+.reports_menu_styles {
+  box-shadow: 0px 0px 10px #c4c0c0;
+  padding: 10px;
+} */
+  .reporting-frame-work-btn {
+    float: right;
+    margin-top: -40px;
+    padding: 10px;
+  }
+
+  .create-report {
+    padding: 5px !important;
+  }
+
+  .reports_dashboard_block {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .each_report_div {
+    min-width: 20%;
+  }
+
+  /* React App iframe Styles */
+  .react-app-container {
+    /* margin-top: 20px; */
+    position: relative;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .iframe-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    border-radius: 8px;
+  }
+
+  .loading-text {
+    font-size: 16px;
+    color: #6c757d;
+    font-weight: 500;
+  }
+
+  .iframe-error {
+    padding: 40px;
+    text-align: center;
+    background: #f8f9fa;
+    border-radius: 8px;
+  }
+
+  .error-message {
+    color: #dc3545;
+  }
+
+  .error-message i {
+    font-size: 48px;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .error-message h4 {
+    margin-bottom: 15px;
+    color: #dc3545;
+  }
+
+  .error-message p {
+    margin-bottom: 20px;
+    color: #6c757d;
+  }
+
+  #react-app-iframe {
+    height: calc(100vh - 110px);
+  }
+
+  /* --- LAYOUT & STRUCTURE --- */
+  .app-container {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 1.5rem;
+  }
+
+  .app-header {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .app-header h1 {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .card {
+    border-radius: 0.75rem;
+    border: 1px solid #e5e7eb;
+    background-color: #fff;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    height: calc(100vh - 145px);
+    overflow-y: auto;
+  }
+
+  .card-header {
+    border-bottom: 1px solid #f3f4f6;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-header h2 {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .card-body {
+    padding: 1rem 1rem 1.25rem;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    font-size: 14px;
+  }
+
+  .card-footer-text {
+    color: #4b5563;
+  }
+
+  /* .table-container {
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 60vh;
+  } */
+
+  .enhanced-table thead {
+    position: sticky;
+    top: 0;
+    /* background: #313265; */
+    z-index: 1;
+  }
+
+
+  .hidden {
+    display: none;
+  }
+
+  /* --- BUTTONS --- */
+  .buying_center_btn {
+    color: #fc8c15;
+    border: 1px solid #e07436;
+    background-color: transparent;
+    border-radius: 50px;
+    font-size: 10px;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    padding: 5px 20px;
+  }
+
+  #buyingCenterBackBtnCustm {
+    padding: 5px 20px;
+  }
+
+  .buying_center_btn:hover {
+    background-color: #e07436;
+    color: white;
+    border: 1px solid #e07436;
+    outline: none;
+  }
+
+  .buying_center_btn.disabled {
+    background-color: #ccc !important;
+    border-color: #ccc !important;
+    color: #666 !important;
+    cursor: not-allowed !important;
+    /* opacity: 0.6; */
+  }
+
+  .buying_center_btn.disabled:hover {
+    background-color: #ccc !important;
+    border-color: #ccc !important;
+    color: #666 !important;
+  }
+
+  .back-btn {
+    border-radius: 50px;
+    border: 1px solid #fc8c15;
+    background-color: #fff;
+    padding: 5px 20px;
+    font-size: 10px;
+    font-weight: 500;
+    color: #fc8c15;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .back-btn:hover {
+    background-color: #fc8c15;
+    color: white;
+  }
+
+  /* --- FORM & TABS --- */
+  .tab-list {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .tab-container {
+    border-bottom: 1px solid #e5e7eb;
+    padding: 0.5rem 1rem 0;
+  }
+
+  .tab-btn {
+    position: relative;
+    margin-bottom: -1px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 2px solid transparent;
+    padding: 0 0.25rem 0.5rem;
+    background: none;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    cursor: pointer;
+    color: #4b5563;
+  }
+
+  .tab-btn:hover {
+    color: #1f2937;
+  }
+
+  .tab-btn.active {
+    border-color: #e05e00;
+    color: #111827;
+  }
+
+  .tab-btn svg {
+    height: 1rem;
+    width: 1rem;
+    stroke: currentColor;
+    color: #9ca3af;
+  }
+
+  .tab-btn.active svg {
+    color: #f97316;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .form-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .md-col-span-2 {
+      grid-column: span 2 / span 2;
+    }
+  }
+
+  .sticky-footer {
+    position: sticky;
+    bottom: 0;
+    margin-top: 1rem;
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    border-top: 1px solid #f3f4f6;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 0.75rem 1rem;
+    backdrop-filter: blur(8px);
+  }
+
+  .sow-link {
+    color: #2985C1;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .sow-link:hover {
+    color: #1e40af;
+  }
+
+  /* --- NOTIFICATIONS --- */
+  .flash-message {
+    margin-top: 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid #a7f3d0;
+    background-color: #f0fdf4;
+    padding: 0.5rem 0.75rem;
+    font-size: 14px;
+    color: #166534;
+  }
+
+  .flash-message .font-semibold {
+    font-weight: 600;
+  }
+
+  .flash-message .dismiss-btn {
+    margin-left: 0.5rem;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  /* --- TABLE STYLES (Existing + Combined) --- */
+  .sortable-header {
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s ease;
+    position: relative;
+    padding-right: 2rem !important;
+  }
+
+  .sortable-header:hover {
+    background-color: #f1f5f9;
+  }
+
+  .sortable-header.active {
+    background-color: #e2e8f0;
+  }
+
+  .sort-indicator {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+  }
+
+  .sort-arrow {
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    opacity: 0.3;
+    transition: opacity 0.2s ease;
+  }
+
+  .sort-arrow.up {
+    border-bottom: 5px solid #313265;
+    margin-bottom: 1px;
+  }
+
+  .sort-arrow.down {
+    border-top: 5px solid #313265;
+  }
+
+  .sort-arrow.active {
+    opacity: 1;
+  }
+
+  .enhanced-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e2e8f0;
+  }
+
+  .enhanced-table th {
+    font-weight: 600;
+    color: #313265;
+    padding: 1rem 1.5rem;
+    text-align: left;
+    font-size: 11px;
+    border-bottom: 2px solid #313265;
+    position: relative;
+    white-space: nowrap;
+  }
+
+  .enhanced-table th:first-child {
+    border-top-left-radius: 12px;
+  }
+
+  .enhanced-table th:last-child {
+    border-top-right-radius: 12px;
+  }
+
+  .enhanced-table td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #dee2e6;
+    color: #313265;
+    font-size: 10px;
+    text-align: left;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  .enhanced-table tbody tr {
+    transition: all 0.2s ease;
+  }
+
+  .enhanced-table tbody tr:hover {
+    background-color: #f8fafc;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .enhanced-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .stakeholders-table {
+    width: 100%;
+    min-width: 1024px;
+    text-align: left;
+    font-size: 14px;
+  }
+
+  .stakeholders-table thead tr {
+    border-bottom: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+    color: #4b5563;
+  }
+
+  .stakeholders-table th,
+  .stakeholders-table td {
+    padding: 0.5rem 0.75rem;
+    font-weight: 500;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .stakeholders-table tbody tr {
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .stakeholders-table tbody tr:last-child {
+    border-bottom: 0;
+  }
+
+  .stakeholders-table tbody tr:hover {
+    background-color: rgba(239, 246, 255, 0.4);
+  }
+
+  .delete-stakeholder-btn {
+    color: black;
+    font-weight: 500;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .delete-stakeholder-btn:hover {
+    color: #fc8c15;
+  }
+
+  .delete-stakeholder-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  .restore-stakeholder-btn {
+    color: #28a745;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .restore-stakeholder-btn:hover {
+    color: #218838;
+  }
+
+  /* --- TABLE CELL & BADGE STYLES --- */
+  .account-cell {
+    font-weight: 500;
+    color: #1f2937;
+  }
+
+  .bc-link {
+    color: #313265;
+    /* text-decoration: underline; */
+    font-weight: 500;
+    transition: color 0.2s ease;
+    /* white-space: nowrap; */
+  }
+
+  .bc-link:hover {
+    font-weight: 600;
+    /* white-space: nowrap; */
+  }
+
+  .type-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    /* font-size: 11px; */
+    font-weight: 500;
+    /* text-transform: uppercase; */
+    letter-spacing: 0.025em;
+    margin: 1px;
+  }
+
+  .stakeholder-badge {
+    background-color: #d9e3f7;
+    color: #374151;
+  }
+
+  .type-badge.new {
+    background-color: #dcfce7;
+    color: #166534;
+  }
+
+  .type-badge.net\.new {
+    background-color: #dbeafe;
+    color: #1e40af;
+    white-space: nowrap;
+  }
+
+  .type-badge.current {
+    background-color: #fef3c7;
+    color: #92400e;
+  }
+
+  .type-badge.current\.-.new {
+    background-color: #e0e7ff;
+    color: #3730a3;
+  }
+
+  .description-cell {
+    max-width: 300px;
+    vertical-align: middle;
+  }
+
+  .description-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+  }
+
+  .sop-cell {
+    font-weight: 500;
+    color: #059669;
+  }
+
+  .created-cell {
+    color: #6b7280;
+    font-size: 12px;
+  }
+
+  /* --- FORM ELEMENTS --- */
+  .field_style {
+    background-color: #ed7d2d1a;
+    border: 0;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .field_style label {
+    margin-bottom: 0.25rem;
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: #4b5563;
+    text-align: left;
+  }
+
+  .field_style label .required-star {
+    color: #ef4444;
+  }
+
+  .required-star {
+    color: #ef4444;
+  }
+
+  .bg_white {
+    background-color: white !important;
+  }
+
+  .form-input,
+  .form-select,
+  .form-textarea {
+    width: 100%;
+    border-radius: 0.5rem;
+    border: 1px solid #d1d5db;
+    background-color: white;
+    padding: 0.5rem 0.75rem;
+    font-size: 10px;
+    color: #313265;
+    font-weight: 500;
+    min-height: 2.5rem;
+  }
+
+  .form-select {
+    padding: 0px !important;
+  }
+
+  select.form-select {
+    padding: 0px 20px 0px 5px !important;
+  }
+
+  .form-input::placeholder {
+    color: #9ca3af;
+  }
+
+  .form-input:focus,
+  .form-select:focus,
+  .form-textarea:focus {
+    border-color: #2985C1;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+  }
+
+  .form-input.error,
+  .form-select.error,
+  .form-textarea.error {
+    border-color: #f87171;
+  }
+
+  .form-input:disabled {
+    background-color: #f9fafb !important;
+    color: #6b7280 !important;
+    border-color: #d1d5db !important;
+    cursor: not-allowed !important;
+    /* opacity: 0.7; */
+  }
+
+  .error-message {
+    margin-top: 0.25rem;
+    font-size: 12px;
+    color: #dc2626;
+  }
+
+  /* --- DISABLED STAKEHOLDER FIELDS STYLING --- */
+  .stakeholder-field:disabled {
+    background-color: #f9fafb !important;
+    color: #6b7280 !important;
+    border-color: #d1d5db !important;
+    cursor: not-allowed !important;
+    /* opacity: 0.7; */
+  }
+
+  .stakeholder-field:disabled::placeholder {
+    color: #9ca3af !important;
+  }
+
+  .edit-stakeholder-btn {
+    color: #fc8c15;
+    border: 1px solid #fc8c15;
+    background-color: transparent;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .edit-stakeholder-btn:hover {
+    background-color: #fc8c15;
+    color: white;
+  }
+
+  /* Apply zero padding to all dropdowns */
+  select {
+    padding: 0 !important;
+  }
+
+  #s2id_fsGrowthPartner,
+  #s2id_smePartnerTech,
+  #s2id_fsClientPartner,
+  #s2id_fsDeliveryPartner,
+  #s2id_bcType {
+    padding: 0px !important;
+  }
+
+  /* Hide Created column */
+  th[data-sort-key="createdAt"],
+  .created-cell {
+    display: none !important;
+  }
+
+  /* Partners container - ensure each partner row takes full width */
+  .partners-container {
+    display: block !important;
+    width: 100%;
+  }
+
+  /* Partner row layout - 3 fields in one row */
+  .partner-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+
+  .partner-row .field_style {
+    flex: 1;
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 768px) {
+    .partner-row {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+
+  .select2-container .select2-choice>.select2-chosen {
+    white-space: break-spaces !important;
+  }
+
+  .account-name {
+    color: #042b5e;
+  }
+
+  /* Key Stakeholders Styles */
+  .key-stakeholder-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    align-items: end;
+  }
+
+  .key-stakeholder-row .field_style {
+    flex: 1;
+    margin-bottom: 0;
+  }
+
+  .key-stakeholder-row .delete-key-stakeholder-btn {
+    color: #dc3545;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    font-size: 16px;
+    margin-bottom: 0.25rem;
+  }
+
+  .key-stakeholder-row .delete-key-stakeholder-btn:hover {
+    color: #b02a37;
+  }
+
+  .key-stakeholder-row .restore-key-stakeholder-btn {
+    color: #28a745;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    font-size: 16px;
+    margin-bottom: 0.25rem;
+  }
+
+  .key-stakeholder-row .restore-key-stakeholder-btn:hover {
+    color: #218838;
+  }
+
+  @media (max-width: 768px) {
+    .key-stakeholder-row {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+
+  #add-key-stakeholder-btn {
+    margin-top: 0px !important;
+    padding: 0px 5px !important;
+  }
+
+  /* Overview Row Styles - all four fields in same row with proper width fitting */
+  .overview-row {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    margin-bottom: 1rem;
+    align-items: flex-start;
+  }
+
+  .overview-row .field_style {
+    flex: 1;
+    margin-bottom: 0;
+    min-width: 0;
+  }
+
+  @media (max-width: 768px) {
+    .overview-row {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+
+  #header-actions {
+    display: flex;
+    gap: 5px;
+  }
+
+  /* --- NOTES & AUDIT LOGS STYLES --- */
+  .bg_transparent {
+    background-color: transparent !important;
+  }
+
+  .interaction-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* margin-bottom: 1rem; */
+    padding: 0.5rem 0;
+  }
+
+  .interaction-type-options {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .custom-radio {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  .custom-radio input {
+    display: none;
+  }
+
+  .radio-content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    color: #6b7280;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .custom-radio input:checked+.radio-content {
+    color: #e05e00;
+  }
+
+  .custom-radio .radio-content i {
+    font-size: 16px;
+  }
+
+  .custom-radio input:checked+.radio-content::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-color: #e05e00;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+
+  /* Fallback ring if dot is not enough */
+  .custom-radio .radio-content::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    border: 2px solid #e05e00;
+    background-color: transparent;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+
+  .date-field-inline {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .date-field-inline label {
+    font-size: 12px;
+    color: #4b5563;
+    font-weight: 500;
+  }
+
+  .form-input-inline {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 0.5rem;
+    font-size: 12px;
+  }
+
+  .next-steps-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .toggle-group {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .toggle-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #e05e00;
+    background: #fff;
+    color: #e05e00;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .toggle-btn.active {
+    background: #e05e00;
+    color: #fff;
+  }
+
+  .next-interaction-header-row {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .section-toggle-btn {
+    background: #e05e00;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* Audit Logs Styles */
+  .audit-filters-row {
+    display: flex;
+    gap: 2rem;
+    padding: 1rem;
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  .custom-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: #374151;
+  }
+
+  .checkbox-box {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #e05e00;
+    border-radius: 4px;
+    display: inline-block;
+    position: relative;
+  }
+
+  .custom-checkbox input {
+    display: none;
+  }
+
+  .custom-checkbox input:checked+.checkbox-box {
+    background-color: #e05e00;
+  }
+
+  .custom-checkbox input:checked+.checkbox-box::after {
+    content: '✓';
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+  }
+
+  .audit-timeline-container {
+    /* padding: 1.5rem; */
+    height: calc(100vh - 155px);
+    overflow-y: auto;
+  }
+
+  /* Audit Timeline Redesign */
+  .audit-item {
+    padding: 1rem 0;
+    /* border-bottom: 1px solid #f3f4f6; */
+    border-bottom: 2px solid #D9D9D9;
+    /* padding: 0px 15px; */
+  }
+
+  .audit-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 13px;
+    color: #374151;
+    margin-bottom: 0.75rem;
+  }
+
+  .audit-header.can-toggle {
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s;
+    padding: 2px 4px;
+    border-radius: 4px;
+  }
+
+  .audit-header.can-toggle:hover {
+    background-color: #f9fafb;
+  }
+
+  .audit-chevron {
+    font-size: 10px;
+    color: #9ca3af;
+    transition: transform 0.2s;
+    margin-left: auto;
+  }
+
+  .audit-item.expanded .audit-chevron {
+    transform: rotate(180deg);
+  }
+
+  .audit-bullet {
+    width: 10px;
+    height: 10px;
+    background-color: #f97316;
+    /* Orange */
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .audit-card-peach,
+  .audit-details-card {
+    display: none;
+    /* Hidden by default */
+  }
+
+  .audit-item.expanded .audit-card-peach,
+  .audit-item.expanded .audit-details-card {
+    display: block;
+  }
+
+  .audit-header-main {
+    font-weight: 500;
+  }
+
+  .audit-header-meta {
+    color: #9ca3af;
+    font-weight: 400;
+  }
+
+  .audit-card-peach {
+    background-color: #fffaf5;
+    /* Peach/Beige tint */
+    border: 1px solid #ffedd5;
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+    margin-top: 0.5rem;
+  }
+
+  .audit-detail-row {
+    margin-bottom: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .audit-detail-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .audit-detail-label {
+    font-weight: 700;
+    color: #1f2937;
+    white-space: nowrap;
+    min-width: 120px;
+  }
+
+  .audit-detail-value {
+    color: #4b5563;
+    flex: 1;
+    font-weight: 400;
+  }
+
+  .audit-filters-row {
+    background: #f9fafb;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 1.5rem;
+    border: 1px solid #e5e7eb;
+    align-items: baseline;
+    justify-content: first baseline;
+  }
+
+  .audit-filters-row .custom-checkbox {
+    margin-bottom: 0;
+    cursor: pointer;
+    font-weight: 500;
+    color: #4b5563;
+  }
+
+  .audit-details-card table {
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  .audit-col-field {
+    width: 25%;
+  }
+
+  .audit-col-from,
+  .audit-col-to {
+    width: 37.5%;
+  }
+
+  .audit-details-card td {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .no-audit-data {
+    text-align: center;
+    color: #9ca3af;
+    padding: 3rem;
+  }
+
+  /* Notes Tab Specifics */
+  .notes-footer-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f3f4f6;
+  }
+
+  .buying_center_btn.cancel-btn {
+    background-color: #fff;
+    color: #e05e00;
+    border: 1px solid #e05e00;
+  }
+
+  .buying_center_btn.cancel-btn:hover {
+    background-color: #fff7ed;
+    color: #e05e00;
+  }
+
+  .next-steps-content.hidden,
+  .next-interaction-content.hidden {
+    display: none;
+  }
+
+  .detailed-notes>label,
+  #detailedNotes,
+  #nextStepsText {
+    font-size: 12px;
+  }
+
+  .placeicon {
+    font-family: "Font Awesome 5 Free", "Font Awesome 6 Free", "poppins", sans-serif !important;
+    font-weight: 900 !important;
+  }
+
+  #meetingDate,
+  #nextStepsEta,
+  #nextInteractionEta {
+    font-size: 10px !important;
+  }
+
+  #updateNoteBtn,
+  #cancelNoteBtn {
+    border-radius: 50px;
+    border: 1px solid #fc8c15;
+    background-color: #fff;
+    padding: 5px 20px;
+    font-size: 10px;
+    font-weight: 500;
+    color: #fc8c15;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  #updateNoteBtn:hover,
+  #cancelNoteBtn:hover {
+    background-color: #fc8c15;
+    color: white;
+  }
+
+  /* Disabled field styling for better visual feedback */
+  #buying-center-form input:disabled,
+  #buying-center-form textarea:disabled,
+  #buying-center-form select:disabled,
+  #notes-panel input:disabled,
+  #notes-panel textarea:disabled,
+  #notes-panel select:disabled {
+    background-color: #f3f4f6 !important;
+    /* opacity: 0.6; */
+    cursor: not-allowed;
+  }
+
+  /* Stakeholder link styling */
+  .stakeholder-link {
+    color: #1e40af;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .stakeholder-link:hover {
+    /* text-decoration: underline; */
+    color: #1e40af;
+    box-shadow: 0px 0px 10px #c4c0c0;
+    white-space: nowrap;
+  }
+
+  .fa-solid.fa-circle-dot {
+    color: #2985C1;
+  }
+
+  .input-group-addon {
+    display: none !important;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 500 !important;
+    color: #374151;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .audit-card-peach {
+    font-size: 12px !important;
+    font-weight: 400;
+  }
+
+  /* Ported styles from sow.html and custom.css */
+  .fa-solid.fa-circle-dot {
+    color: #2985C1;
+  }
+
+  /* Refined Audit Log Styles */
+  .audit-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .audit-row {
+    border-bottom: 2px solid #D9D9D9;
+    padding: 5px 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .audit-row i.fas.fa-circle {
+    color: #2985C1;
+    font-size: 8px;
+    margin-top: 6px;
+    /* Align with first line of text */
+  }
+
+  .audit-content {
+    flex: 1;
+    line-height: 1.4;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+  }
+
+  .audit-msg {
+    font-size: 13px;
+    color: #313265;
+    font-weight: 400;
+  }
+
+  .audit-msg strong {
+    font-weight: 500;
+  }
+
+  .audit-meta {
+    color: #818199;
+    font-size: 12px;
+    margin-left: 8px;
+    font-weight: 400;
+  }
+
+  .notes_div,
+  .notes_name_div {
+    display: flex;
+    gap: 15px;
+  }
+
+  .notes_div {
+    margin-bottom: 0;
+  }
+
+  .notes_icon_text {
+    margin: 0px;
+    background-color: #4079c3;
+    padding: 2px 5px;
+    color: white;
+    font-size: 12px;
+    border-radius: 30px;
+    font-weight: 600;
+  }
+
+  .notes_body_div {
+    display: flex;
+    flex-direction: column;
+    color: #313265;
+    font-family: poppins;
+  }
+
+  .notes_comments_div {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    color: #818199;
+  }
+
+  .stakeholder-link {
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .stakeholder-link:hover {
+    text-decoration: underline !important;
+    filter: brightness(0.9);
+  }
+
+  .highlight-row {
+    background-color: #fef9c3 !important;
+    /* light yellow */
+    transition: background-color 0.5s ease;
+  }
+
+  .engagement-detailed-note {
+    font-size: 12px;
+  }
+
+  .showAllLogs {
+    border: 1px solid #e3e2e2;
+    position: absolute;
+    right: 40px;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    gap: 5px;
+    margin-top: 14px;
+    z-index: 10;
+  }
+
+  .audit-item-div {
+    border-bottom: 2px solid #D9D9D9;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .audit-item-div:last-child {
+    border-bottom: none;
+  }
+
+  .fa-solid.fa-circle-dot {
+    color: #2985C1;
+  }
+
+  /* NPS Modal styling fallback for buying_center.html */
+  .nps-modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+  }
+  
+  .nps-modal-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 0;
+    border-radius: 12px;
+    width: 85%;
+    max-width: 650px;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+    border: none;
+    animation: modalSlideDown 0.35s ease-out;
+  }
+  
+  @keyframes modalSlideDown {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .nps-close {
+    font-size: 28px;
+    font-weight: 400;
+    color: #888;
+    cursor: pointer;
+    line-height: 1;
+  }
+  
+  .nps-close:hover {
+    color: #000;
+  }
+  
+  .sow-remap-card select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234b5563' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 14px;
+    padding-right: 30px !important;
+  }
+
+  .btn-modal-cancel:hover {
+    background-color: #f9fafb !important;
+    border-color: #cbd5e1 !important;
+    text-decoration: none !important;
+  }
+
+  .btn-modal-delete:hover {
+    background-color: #e5925e !important;
+    text-decoration: none !important;
+  }
+  #cancelDeleteKsBtn {
+    background: white;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 2px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.2s;
+    outline: none;
+  }
+  #confirmDeleteKsBtn {
+    background: #e05e00;
+    border: none;
+    border-radius: 8px;
+    padding: 2px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    outline: none;
+  }
+  #confirmDeleteKsBtn:hover {
+    background-color: #e5925e;
+  }
+ 
+</style>
+
+<body>
+  <div class="loader">
+    <div class="loader-wheel"></div>
+    <div class="loader-text"></div>
+  </div>
+  <div class="show_page">
+    <div id="header"></div>
+    <div class="wrapper_outer">
+
+      <div class="container-fluid">
+        <div>
+          <div class="employee_form" id="emp_form">
+            <div id="buying_center_app">
+              <div id="app">
+                <!-- APP HEADER -->
+                <header class="app-header">
+                  <h1 id="page-title">Buying Centers</h1>
+                  <div id="header-actions">
+                    <button id="go-create-btn" class="buying_center_btn">+ Create</button>
+                    <div id="form-header-actions" class="hidden"
+                      style="display: flex; align-items: center; gap: 0.5rem;">
+                      <button id="edit-mode-btn" class="buying_center_btn hidden">Edit</button>
+                      <button id="go-list-btn" class="back-btn">Back</button>
+                    </div>
+                    <button class="btn btn-info pull-right" id="buyingCenterBackBtnCustm">Back</button>
+                  </div>
+                </header>
+
+                <!-- DIRECTORY / LIST PAGE -->
+                <main id="directory-page">
+                  <section class="card">
+                    <!-- <div class="card-header">
+                      <h2>Buying Centers Directory</h2>
+                    </div> -->
+                    <div id="flash-message-container" class="hidden flash-message" style="margin: 0 1rem;">
+                    </div>
+                    <div class="table-container">
+                      <div class="loader-div">
+                        <div class="loader-wheel-div"></div>
+                        <div class="loader-text-div"></div>
+                      </div>
+                      <table class="enhanced-table min-w-[940px]">
+                        <thead>
+                          <tr>
+                            <th class="sortable-header" data-sort-key="bcName">Buying Center <span
+                                class="sort-indicator"><span class="sort-arrow up"></span><span
+                                  class="sort-arrow down"></span></span></th>
+                            <th class="sortable-header" data-sort-key="bcType">Type <span class="sort-indicator"><span
+                                  class="sort-arrow up"></span><span class="sort-arrow down"></span></span>
+                            </th>
+                            <th class="sortable-header" data-sort-key="description">Services/Description <span
+                                class="sort-indicator"><span class="sort-arrow up"></span><span
+                                  class="sort-arrow down"></span></span></th>
+                            <th class="sortable-header" data-sort-key="superboss">Super Boss <span
+                                class="sort-indicator"><span class="sort-arrow up"></span><span
+                                  class="sort-arrow down"></span></span></th>
+                            <!-- <th class="sortable-header" data-sort-key="superbossDesignation">Super Boss Designation <span
+                                class="sort-indicator"><span class="sort-arrow up"></span><span class="sort-arrow down"></span></span></th> -->
+                            <th class="sortable-header" data-sort-key="keyStakeholder">Key Stakeholder <span
+                                class="sort-indicator"><span class="sort-arrow up"></span><span
+                                  class="sort-arrow down"></span></span></th>
+                            <th class="sortable-header" data-sort-key="stakeholder">Stakeholder <span
+                                class="sort-indicator"><span class="sort-arrow up"></span><span
+                                  class="sort-arrow down"></span></span></th>
+                            <th class="sortable-header" data-sort-key="sop1y">Size of Prize 1Y <span
+                                class="sort-indicator"><span class="sort-arrow up"></span><span
+                                  class="sort-arrow down"></span></span></th>
+                            <th class="sortable-header" data-sort-key="createdAt">Created <span
+                                class="sort-indicator"><span class="sort-arrow up"></span><span
+                                  class="sort-arrow down"></span></span></th>
+                          </tr>
+                        </thead>
+                        <tbody id="directory-table-body">
+                          <!-- Rows will be injected by jQuery -->
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- <div class="card-footer">
+                      <p class="card-footer-text">Total: <span id="total-items">0</span></p>
+                      <span class="card-footer-text" style="color: #6b7280;">Use the top "Create" button to add
+                        another</span>
+                    </div> -->
+                  </section>
+                </main>
+
+                <!-- FORM PAGE (for Create/Edit) -->
+                <main id="form-page" class="hidden">
+                  <section class="card">
+                    <div class="card-header">
+                      <h2 id="form-title"></h2>
+                    </div>
+
+                    <form id="buying-center-form" novalidate>
+                      <input type="hidden" id="edit-id" />
+                      <!-- Tabs -->
+                      <div class="tab-container">
+                        <div role="tablist" class="tab-list">
+                          <button type="button" data-tab="overview" class="tab-btn active">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9 12h6M9 16h6M8 4h5l5 5v9a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"></path>
+                            </svg>
+                            Overview
+                          </button>
+                          <button type="button" data-tab="stakeholders" class="tab-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M17 20v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2M13 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0M21 20v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75">
+                              </path>
+                            </svg>
+                            <span id="stakeholders-tab-label">Stakeholders (0)</span>
+                          </button>
+                          <button type="button" data-tab="fs-members" class="tab-btn" id="fs-members-tab">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z">
+                              </path>
+                            </svg>
+                            FS Partners
+                          </button>
+                          <button type="button" data-tab="notes" id="notes-tab-btn" class="tab-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                            </svg>
+                            Notes
+                          </button>
+                          <button type="button" data-tab="audit-logs" id="audit-logs-tab-btn" class="tab-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <circle cx="12" cy="12" r="10"></circle>
+                              <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            Audit Logs
+                          </button>
+                        </div>
+                      </div>
+
+                      <!-- Panels -->
+                      <div class="card-body">
+                        <!-- Overview Panel -->
+                        <div id="overview-panel" class="tab-panel form-grid">
+                          <div class="field_style">
+                            <label>Account <span class="required-star">*</span></label>
+                            <input type="text" id="account" name="account" placeholder="Enter account name"
+                              class="form-input bg_white" autocomplete="off">
+                            <p class="error-message"></p>
+                          </div>
+                          <div class="field_style">
+                            <label>Buying Center <span class="required-star">*</span> <i class="fas fa-info-circle"
+                                data-toggle="tooltip" data-placement="top"
+                                title="Group/unit involved in purchase decisions"></i></label>
+                            <input type="text" id="bcName" name="bcName" placeholder="e.g., GDA"
+                              class="form-input bg_white" autocomplete="off">
+                            <p class="error-message"></p>
+                          </div>
+                          <div class="md-col-span-2 field_style">
+                            <label>Services/Description <span class="required-star">*</span></label>
+                            <textarea id="description" name="description" rows="2"
+                              placeholder="Describe the services/solution" class="form-textarea bg_white"></textarea>
+                            <p class="error-message"></p>
+                          </div>
+                          <div class="overview-row">
+                            <div class="field_style">
+                              <label>Super Boss <span class="required-star">*</span> <i class="fas fa-info-circle"
+                                  data-toggle="tooltip" data-placement="top"
+                                  title="Responsible for budget ownership and final approval of capex/opex decisions"></i></label>
+                              <input type="text" id="superboss" name="superboss" placeholder="Holly Landry"
+                                class="form-input bg_white superboss-input" autocomplete="off">
+                              <p class="error-message"></p>
+                            </div>
+                            <div class="field_style">
+                              <label>Super Boss Designation <span class="required-star">*</span> </label>
+                              <input type="text" id="superbossDesignation" name="superbossDesignation"
+                                placeholder="Enter super boss designation"
+                                class="form-input bg_white superboss-designation-input" autocomplete="off">
+                              <p class="error-message"></p>
+                            </div>
+                          </div>
+                          <div class="overview-row">
+                            <div class="field_style">
+                              <label>Type <span class="required-star">*</span></label>
+                              <select id="bcType" name="bcType" class="form-select bg_white">
+                                <option value="Net New">Net New</option>
+                                <option value="Current">Current</option>
+                                <option value="Current - New">Current - New</option>
+                              </select>
+                              <p class="error-message"></p>
+                            </div>
+                            <div class="field_style">
+                              <label>Size of Prize $</label>
+                              <input type="text" id="sop1y" name="sop1y" placeholder="USD" class="form-input bg_white"
+                                autocomplete="off">
+                            </div>
+                          </div>
+                          <div class="md-col-span-2 field_style" id="key-stakeholders-section">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
+                              <label style="margin-bottom: 0;">Key Stakeholders <span class="required-star">*</span></label>
+                              <button type="button" id="add-key-stakeholder-btn" class="buying_center_btn">+ Add</button>
+                            </div>
+                            <div id="key-stakeholders-list">
+                              <!-- Key stakeholder blocks will be dynamically added here -->
+                            </div>
+                            <p class="error-message" id="key-stakeholders-error"></p>
+                          </div>
+                        </div>
+
+                        <!-- Stakeholders Panel -->
+                        <div id="stakeholders-panel" class="tab-panel hidden">
+                          <div
+                            style="margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: space-between;">
+                            <h3 style="font-size: 14px; font-weight: 600;">Stakeholders</h3>
+                            <button type="button" id="add-stakeholder-btn" class="buying_center_btn">+ Add</button>
+                          </div>
+                          <div id="stakeholders-error" style="margin-bottom: 0.5rem; font-size: 12px; color: #dc2626;">
+                          </div>
+                          <div class="table-container" style="border-radius: 0.75rem; border: 1px solid #e5e7eb;">
+                            <table class="stakeholders-table">
+                              <thead>
+                                <tr>
+                                  <th>S No</th>
+                                  <th>Key Stakeholder <span class="required-star">*</span></th>
+                                  <th>Stakeholder <i class="fas fa-info-circle" data-toggle="tooltip"
+                                      data-placement="top" title="Person influencing/impacted by buying decision"></i>
+                                  </th>
+                                  <th>Designation </th>
+                                  <th style="width: 125px !important;">Type</th>
+                                  <th>Key Directs <i class="fas fa-info-circle" data-toggle="tooltip"
+                                      data-placement="top" title="Stakeholder’s representative"></i></th>
+                                  <th style="width: 150px !important;">Stakeholder Type</th>
+                                  <!-- Factspan Owner column hidden -->
+                                  <th>Comments</th>
+                                  <th style="width: 75px !important;">Level <i class="fas fa-info-circle"
+                                      data-toggle="tooltip" data-placement="top" title="Hierarchical seniority"></i>
+                                  </th>
+                                  <th>Size of Prize $</th>
+                                  <th>Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody id="stakeholders-table-body">
+                                <!-- Stakeholder rows injected here -->
+                              </tbody>
+                            </table>
+                          </div>
+                          <div id="stakeholder-row-errors" style="margin-top: 0.5rem; font-size: 12px; color: #dc2626;">
+                          </div>
+                        </div>
+
+                        <!-- FS Members Panel -->
+                        <div id="fs-members-panel" class="tab-panel hidden">
+                          <div
+                            style="margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: space-between;">
+                            <h3 style="font-size: 14px; font-weight: 600;">FS Partners</h3>
+                          </div>
+                          <div class="table-container" style="border-radius: 0.75rem; border: 1px solid #e5e7eb;">
+                            <table class="stakeholders-table">
+                              <thead>
+                                <tr>
+                                  <th>S No</th>
+                                  <th>Key Stakeholder</th>
+                                  <th>Stakeholder </th>
+                                  <th>Designation </th>
+                                  <th style="width: 120px !important;">Type</th>
+                                  <th style="width: 130px !important;">Stakeholder Type</th>
+                                  <th>Growth Partner <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="FS Partner to Super Boss"></i></th>
+                                  <th>Delivery Partner <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="FS Partner to Key Stakeholder"></i></th>
+                                  <th>Client Partner <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="FS Partner to Stakeholder & Key Directs"></i></th>
+                                  <th>SME Partner - Tech</th>
+                                </tr>
+                              </thead>
+                              <tbody id="fs-partners-table-body">
+                                <!-- FS Partners rows injected here -->
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+
+                        <!-- Notes Panel -->
+                        <div id="notes-panel" class="tab-panel hidden">
+                          <div id="notes-timeline-container" class="hidden">
+                            <!-- New Notes Design Container -->
+                            <div id="notesTabDiv" class="notes-history-container"></div>
+                            <!-- Old timeline if needed for fallback, but we'll likely replace its usage -->
+                            <div class="audit-timeline-container hidden" id="notes-timeline">
+                              <!-- Notes history will be injected here -->
+                            </div>
+                          </div>
+                          <div class="notes-form-container">
+                            <!-- Interaction Type Selection -->
+                            <div class="interaction-header-row">
+                              <div class="interaction-type-options">
+                                <label class="custom-radio">
+                                  <input type="radio" name="interactionType" value="In Person" checked>
+                                  <span class="radio-content"><i class="fas fa-users"></i> In Person</span>
+                                </label>
+                                <label class="custom-radio">
+                                  <input type="radio" name="interactionType" value="Phone Call">
+                                  <span class="radio-content"><i class="fas fa-phone-alt"></i> Phone Call</span>
+                                </label>
+                                <label class="custom-radio">
+                                  <input type="radio" name="interactionType" value="Video Call">
+                                  <span class="radio-content"><i class="fas fa-video"></i> Video Call</span>
+                                </label>
+                                <label class="custom-radio">
+                                  <input type="radio" name="interactionType" value="Slack/Teams">
+                                  <span class="radio-content"><i class="fas fa-comment-dots"></i> Slack/Teams</span>
+                                </label>
+                                <label class="custom-radio">
+                                  <input type="radio" name="interactionType" value="Phone Text">
+                                  <span class="radio-content"><i class="fas fa-mobile-alt"></i> Phone Text</span>
+                                </label>
+                              </div>
+                              <div class="date-field-inline">
+                                <label>Meeting Date</label>
+                                <div class="date-picker-wrapper">
+                                  <input type="text" id="meetingDate" class="form-input-inline placeicon"
+                                    placeholder="&#xf073; MM-DD-YY" autocomplete="off">
+                                </div>
+                              </div>
+                            </div>
+
+                            <!-- Detailed Notes -->
+                            <div class="detailed-notes bg_transparent">
+                              <label class="section-label">Detailed Notes</label>
+                              <div id="detailedNotes" class="bg_white"
+                                style="min-height: 50px; height: auto; border: 1px solid #ccc;"></div>
+                            </div>
+
+                            <!-- Next Steps Section -->
+                            <div class="next-steps-header-row">
+                              <div class="toggle-group">
+                                <button type="button" class="toggle-btn active" id="nextStepsBtn"
+                                  data-value="Next Steps">Next
+                                  Steps</button>
+                                <button type="button" class="toggle-btn" id="noNextStepsBtn"
+                                  data-value="No Next Steps">No Next
+                                  Steps</button>
+                              </div>
+                              <div class="date-field-inline" id="nextStepsEtaWrapper">
+                                <label>Next Steps Estimated Date</label>
+                                <div class="date-picker-wrapper">
+                                  <input type="text" id="nextStepsEta" class="form-input-inline placeicon"
+                                    placeholder="&#xf073; MM-DD-YY" autocomplete="off">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="bg_transparent next-steps-content">
+                              <div id="nextStepsText" class="bg_white"
+                                style="min-height: 50px; height: auto; border: 1px solid #ccc;"></div>
+                            </div>
+
+                            <!-- Next Interaction Section -->
+                            <div class="next-interaction-header-row">
+                              <button type="button" id="toggleNextInteraction" class="section-toggle-btn"><i
+                                  class="fas fa-paper-plane"></i> Next Interaction</button>
+                            </div>
+                            <div class="next-interaction-content" id="nextInteractionContent">
+                              <div class="interaction-header-row">
+                                <div class="interaction-type-options">
+                                  <label class="custom-radio">
+                                    <input type="radio" name="nextInteractionType" value="In Person" checked>
+                                    <span class="radio-content"><i class="fas fa-users"></i> In Person</span>
+                                  </label>
+                                  <label class="custom-radio">
+                                    <input type="radio" name="nextInteractionType" value="Phone Call">
+                                    <span class="radio-content"><i class="fas fa-phone-alt"></i> Phone Call</span>
+                                  </label>
+                                  <label class="custom-radio">
+                                    <input type="radio" name="nextInteractionType" value="Video Call">
+                                    <span class="radio-content"><i class="fas fa-video"></i> Video Call</span>
+                                  </label>
+                                  <label class="custom-radio">
+                                    <input type="radio" name="nextInteractionType" value="Slack/Teams">
+                                    <span class="radio-content"><i class="fas fa-comment-dots"></i> Slack/Teams</span>
+                                  </label>
+                                  <label class="custom-radio">
+                                    <input type="radio" name="nextInteractionType" value="Phone Text">
+                                    <span class="radio-content"><i class="fas fa-mobile-alt"></i> Phone Text</span>
+                                  </label>
+                                </div>
+                                <div class="date-field-inline">
+                                  <label>Next Interaction Estimated Date</label>
+                                  <div class="date-picker-wrapper">
+                                    <input type="text" id="nextInteractionEta" class="form-input-inline placeicon"
+                                      placeholder="&#xf073; MM-DD-YY" autocomplete="off">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <!-- Notes Footer Buttons -->
+                            <div class="notes-footer-actions">
+                              <button type="button" id="updateNoteBtn" class="enhanced-btn">Save</button>
+                              <button type="button" id="cancelNoteBtn" class="enhanced-btn cancel-btn">Cancel</button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Audit Logs Panel -->
+                        <div id="audit-logs-panel" class="tab-panel hidden">
+                          <div class="audit-filters-row hidden">
+                            <span style="font-size: 13px; font-weight: 600; color: #374151; margin-right: 1rem;">Filter
+                              :</span>
+                            <label class="custom-radio">
+                              <input type="radio" name="auditFilter" value="all" checked>
+                              <span class="radio-content">Audit Logs</span>
+                            </label>
+                            <label class="custom-radio">
+                              <input type="radio" name="auditFilter" value="notes">
+                              <span class="radio-content">Notes</span>
+                            </label>
+
+                          </div>
+                          <div class="audit-timeline-container" id="audit-timeline-container">
+                            <!-- New Audit Log Design Container -->
+                            <div id="audit-log-list" class="audit-list"></div>
+                            <!-- Old timeline if needed for fallback -->
+                            <div id="audit-timeline" class="hidden">
+                              <!-- Timeline items will be injected here -->
+                              <div class="no-audit-data">No audit logs found for this buying center.</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Sticky Footer -->
+                      <div class="sticky-footer">
+                        <!-- <button type="button" onclick="alert('Redirect to SOW page')" class="sow-link">Go to
+                          SOW</button> -->
+                        <button type="submit" id="form-submit-btn" class="buying_center_btn"></button>
+                      </div>
+                    </form>
+                  </section>
+                </main>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+
+      $(document).ready(function () {
+        $(".allReportDiv").hide()
+        $(".report_module").hide()
+        assignMetaValue();
+        $("meta[name='google-signin-client_id']").attr("content", metaValue);
+        getLocalSessionData();
+        if (sessionName == null) {
+          window.location.href = 'index.html';
+          return false;
+        } else {
+          let accessStatus = checkDashboardPageAccessData()
+          if (accessStatus) {
+            let accessLevel = checkEachPageAccess("Reports")
+            if (accessLevel.length > 0) {
+              let environment = accessLevel[0]
+              if (environment == apiValue.environment) {
+                let access_page_list = $.parseJSON(localStorage.getItem("access-page-list"))
+                console.log("accessStatus - ", accessStatus)
+                console.log("accessLevel - ", accessLevel)
+                console.log("access_page_list - ", access_page_list)
+                let userRole = localStorage.getItem("user-role")
+                let userEmail = localStorage.getItem("email")
+                let userDept = localStorage.getItem("Department")
+
+                $.each(access_page_list, function (h, page) {
+                  if (page == "All") {
+                    $(".allReportDiv").show()
+                    $(".report_module").show()
+                  } else {
+                    $("#" + page.replace(".html", "")).show()
+                    $("." + page.replace(".html", "") + "_div").show()
+                  }
+                })
+                $(".reporting_main_div").hide()
+                $(".show_page").css("display", "block");
+                $(".loader").css("display", "none");
+                $(".show_page").css("display", "block");
+                $(".new-sub-menu").hover(function () {
+                  $('.sub-menu').css('display', '')
+                });
+              } else {
+                window.location.href = "home.html"
+              }
+            } else {
+              window.location.href = "home.html"
+            }
+          } else {
+            window.location.href = "home.html"
+          }
+          // $('#create-report').click(function(){
+          //   window.location.href = 'reporting-framework.html'
+          //   return false;
+          // })
+        }
+      });
+
+      $('#dashboard').click(function () {
+        window.location.href = 'home.html';
+        return false;
+      });
+      $('#logout').click(function () {
+        localStorage.clear();
+
+        window.location.href = 'index.html';
+        return false;
+      });
+      $("#use_bench_data").click(function () {
+        window.location.href = 'useBench.html';
+        return false;
+      });
+      $('#create_employee').click(function () {
+        window.location.href = 'employee_create.html';
+        return false;
+      });
+      $('#buyingCenterBackBtnCustm').click(function () {
+        // Use document.referrer to determine back destination
+        const referrer = document.referrer;
+
+        if (referrer) {
+          try {
+            const referrerUrl = new URL(referrer);
+            const referrerPath = referrerUrl.pathname.split('/').pop(); // Get the filename from path
+
+            if (referrerPath === 'accountDetails.html') {
+              // Redirect back to account details page
+              window.location.href = 'accountDetails.html';
+            } else if (referrerPath === 'sowEdit.html') {
+              // Redirect back to sowEdit with the same parameters
+              const searchParams = referrerUrl.search;
+              window.location.href = `sowEdit.html${searchParams}`;
+            } else if (referrerPath === 'sowCreate.html') {
+              // Redirect back to sowCreate page
+              window.location.href = 'sowCreate.html';
+            } else {
+              // Default fallback to account details
+              window.location.href = 'accountDetails.html';
+            }
+          } catch (error) {
+            console.error('Error parsing referrer URL:', error);
+            // Fallback to account details on error
+            window.location.href = 'accountDetails.html';
+          }
+        } else {
+          // No referrer available, fallback to account details
+          window.location.href = 'accountDetails.html';
+        }
+        return false;
+      });
+
+      function employeeDetails() {
+        window.location.href = 'team-profile.html';
+        return false
+      }
+    </script>
+
+    <!-- Delete Stakeholder Remap Modal -->
+    <div id="deleteStakeholderRemapModal" class="nps-modal" style="display: none; font-family: 'Poppins', sans-serif;">
+      <div class="nps-modal-content" style="width: 90%; max-width: 650px; border-radius: 16px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); border: none; padding: 25px;">
+        <!-- Modal Header -->
+        <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px;">
+          <div style="display: flex; align-items: center; gap: 15px;">
+            <div style="width: 30px; height: 30px; border-radius: 50%; background-color: #fffbeb; border: 1.5px solid #f59e0b; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <i class="fa fa-exclamation-triangle" style="color: #f59e0b; font-size: 15px;"></i>
+            </div>
+            <div>
+              <h3 id="deleteKsModalTitle" style="margin: 0; font-size: 14px; font-weight: 700; color: #1e1b4b;">Delete stakeholder</h3>
+              <p id="deleteKsModalSubtitle" style="margin: 5px 0 0 0; font-size: 12px; color: #4b5563;font-weight: 500;">1 SoW linked — select a replacement before deleting.</p>
+            </div>
+          </div>
+          <span class="nps-close" id="closeDeleteKsModal" style="cursor: pointer; font-size: 24px; color: #9ca3af; line-height: 1; margin-top: -5px;">&times;</span>
+        </div>
+
+        <!-- Modal Body (Cards Container) -->
+        <div id="deleteKsModalBody" style="max-height: 260px; overflow-y: auto; padding-right: 5px;">
+          <!-- SOW cards will be rendered here dynamically -->
+        </div>
+
+        <!-- Modal Footer -->
+        <div style="padding-top: 10px; border-top: 1px solid #f3f4f6; display: flex; justify-content: flex-end; gap: 12px;">
+          <button type="button" id="cancelDeleteKsBtn" class="btn-modal-cancel">Cancel</button>
+          <button type="button" id="confirmDeleteKsBtn" class="btn-modal-delete">Delete</button>
+        </div>
+      </div>
+    </div>
+
+</body>
+
+</html>

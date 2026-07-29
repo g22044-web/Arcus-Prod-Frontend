@@ -1,0 +1,41 @@
+/* Custom CSS overrides applied only when the page is loaded inside an iframe */
+
+html {
+    overflow: hidden !important;
+}
+
+.loader, .loader-div {
+    display: none !important;
+}
+
+.card {
+    height: calc(100vh - 62px) !important;
+}
+
+.employee_form {
+    height: calc(100vh - 0px) !important;
+}
+
+#buyingCenterBackBtnCustm {
+    display: none !important;
+}
+
+.container-fluid {
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}
+.enhanced-table th[data-sort-key="description"], 
+.enhanced-table td.description-cell {
+    max-width: 150px !important;
+    min-width: 100px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.enhanced-table {
+    min-width: 100% !important;
+    width: 100% !important;
+    table-layout: fixed !important;
+}
+

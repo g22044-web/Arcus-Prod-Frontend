@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CNPS Details - ARCUS</title>
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css" />
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="css/custom.css" />
+    <link rel="stylesheet" href="css/toastr/2.0.1/css/toastr.css" />
+    <link rel="icon" href="images/factspan.png" type="image/png" sizes="16x16" />
+    <link rel="stylesheet" href="css/busyLoading.css" />
+    <link rel="stylesheet" href="css/npsPlanning.css?v=1.1" />
+
+    <style>
+        /* CNPS Planning: extend the dark navy tab band down to cover the legend/filter row (Figma) */
+        .nps-actions-bar {
+            background: #1F3864 !important;
+            padding: 5px 25px 0px 20px !important;
+            margin: 0 -15px 10px -15px !important;
+            border-radius: 0 !important;
+            border-top: 1px solid grey;
+        }
+
+        .nps-tab-header {
+            background: transparent !important;
+            padding: 0 !important;
+            margin: 0 0 0px 0 !important;
+        }
+
+        .nps-filters {
+            padding: 5px 5px !important;
+        }
+
+        .nps-actions-bar .legend-item {
+            color: #fff !important;
+        }
+
+        .nps-actions-bar .nps-search-input {
+            background: transparent !important;
+            border-color: rgba(255, 255, 255, 0.5) !important;
+            color: #fff !important;
+        }
+
+        .nps-actions-bar .nps-search-input::placeholder {
+            color: rgba(255, 255, 255, 0.75) !important;
+        }
+
+        .nps-actions-bar .nps-search-icon {
+            color: #fff !important;
+        }
+
+        .nps-actions-bar .nps-select {
+            background-color: transparent !important;
+            border-color: rgba(255, 255, 255, 0.5) !important;
+            color: #fff !important;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,<svg%20xmlns%3D"http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg"%20width%3D"292.4"%20height%3D"292.4"><path%20fill%3D"%23ffffff"%20d%3D"M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z"%2F><%2Fsvg>') !important;
+        }
+
+        .nps-actions-bar .nps-select option {
+            color: #313265;
+        }
+
+        .nps-actions-bar .ms-options-wrap {
+            background: transparent !important;
+        }
+
+        .nps-actions-bar .ms-options-wrap > button {
+            background-color: transparent !important;
+            border-color: rgba(255, 255, 255, 0.5) !important;
+            color: #fff !important;
+        }
+
+        .nps-actions-bar .ms-options-wrap > button:after {
+            border-top-color: #fff !important;
+        }
+
+    </style>
+
+    <script src="js/toastr/2.0.1/js/toastr.js"></script>
+    <script src="js/common.js"></script>
+    <script src="lib/jQuery-MultiSelect.js"></script>
+    <link rel="stylesheet" href="css/jquery.multiselect.css">
+    <script src="js/npsPlanning.js?v=1.3.0"></script>
+    <script src="js/npsSummary.js?v=1.0.1"></script>
+</head>
+
+<body style="overflow: hidden;">
+    <div id="header"></div>
+    <script>
+        $(function () {
+            $("#header").load("header.html");
+        });
+    </script>
+
+    <div class="loader-overlay" style="display: none;">
+        <div class="loader">
+            <div class="loader-wheel"></div>
+            <div class="loader-text"></div>
+        </div>
+    </div>
+
+    <div class="nps-container">
+        <!-- Combined Navigation and Filters -->
+        <div class="nps-actions-bar">
+            <div class="nps-tab-header">
+                <div class="nps-tabs">
+                    <div class="nps-tab active" data-tab="planning">CNPS Planning</div>
+                    <div class="nps-tab" data-tab="summary">CNPS Summary</div>
+                    <div class="nps-tab" data-tab="buying-center">CNPS Buying Center</div>
+                </div>
+            </div>
+
+            <div class="nps-filters" style="display: none;">
+                <!-- Legend for color status -->
+                <div class="nps-legend-right" id="planningLegend">
+                    <div class="legend-item">
+                        <span class="dot received"></span> NPS received
+                    </div>
+                    <div class="legend-item">
+                        <span class="dot pending"></span> NPS not received
+                    </div>
+                    <div class="legend-item">
+                        <span class="dot planned"></span> NPS planned
+                    </div>
+                    <div class="legend-item">
+                        <span class="dot approved-legend-dot"></span> Approved Stakeholders
+                    </div>
+                </div>
+
+                <!-- Legend for recent update indicator -->
+                <div class="nps-legend-right" id="summaryLegend" style="display: none;">
+                    <div class="legend-item">
+                        <span class="dot recent"></span> NPS received in last 7 days
+                    </div>
+                    <div class="legend-item">
+                        <span class="dot cpns_active"></span> Approved Stakeholders
+                    </div>
+                </div>
+
+                <div id="bcStakeholderToggles" class="nps-toggle-group" style="display:none;">
+                    <button class="nps-toggle-btn active" data-type="Key Stakeholder">Key Stakeholder</button>
+                    <button class="nps-toggle-btn" data-type="Stakeholder">Stakeholder</button>
+                    <button class="nps-toggle-btn" data-type="Influencer">Influencer</button>
+                </div>
+
+                <div>
+
+
+                    <!-- Planning Filter Group -->
+                    <div id="planningFilters" class="nps-filter-group">
+                        <div class="nps-search-wrapper">
+                            <i class="fa fa-search nps-search-icon"></i>
+                            <input type="text" id="npsSearch" class="nps-search-input" placeholder="Search">
+                        </div>
+                        <select id="planAccount" name="planAccount[]" class="nps-select ms-select" multiple>
+                            <option value="">Account</option>
+                        </select>
+                        <select id="planSow" name="planSow[]" class="nps-select ms-select" multiple>
+                            <option value="">SoW</option>
+                        </select>
+                        <select id="planStakeholder" name="planStakeholder[]" class="nps-select ms-select" multiple>
+                            <option value="">Stakeholder</option>
+                        </select>
+                        <select id="planYear" class="nps-select">
+                            <!-- Dynamic populated -->
+                        </select>
+                    </div>
+    
+                    <!-- Summary Filter Group -->
+                    <div id="summaryFilters" class="nps-filter-group" style="display: none;">
+                        <div class="nps-search-wrapper">
+                            <i class="fa fa-search nps-search-icon"></i>
+                            <input type="text" id="npsSummarySearch" class="nps-search-input" placeholder="Search">
+                        </div>
+                        <select id="sumAccount" name="sumAccount[]" class="nps-select ms-select" multiple>
+                            <option value="">Account</option>
+                        </select>
+                         <select id="sumSow" name="sumSow[]" class="nps-select ms-select" multiple style="display: none;">
+                             <option value="">SoW</option>
+                         </select>
+                        <select id="sumStakeholder" name="sumStakeholder[]" class="nps-select ms-select" multiple>
+                            <option value="">NPS Stakeholder</option>
+                        </select>
+                        <select id="sumYear" class="nps-select">
+                            <!-- Dynamic populated -->
+                        </select>
+                    </div>
+    
+                    <!-- Buying Center Filter Group -->
+                    <div id="bcFilters" class="nps-filter-group" style="display: none;">
+                        <div class="nps-search-wrapper">
+                            <i class="fa fa-search nps-search-icon"></i>
+                            <input type="text" id="npsBcSearch" class="nps-search-input" placeholder="Search">
+                        </div>
+                        <select id="bcAccount" name="bcAccount[]" class="nps-select ms-select" multiple>
+                            <option value="">Account</option>
+                        </select>
+                        <select id="bcBuyingCenter" name="bcBuyingCenter[]" class="nps-select ms-select" multiple>
+                            <option value="">Buying Center</option>
+                        </select>
+                        <select id="bcSuperboss" name="bcSuperboss[]" class="nps-select ms-select" multiple>
+                            <option value="">Superboss</option>
+                        </select>
+                        <select id="bcKeyStakeholder" name="bcKeyStakeholder[]" class="nps-select ms-select" multiple>
+                            <option value="">Key Stakeholder</option>
+                        </select>
+                        <select id="bcStakeholder" name="bcStakeholder[]" class="nps-select ms-select" multiple>
+                            <option value="">Stakeholder</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NPS Planning View -->
+        <div id="npsPlanningView" class="nps-view">
+            <!-- Summary Table -->
+            <div class="nps-table-card">
+                <table class="nps-table" id="summaryTable">
+                    <thead style="display: none;">
+                        <tr id="summaryHeader">
+                            <th>Metric</th>
+                            <!-- Monthly headers will be injected here -->
+                        </tr>
+                    </thead>
+                    <tbody id="summaryBody">
+                        <!-- Summary rows will be injected here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Account Data Table -->
+            <div class="accountDataTable">
+                <div>
+                    <h4 style="font-weight: 600; color: #313265;font-size: 14px;">Account Data Table</h4>
+                </div>
+                <!-- Update Button Container -->
+                <div class="nps-footer-actions" id="planningFooterActions"
+                    style="display: flex; justify-content: flex-end;">
+                    <button id="btnUpdateNps" class="nps-btn-primary" disabled>Update</button>
+                </div>
+            </div>
+            <div class="nps-detailed-card" id="planningDetailedCard">
+                <table class="nps-table detailed-table" id="detailedTable">
+                    <thead style="display: none;">
+                        <tr id="detailedHeader">
+                            <th class="sticky-col col-1">Account</th>
+                            <th class="sticky-col col-2">NPS Stakeholder</th>
+                            <th class="sticky-col col-3">Active SoWs</th>
+                            <th class="sticky-col col-4" style="display:none;">SoW Type</th>
+                            <th class="sticky-col col-5" style="display:none;">SoW Start</th>
+                            <th class="sticky-col col-6" style="display:none;">SoW End</th>
+                            <!-- Planning months injected here -->
+                        </tr>
+                    </thead>
+                    <tbody id="detailedBody">
+                        <!-- Detailed rows injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- NPS Summary View -->
+        <div id="npsSummaryView" class="nps-view" style="display: none;">
+            <div class="nps-summary-card nps-detailed-card" id="summaryDetailedCard" style="max-height: 800px;">
+                <table class="nps-table summary-table" id="npsSummaryTable">
+                    <thead style="display: none;">
+                        <tr id="npsSummaryHeader">
+                            <th class="sticky-col" style="left: 0; min-width: 150px;">
+                                <div style="display: flex; align-items: center; justify-content: flex-start; gap: 8px; width: 100%;">
+                                    <div style="display: flex; gap: 6px; align-items: center;">
+                                        <i id="btnExpandAllSum" class="fa fa-plus-square sum-header-action" title="Expand All" style="cursor: pointer; font-size: 14px; color: #666;"></i>
+                                        <i id="btnCollapseAllSum" class="fa fa-minus-square sum-header-action" title="Collapse All" style="cursor: pointer; font-size: 14px; color: #666; display: none;"></i>
+                                    </div>
+                                    <span>Account</span>
+                                </div>
+                            </th>
+                            <th class="sticky-col" style="left: 150px; min-width: 180px;">NPS Stakeholder</th>
+                            <th class="sticky-col" style="left: 330px; min-width: 180px;">SoW</th>
+                            <th class="col-num" style="min-width: 80px; display: none;">No. of Planned</th>
+                            <th class="col-num" style="min-width: 80px;">No. of Received</th>
+                            <th class="col-num" style="min-width: 80px; display: none;">% Received</th>
+                            <th class="col-num" style="min-width: 90px;">Avg. NPS Rating</th>
+                            <!-- Monthly headers Jan 2025 - Jan 2026 injected here -->
+                        </tr>
+                    </thead>
+                    <tbody id="npsSummaryBody">
+                        <!-- Hierarchical rows injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- NPS Buying Center View -->
+        <div id="npsBuyingCenterView" class="nps-view" style="display: none;">
+            <div class="nps-detailed-card" id="buyingCenterDetailedCard">
+                <table class="nps-table bc-table" id="npsBuyingCenterTable">
+                    <thead style="display: none;">
+                        <tr class="group-header-row">
+                            <th rowspan="2" class="sticky-col sortable-header bc-sticky-col-1" style="left: 0;"
+                                data-sort="account">
+                                <div style="display: flex; align-items: center; justify-content: flex-start; gap: 8px; width: 100%;">
+                                    <div style="display: flex; gap: 6px; align-items: center;">
+                                        <i id="btnExpandAllBC" class="fa fa-plus-square bc-header-action" title="Expand All" style="cursor: pointer; font-size: 14px; color: #666;"></i>
+                                        <i id="btnCollapseAllBC" class="fa fa-minus-square bc-header-action" title="Collapse All" style="cursor: pointer; font-size: 14px; color: #666; display: none;"></i>
+                                    </div>
+                                    <span>Account Name</span>
+                                    <i class="fa fa-sort sort-icon" style="margin-left: auto;"></i>
+                                </div>
+                            </th>
+                            <th rowspan="2" class="sticky-col sortable-header bc-sticky-col-2" style="left: 180px;"
+                                data-sort="buyingCenter">Buying Center Name <i class="fa fa-sort sort-icon"></i></th>
+                            <th colspan="2" class="group-header">SUPERBOSS</th>
+                            <th colspan="4" class="group-header">KEY STAKEHOLDER</th>
+                            <th colspan="4" class="group-header" id="stkGroupHeader">STAKEHOLDER</th>
+                            <th colspan="4" class="group-header" id="infGroupHeader">INFLUENCER</th>
+                            <th colspan="2" class="group-header" id="bcRevenueGroupHeader">Revenue (Signed SoWs)</th>
+                        </tr>
+                        <tr class="detail-header-row">
+                            <th style="min-width: 100px;" class="sortable-header" data-sort="sbName">Name <i
+                                    class="fa fa-sort sort-icon"></i></th>
+                            <th style="min-width: 100px;" class="sortable-header" data-sort="sbPartner">FS Partner <i class="fa fa-sort sort-icon"></i></th>
+                            <th style="min-width: 100px;" class="sortable-header" data-sort="ksName">Name <i
+                                    class="fa fa-sort sort-icon"></i></th>
+                            <th style="min-width: 100px;" class="sortable-header" data-sort="ksPartner">FS Partner <i class="fa fa-sort sort-icon"></i></th>
+                            <th class="col-num sortable-header" data-sort="ksAvgNps">Average NPS <i
+                                    class="fa fa-sort sort-icon"></i></th>
+                            <th style="min-width: 110px;" class="sortable-header" data-sort="ksLastDate">Last NPS Date <i class="fa fa-sort sort-icon"></i></th>
+                            <th class="stk-header-cell sortable-header" style="min-width: 100px;" data-sort="sName">Name
+                                <i class="fa fa-sort sort-icon"></i></th>
+                            <th class="stk-header-cell sortable-header" style="min-width: 100px;" data-sort="sPartner">FS Partner <i class="fa fa-sort sort-icon"></i></th>
+                            <th class="stk-header-cell col-num sortable-header" data-sort="sAvgNps">Average NPS <i class="fa fa-sort sort-icon"></i></th>
+                            <th class="stk-header-cell sortable-header" style="min-width: 110px;" data-sort="sLastDate">Last NPS Date <i class="fa fa-sort sort-icon"></i></th>
+                            <th class="inf-header-cell sortable-header" style="min-width: 100px;" data-sort="iName">Name
+                                <i class="fa fa-sort sort-icon"></i></th>
+                            <th class="inf-header-cell sortable-header" style="min-width: 100px;" data-sort="iPartner">FS Partner <i class="fa fa-sort sort-icon"></i></th>
+                            <th class="inf-header-cell col-num sortable-header" data-sort="iAvgNps">Average NPS <i class="fa fa-sort sort-icon"></i></th>
+                            <th class="inf-header-cell sortable-header" style="min-width: 110px;" data-sort="iLastDate">Last NPS Date <i class="fa fa-sort sort-icon"></i></th>
+                            <th class="col-num sortable-header" id="bcHeaderLy" data-sort="lyRev"><span class="header-text">FY25</span> <i class="fa fa-sort sort-icon"></i></th>
+                            <th class="col-num sortable-header" id="bcHeaderCy" data-sort="cyRev"><span class="header-text">FY26</span> <i class="fa fa-sort-down sort-icon sort-active"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody id="npsBuyingCenterBody">
+                        <!-- Dynamic rows -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- NPS Details Modal (Popup) -->
+    <div id="npsDetailsModal" class="nps-modal">
+        <div class="nps-modal-content">
+            <div class="nps-modal-header">
+                <div class="header-title">
+                    <i class="fa fa-chart-bar" style="color: #f7941d; margin-right: 8px;"></i>
+                    <span>NPS Details</span>
+                </div>
+                <span class="nps-close" id="closeNpsModal">&times;</span>
+            </div>
+            <div class="nps-modal-body">
+                <div class="heatmap-scroll-container">
+                    <table class="nps-table heatmap-table" id="heatmapTable">
+                        <thead>
+                            <tr id="heatmapHeader">
+                                <th style="min-width: 200px;">Stakeholder Name</th>
+                                <!-- Monthly months like Jan-26, Feb-26 -->
+                            </tr>
+                        </thead>
+                        <tbody id="heatmapBody">
+                            <!-- heatmap rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NPS Details Tooltip Popover -->
+    <div id="npsTooltip" class="nps-popover"
+        style="display: none; position: fixed; z-index: 11000;"></div>
+
+    <script src="js/npsBuyingCenter.js?v=1.0.3"></script>
+</body>
+
+</html>
